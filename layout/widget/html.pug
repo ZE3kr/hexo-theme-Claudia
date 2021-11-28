@@ -17,6 +17,12 @@ html(lang=config.language class= `appearance-auto`)
         margin-bottom: 0;
         height: 100%;
       }
+      .recent-post-ellipses {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc( 100vw - 77px );
+      }
 
   body.is-flex.is-flex-direction-column
     main.post-container
