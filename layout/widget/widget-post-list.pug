@@ -6,7 +6,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()
                         - var postURL = url_for(post.path)
-                        - var imgURL = getPostCoverImg(post)
+                        - var imgURL = post.cover || getPostCoverImg(post)
                         - var isExcerpt = post.excerpt && post.excerpt.length > 0
                         - var postContent = isExcerpt ? post.excerpt : post.content
                         article.post-item-card
@@ -29,7 +29,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                                     time.has-text-grey(datetime=post.date.toJSON())= date(post.date, date_format)
                                 p.is-flex-grow-2.mt-2
                                     = truncate( strip_html(postContent), {length: 360, omission: '..'} )
-                                a.button.is-default.mt-2.has-text-weight-semibold(href= postURL)= __('read_more')
+                                a.button.is-default.mt-2.has-text-weight-semibold(href= postURL)= post.categories.toArray().find(category => category.name === '视频') ? '播放' : __('read_more')
 
                     -
                         // turnPage
