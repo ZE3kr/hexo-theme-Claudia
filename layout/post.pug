@@ -31,7 +31,7 @@ block content
                 if (alt) {
                     return `<figure>${imgtag}<figcaption>${alt}</figcaption></figure>`
                 }
-                return imgtag
+                return `<figure>${imgtag}</figure>`
             })
         }
     - var tocContent = toc(page.content, {list_number: false})
