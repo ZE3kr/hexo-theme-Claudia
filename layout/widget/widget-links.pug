@@ -1,0 +1,7 @@
+main.aside-card-container.categories-widget(class= is_category && "category-page")
+    h3="友情链接"
+    section
+        ul.category-list
+            each link in theme.links
+                li.category-list-item
+                    a.category-list-link(href= link.url target="_blank")= link.title
