@@ -5,3 +5,4 @@ main.aside-card-container.categories-widget(class= is_category && "category-page
             each link in theme.links
                 li.category-list-item
                     a.category-list-link(href= link.url target="_blank" rel="noopener nofollow")= link.title
+                    a.category-list-count(href= link.url target="_blank" rel="noopener nofollow")= link.domain
