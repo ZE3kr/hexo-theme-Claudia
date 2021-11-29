@@ -18,7 +18,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                                     if post.video
                                         a.post-cover-link.has-text-centered.skeleton(href= postURL)
                                             img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
-                                            video.post-cover-img.js-video(muted loop preload="metadata" playsinline)
+                                            video.is-hidden.post-cover-img.js-video(muted loop preload="metadata" playsinline)
                                                 source(src=`https://videodelivery.net/${post.video}/manifest/video.mpd` type="application/dash+xml")
                                                 source(src=`https://videodelivery.net/${post.video}/manifest/video.m3u8` type="application/x-mpegURL")
                                     else
