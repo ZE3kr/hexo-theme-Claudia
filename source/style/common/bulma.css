@@ -2043,12 +2043,8 @@ header .container {
   object-fit: contain;
 }
 
-.content figure:hover, .content figure.hover {
+.content figure:hover, .content figure.hover, .content figure.full-screen {
   transform: scale(1);
-}
-
-.content figure:hover.hover {
-  transform: scale(1.04);
 }
 
 .content figure:not(:first-child) {
@@ -11651,7 +11647,6 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     left: 0;
     top: 0;
     margin: 0;
-    transform: scale(1);
     z-index: 200;
   }
   .content figure.full-screen:hover {
