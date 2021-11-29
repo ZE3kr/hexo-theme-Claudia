@@ -59,5 +59,51 @@ window.$claudia = {
         })
 
         callback && callback(media.matches ? 'dark' : 'light')
+    },
+
+    keys: {37: 1, 38: 1, 39: 1, 40: 1},
+
+    preventDefault(e) {
+        e.preventDefault();
+    },
+
+    preventDefaultForScrollKeys(e) {
+        console.log(this)
+        if (this.keys[e.keyCode]) {
+            this.preventDefault(e);
+            return false;
+        }
+    },
+
+    // modern Chrome requires { passive: false } when adding event
+    supportsPassive: false,
+    init() {
+        var supportsPassive = false;
+        try {
+            window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+                get: function () { supportsPassive = true; } 
+            }));
+        } catch(e) {}
+        console.log(supportsPassive)
+        this.wheelOpt = supportsPassive ? { passive: false } : false;
+        this.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+    },
+
+    // call this to Disable
+    disableScroll() {
+        window.addEventListener('DOMMouseScroll', this.preventDefault, false); // older FF
+        window.addEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt); // modern desktop
+        window.addEventListener('touchmove', this.preventDefault, this.wheelOpt); // mobile
+        window.addEventListener('keydown', this.preventDefaultForScrollKeys, false);
+    },
+
+    // call this to Enable
+    enableScroll() {
+        window.removeEventListener('DOMMouseScroll', this.preventDefault, false);
+        window.removeEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt); 
+        window.removeEventListener('touchmove', this.preventDefault, this.wheelOpt);
+        window.removeEventListener('keydown', this.preventDefaultForScrollKeys, false);
     }
 }
+
+window.$claudia.init();

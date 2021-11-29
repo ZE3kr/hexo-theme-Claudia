@@ -29,7 +29,7 @@ block content
                 img.replace(/alt="([^"]+)"/, function(str) {
                     alt = str.slice(5, -1)
                 })
-                var imgtag = `<img src="${src}" srcset="${srcset}" alt="${alt}" sizes="(min width: 1216px) 858px, (min width: 1024px) 714px, (min width: 769px) 75vw, 100vw" loading="lazy">`
+                var imgtag = `<img src="${src}" srcset="${srcset}" alt="${alt}" sizes="(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" loading="lazy">`
                 if (alt) {
                     return `<figure>${imgtag}<figcaption>${alt}</figcaption></figure>`
                 }
@@ -51,6 +51,7 @@ block content
                 h1.mt-0.mb-1.is-family-serif#postTitle= page.title
                 if page.date
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
+                div#shadow
                 article.mt-2.post-content!= parseContent(page.content)
                 section.jump-container.is-flex.is-justify-content-space-between.my-6
                     // em is empty placeholder
@@ -89,3 +90,38 @@ block content
                         script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
 block script
     script(src= url_for("/js/post.js"))
+    script.
+        var timeout
+        function postScroll () {
+            if (timeout) {
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(function () {
+                document.querySelectorAll('.content figure').forEach(function (figure) {
+                    if (figure.getBoundingClientRect().top + figure.clientHeight < window.innerHeight && figure.getBoundingClientRect().top > 58) {
+                        figure.classList.add('hover')
+                        hasHover = true
+                    } else {
+                        figure.classList.remove('hover')
+                    }
+                })
+            }, 100)
+        }
+
+        window.addEventListener('load', function () { setTimeout(postScroll, 500) })
+        window.addEventListener('scroll', postScroll)
+        document.querySelectorAll('.content figure').forEach(function (figure) {
+            figure.addEventListener('click', function () {
+                if (figure.classList.contains('full-screen')) {
+                    figure.classList.remove('full-screen')
+                    window.$claudia.enableScroll()
+                } else {
+                    figure.querySelectorAll('img').forEach(function (img) {
+                        img.sizes = 'max(100vw, 100vh)'
+                    })
+                    figure.classList.add('full-screen')
+                    window.$claudia.disableScroll()
+                }
+            })
+        })
+
