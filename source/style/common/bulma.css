@@ -11663,11 +11663,17 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   .content figure.full-screen > :first-child {
     display: block;
     width: 100vw;
+    height: 100vh;
     max-width: 100vw;
     max-height: 100vh;
     position: relative;
+    padding-top: unset !important;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .content figure.full-screen > :first-child iframe {
+    position: relative;
   }
 }
 

@@ -113,15 +113,18 @@ block script
         document.querySelectorAll('.content figure').forEach(function (figure) {
             window.addEventListener('load', function () { 
                 figure.querySelectorAll('iframe').forEach(function (iframe) {
-                    var player = Stream(iframe)
-                    player.addEventListener('play', () => {
-                        figure.classList.add('full-screen')
-                        window.$claudia.disableScroll()
-                    })
-                    player.addEventListener('pause', () => {
-                        figure.classList.remove('full-screen')
-                        window.$claudia.enableScroll()
-                    })
+                    var url = new URL(iframe.src)
+                    if (url.searchParams.get('autoplay') !== 'true') {
+                        var player = Stream(iframe)
+                        player.addEventListener('play', () => {
+                            figure.classList.add('full-screen')
+                            window.$claudia.disableScroll()
+                        })
+                        player.addEventListener('pause', () => {
+                            figure.classList.remove('full-screen')
+                            window.$claudia.enableScroll()
+                        })
+                    }
                 })
             })
 
