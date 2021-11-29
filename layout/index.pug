@@ -10,7 +10,7 @@ block content
             if theme.widgets.includes('profile')
                 include widget/widget-profile
             if theme.iframe
-                iframe(src= theme.iframe style="width: 100%; height: 446px")
+                iframe(src= theme.iframe style="width: 100%; height: 446px" loading="lazy")
             if theme.widgets.includes('category') && site.categories.length > 0
                 include widget/widget-categories
             if theme.widgets.includes('archive')

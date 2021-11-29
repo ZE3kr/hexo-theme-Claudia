@@ -19,23 +19,6 @@
   position: relative;
   overflow: hidden;
 
-  &::before {
-    will-change: transform;
-
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-
-    content: "";
-    z-index: 100;
-    animation: skeleton-ani 1s ease infinite;
-    background: linear-gradient(120deg,
-                                hsla(0, 0%, 100%, 0) 30%,
-                                hsla(0, 0%, 100%, var(--skeleton-flash-color)) 50%,
-                                hsla(0, 0%, 100%, 0) 70%);
-  }
-
   &::after{
     content: "";
     position: absolute;
@@ -56,5 +39,22 @@
       transform: translateX(100%);
     }
   }
+}
+
+.skeleton::before, .skeleton-with-content::before {
+  will-change: transform;
+
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  content: "";
+  z-index: 100;
+  animation: skeleton-ani 1s ease infinite;
+  background: linear-gradient(120deg,
+                              hsla(0, 0%, 100%, 0) 30%,
+                              hsla(0, 0%, 100%, var(--skeleton-flash-color)) 50%,
+                              hsla(0, 0%, 100%, 0) 70%);
 }
 

@@ -16,21 +16,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     meta(name="description" content= config.description || theme.user && theme.user.description)
     meta(name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1")
 
-    script.
-      var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(["setCookieDomain", "*.guozeyu.com"]);
-        _paq.push(["setDomains", ["*.guozeyu.com"]]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-          var u="https://matomo.tloxygen.com/";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
-          _paq.push(['setSiteId', '3']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
-
     link(rel="icon" href= url_for(theme.favicon))
     link(rel="stylesheet" href= url_for('/style/common/bulma.css'))
     link(rel="stylesheet" href= url_for('/style/base.css'))
@@ -40,8 +25,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     block head
 
   body.is-flex.is-flex-direction-column
-    noscript
-      img(referrerpolicy="no-referrer-when-downgrade" src=`https://matomo.tloxygen.com/matomo.php?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
     include widget-header
     main
       block content
@@ -61,4 +44,20 @@ html(lang=config.language class= `appearance-${ appearance }`)
         span!= theme.user && theme.user.footnotes
 
     block script
+    noscript
+      img(referrerpolicy="no-referrer-when-downgrade" src=`https://matomo.tloxygen.com/matomo.php?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
+    script.
+      var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setCookieDomain", "*.guozeyu.com"]);
+        _paq.push(["setDomains", ["*.guozeyu.com"]]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+          var u="https://matomo.tloxygen.com/";
+          _paq.push(['setTrackerUrl', u+'matomo.php']);
+          _paq.push(['setSiteId', '3']);
+          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
 

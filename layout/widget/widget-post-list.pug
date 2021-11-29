@@ -13,9 +13,17 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                             if imgURL
                                 header.is-relative.is-flex
                                     div.post-cover-backdrop.is-hidden
-                                        img(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )")
-                                    a.post-cover-link.has-text-centered.skeleton(href= postURL)
-                                        img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )", data-backdrop="true")
+                                        img(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy")
+                                    
+                                    if post.video
+                                        a.post-cover-link.has-text-centered.skeleton(href= postURL)
+                                            img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
+                                            video.is-hidden.post-cover-img.js-video(muted loop preload="metadata")
+                                                source(src=`https://videodelivery.net/${post.video}/manifest/video.mpd` type="application/dash+xml")
+                                                source(src=`https://videodelivery.net/${post.video}/manifest/video.m3u8` type="application/x-mpegURL")
+                                    else
+                                        a.post-cover-link.has-text-centered.skeleton(href= postURL)
+                                            img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                             section.content.post-card-content.p-4.pb-5
                                 if post.categories.toArray().find(category => category.name === '视频') || (post.tags && post.tags.length > 0)
                                     header
@@ -56,3 +64,40 @@ block append script
 
             images.forEach($claudia.blurBackdropImg)
         }, 150))
+
+        document.querySelectorAll('.js-video').forEach(function (video) {
+            video.parentNode.previousElementSibling.classList.remove('is-hidden')
+            video.addEventListener('loadedmetadata', (event) => {
+                videoScroll()
+                video.parentNode.classList.remove('skeleton')
+            });
+            video.addEventListener('playing', (event) => {
+                video.parentNode.classList.remove('skeleton-with-content')
+                video.previousElementSibling.classList.add('is-hidden')
+                video.classList.remove('is-hidden')
+            });
+        })
+
+        let timeout;
+
+        function videoScroll () {
+            if (timeout) {
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(function () {
+                console.log('fired')
+                var hasPlay = false
+                document.querySelectorAll('.js-video').forEach(function (video) {
+                    if (!hasPlay && video.parentNode.getBoundingClientRect().top + video.parentNode.clientHeight < window.innerHeight && video.parentNode.getBoundingClientRect().top > 58) {
+                        video.parentNode.classList.add('skeleton-with-content')
+                        video.play()
+                        hasPlay = true
+                    } else {
+                        video.parentNode.classList.remove('skeleton-with-content')
+                        video.pause()
+                    }
+                })
+            }, 100)
+        }
+
+        window.addEventListener('scroll', videoScroll)

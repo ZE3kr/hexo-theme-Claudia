@@ -63,6 +63,10 @@ $coverBlurEffect: 20px;
         transform: translateY(-50%);
       }
 
+      .js-video {
+        width: 100%;
+      }
+
       &:hover .post-cover-img {
         transform: translateY(-50%) scale(1.04);
       }
@@ -209,7 +213,6 @@ $coverBlurEffect: 20px;
       margin-right: 5px;
       object-fit: cover;
       border-radius: $borderRadius;
-      background-color: #ffffff;
     }
 
     section {
