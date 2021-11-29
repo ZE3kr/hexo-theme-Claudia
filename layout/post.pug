@@ -111,6 +111,21 @@ block script
         window.addEventListener('load', function () { setTimeout(postScroll, 500) })
         window.addEventListener('scroll', postScroll)
         document.querySelectorAll('.content figure').forEach(function (figure) {
+            window.addEventListener('load', function () { 
+                figure.querySelectorAll('iframe').forEach(function (iframe) {
+                    var player = Stream(iframe)
+                    player.addEventListener('play', () => {
+                        figure.classList.add('full-screen')
+                        window.$claudia.disableScroll()
+                    })
+                    player.addEventListener('pause', () => {
+                        figure.classList.remove('full-screen')
+                        window.$claudia.enableScroll()
+                    })
+                })
+            })
+
+
             figure.addEventListener('click', function () {
                 if (figure.classList.contains('full-screen')) {
                     figure.classList.remove('full-screen')

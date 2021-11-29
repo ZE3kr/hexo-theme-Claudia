@@ -11657,16 +11657,17 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   .content figure.full-screen:hover {
     transform: scale(1);
   }
-  .content figure.full-screen img {
+  .content figure.full-screen > * {
+    display: none;
+  }
+  .content figure.full-screen > :first-child {
+    display: block;
     width: 100vw;
     max-width: 100vw;
     max-height: 100vh;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-  }
-  .content figure.full-screen figcaption {
-    display: none;
   }
 }
 
@@ -11717,4 +11718,13 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
+
+.overlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
 /*# sourceMappingURL=bulma.css.map */

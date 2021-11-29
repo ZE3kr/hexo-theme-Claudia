@@ -68,7 +68,6 @@ window.$claudia = {
     },
 
     preventDefaultForScrollKeys(e) {
-        console.log(this)
         if (this.keys[e.keyCode]) {
             this.preventDefault(e);
             return false;
@@ -84,7 +83,6 @@ window.$claudia = {
                 get: function () { supportsPassive = true; } 
             }));
         } catch(e) {}
-        console.log(supportsPassive)
         this.wheelOpt = supportsPassive ? { passive: false } : false;
         this.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
     },
