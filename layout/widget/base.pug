@@ -43,6 +43,8 @@ html(lang=config.language class= `appearance-${ appearance }`)
       div
         span!= theme.user && theme.user.footnotes
 
+    script(src= url_for("/js/hls.js"))
+    script(src= url_for("https://embed.videodelivery.net/embed/sdk.latest.js"))
     block script
     noscript
       img(referrerpolicy="no-referrer-when-downgrade" src=`https://matomo.tloxygen.com/matomo.php?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
@@ -60,5 +62,4 @@ html(lang=config.language class= `appearance-${ appearance }`)
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
         })();
-    script(src= url_for("https://embed.videodelivery.net/embed/sdk.latest.js"))
 
