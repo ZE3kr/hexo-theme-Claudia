@@ -93,7 +93,12 @@ block append script
                         if (!video['data-playing']) {
                             video.parentNode.classList.add('skeleton-with-content')
                         }
-                        video.play()
+                        try {
+                            video.play()
+                        } catch(_) {
+                            video['data-playing'] = true
+                            video.parentNode.classList.remove('skeleton-with-content')
+                        }
                         hasPlay = true
                     } else {
                         video.parentNode.classList.remove('skeleton-with-content')

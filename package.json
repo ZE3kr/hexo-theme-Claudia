@@ -4,6 +4,6 @@
   "peerDependencies": {
     "hexo": "^5.0.2",
     "hexo-renderer-pug": "^1.0.0",
-    "hexo-renderer-sass": "^0.4.0"
+    "hexo-renderer-sass": "git+https://github.com/ZE3kr/hexo-renderer-sass.git"
   }
 }
