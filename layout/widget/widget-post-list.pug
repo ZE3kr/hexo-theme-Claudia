@@ -66,6 +66,7 @@ block append script
         }, 150))
 
         document.querySelectorAll('.js-video').forEach(function (video) {
+            video.playbackRate = 2
             video.parentNode.previousElementSibling.classList.remove('is-hidden')
             video.addEventListener('loadedmetadata', (event) => {
                 videoScroll()
