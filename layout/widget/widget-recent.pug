@@ -3,7 +3,7 @@ extends html
 block content
     include methods
     main.aside-card-container.recent-widget
-        h3= theme.title
+        h3= theme.short
         ul
             if site.posts.length > 0
                 each post in site.posts.sort('date', -1).limit(6).toArray()
