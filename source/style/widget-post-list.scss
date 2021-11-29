@@ -67,7 +67,19 @@ $coverBlurEffect: 20px;
         width: 100%;
       }
 
-      &:hover .post-cover-img {
+      &:hover .post-cover-img, &.hover .post-cover-img {
+        transform: translateY(-50%) scale(1.04);
+      }
+
+      &.hover:hover .post-cover-img {
+        transform: translateY(-50%) scale(1.08);
+      }
+
+      .post-cover-img.js-video {
+        transform: translateY(-50%);
+      }
+
+      &.hover:hover .post-cover-img.js-video {
         transform: translateY(-50%) scale(1.04);
       }
     }

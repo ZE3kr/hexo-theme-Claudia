@@ -11,7 +11,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.is-ma
                         - var postContent = isExcerpt ? post.excerpt : post.content
                         article.post-item-card
                             if imgURL
-                                header.is-relative.is-flex
+                                header.is-relative.is-flex.tlo-header
                                     div.post-cover-backdrop.is-hidden
                                         img(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy")
                                     
@@ -88,21 +88,33 @@ block append script
             }
             timeout = setTimeout(function () {
                 var hasPlay = false
-                document.querySelectorAll('.js-video').forEach(function (video) {
-                    if (!hasPlay && video.parentNode.getBoundingClientRect().top + video.parentNode.clientHeight < window.innerHeight && video.parentNode.getBoundingClientRect().top > 58) {
-                        if (!video['data-playing']) {
-                            video.parentNode.classList.add('skeleton-with-content')
+
+                var hasHover = false
+                document.querySelectorAll('.tlo-header').forEach(function (header) {
+                    if (!hasHover && header.getBoundingClientRect().top + header.clientHeight < window.innerHeight && header.getBoundingClientRect().top > 58) {
+                        header.classList.add('hover')
+                        hasHover = true
+
+                        var video = header.querySelector('.js-video')
+                        if (video) {
+                            if (!video['data-playing']) {
+                                video.parentNode.classList.add('skeleton-with-content')
+                            }
+                            try {
+                                video.play()
+                            } catch(_) {
+                                video['data-playing'] = true
+                                video.parentNode.classList.remove('skeleton-with-content')
+                            }
                         }
-                        try {
-                            video.play()
-                        } catch(_) {
-                            video['data-playing'] = true
-                            video.parentNode.classList.remove('skeleton-with-content')
-                        }
-                        hasPlay = true
                     } else {
-                        video.parentNode.classList.remove('skeleton-with-content')
-                        video.pause()
+                        header.classList.remove('hover')
+
+                        var video = header.querySelector('.js-video')
+                        if (video) {
+                            video.parentNode.classList.remove('skeleton-with-content')
+                            video.pause()
+                        }
                     }
                 })
             }, 100)
