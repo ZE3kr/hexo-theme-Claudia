@@ -101,7 +101,7 @@ block append script
                             }
                             if (!video['data-loaded']) {
                                 video['data-loaded'] = true
-                                if (Hls.isSupported() && !video.canPlayType('application/vnd.apple.mpegurl')) {
+                                if (Hls.isSupported() && !video.canPlayType('application/x-mpegURL') && !video.canPlayType('application/dash+xml')) {
                                     var hls = new Hls();
                                     video['data-hls'] = hls;
                                     // bind them together
@@ -129,11 +129,11 @@ block append script
                             video.parentNode.classList.remove('skeleton-with-content')
                             video.pause()
                             video['data-loaded'] = false
-                            if (video['data-hls']) {
+                            if (video['data-hls'] && typeof video['data-hls'] === 'function') {
                                 video['data-hls'].destroy()
+                                video.previousElementSibling.classList.remove('is-hidden')
+                                video.classList.add('is-hidden')
                             }
-                            video.previousElementSibling.classList.remove('is-hidden')
-                            video.classList.add('is-hidden')
                         }
                     }
                 })
