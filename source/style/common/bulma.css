@@ -11638,6 +11638,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   .content figure {
     width: calc(100% + 3rem);
     left: -1.5rem;
+    cursor: zoom-in;
   }
   .content figure.full-screen {
     width: 100vw;
@@ -11648,6 +11649,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     top: 0;
     margin: 0;
     z-index: 200;
+    cursor: zoom-out;
   }
   .content figure.full-screen:hover {
     transform: scale(1);
