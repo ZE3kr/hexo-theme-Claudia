@@ -22,13 +22,11 @@
                 ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 const prefix = imageUrl.slice(0, -5);
-                return prefix + 'wide80k 81920w, ' +
-                    prefix + 'wide40k 40960w, ' +
-                    prefix + 'wide20k 20480w, ' +
-                    prefix + 'wide12k 12288w, ' +
-                    prefix + 'wide8k 8192w, ' +
+                return prefix + 'wide36k 36864w, ' +
+                    prefix + 'wide24k 24576w, ' +
+                    prefix + 'wide16k 16384w, ' +
+                    prefix + 'wide10k 10240w, ' +
                     prefix + 'wide6k 6144w, ' +
-                    prefix + 'wide5k 5120w, ' +
                     prefix + 'wide4k 4096w, ' +
                     prefix + 'max 3200w, ' +
                     prefix + 'wide 2400w, ' +
