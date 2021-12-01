@@ -123,6 +123,12 @@
       }
     }
   }
+
+  @supports (margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)) {
+    body {
+      margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+  }
 }
 
 @import "widget-header";
