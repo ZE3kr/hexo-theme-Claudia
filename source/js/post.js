@@ -238,7 +238,7 @@ var $posts = {
                 img.scaleBase = img.scale
             })
             figure.addEventListener('touchmove', function(e) {
-                if (e.scale !== 1) {
+                if (figure.classList.contains('full-screen') && e.scale !== 1) {
                     e.preventDefault()
                     img.scale = e.scale * img.scaleBase
                     if (img.scale < 100) {
