@@ -1,12 +1,11 @@
 window.$claudia = {
     throttle: function (func, time) {
-        var wait = false
-        return function () {
-            if (wait) return
-            wait = true
+        var timeout
+        return function (e) {
+            if (timeout) clearInterval(timeout)
 
-            setTimeout(function () {
-                func()
+            timeout = setTimeout(function () {
+                func(e)
                 wait = false
             }, time || 100)
         }
@@ -70,7 +69,7 @@ window.$claudia = {
     },
 
     preventDefaultForScrollKeys(e) {
-        if (this.keys[e.keyCode]) {
+        if (e && this.keys[e.keyCode]) {
             this.preventDefault(e);
             return false;
         }
@@ -93,7 +92,7 @@ window.$claudia = {
     disableScroll() {
         window.addEventListener('DOMMouseScroll', this.preventDefault, false); // older FF
         window.addEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt); // modern desktop
-        window.addEventListener('touchmove', this.preventDefault, this.wheelOpt); // mobile
+        // window.addEventListener('touchmove', this.preventDefault, this.wheelOpt); // mobile
         window.addEventListener('keydown', this.preventDefaultForScrollKeys, false);
     },
 
@@ -101,7 +100,7 @@ window.$claudia = {
     enableScroll() {
         window.removeEventListener('DOMMouseScroll', this.preventDefault, false);
         window.removeEventListener(this.wheelEvent, this.preventDefault, this.wheelOpt); 
-        window.removeEventListener('touchmove', this.preventDefault, this.wheelOpt);
+        // window.removeEventListener('touchmove', this.preventDefault, this.wheelOpt);
         window.removeEventListener('keydown', this.preventDefaultForScrollKeys, false);
     }
 }

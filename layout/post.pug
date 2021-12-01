@@ -138,25 +138,67 @@ block script
                 })
             })
 
-            figure.querySelectorAll('img').forEach(function (img) {
-                img.addEventListener(window.$claudia.wheelEvent, function (e) {
-                    if (e.ctrlKey && e.deltaY !== 0) {
-                        if (!img.scale) {
-                            img.scale = 100 - e.deltaY;
-                        } else {
-                            img.scale -= e.deltaY;
-                        }
-                        img.style.transform = `translateY(-50%) scale(${img.scale / 100})`
+            var img = figure.querySelector('img')
+            
+            img.scale = 100
+            img.translateX = 0
+            img.translateY = 0
+            img.scaleBase = 100
+
+            figure.addEventListener('touchstart', function (e) { img.scaleBase = img.scale })
+            figure.addEventListener('touchmove', function (e) {
+                if (e.scale !== 1) {
+                    e.preventDefault()
+                    img.scale = e.scale * img.scaleBase
+                    if (img.scale < 100) {
+                        img.scale = 100
                     }
-                })
+                    var transform = `translateY(-50%) scale(${img.scale / 100})`
+                    if (transform !== img.style.transform) {
+                        img.style.transform = transform
+                    }
+                }
+            })
+
+            figure.addEventListener(window.$claudia.wheelEvent, function (e) {
+                e.stopPropagation()
+                if (figure.classList.contains('full-screen')) {
+                    if (e.ctrlKey && e.deltaY !== 0) {
+                        img.scale -= e.deltaY
+                        figure.scrollLeft -= e.deltaY * window.innerWidth / 200
+                        figure.scrollTop -= e.deltaY * window.innerHeight / 200
+                        img.translateY = figure.scrollTop * 100 / window.innerHeight
+                        if (img.scale < 100) {
+                            img.scale = 100
+                        }
+                        var transform = `translateY(-50%) scale(${img.scale / 100})`
+                        if (transform !== img.style.transform) {
+                            img.style.transform = transform
+                        }
+                        return
+                    }
+
+                    img.translateY += e.deltaY * 100 / window.innerHeight
+                    if (img.translateY > img.scale) {
+                        img.translateY = img.scale
+                    }
+                    if (img.translateY < 0) {
+                        img.translateY = 0
+                    }
+                    figure.scrollTop = img.translateY / 100 * window.innerHeight
+                }
             })
 
             figure.addEventListener('click', function () {
                 if (figure.classList.contains('full-screen')) {
                     figure.classList.remove('full-screen')
+                    img.style.transform = ''
                     canScroll = true
                     window.$claudia.enableScroll()
                 } else {
+                    img.scale = 100
+                    img.translateX = 0
+                    img.translateY = 0
                     figure.querySelectorAll('img').forEach(function (img) {
                         if (img.offsetWidth >= 2 * img.offsetHeight) {
                             figure.classList.add('panorama')
