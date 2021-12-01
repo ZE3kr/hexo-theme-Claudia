@@ -239,7 +239,6 @@ var $posts = {
             })
             figure.addEventListener('touchmove', function(e) {
                 if (e.scale !== 1) {
-                    e.preventDefault()
                     img.scale = e.scale * img.scaleBase
                     if (img.scale < 100) {
                         img.scale = 100
@@ -247,12 +246,16 @@ var $posts = {
                     var transform = `translateY(-50%) scale(${img.scale / 100})`
                     if (transform !== img.style.transform) {
                         img.style.transform = transform
+                        if (img.offsetWidth >= 2 * img.offsetHeight) {
+                            img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                        } else {
+                            img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                        }
                     }
                 }
             })
 
             figure.addEventListener(window.$claudia.wheelEvent, function(e) {
-                e.stopPropagation()
                 if (figure.classList.contains('full-screen')) {
                     if (e.ctrlKey && e.deltaY !== 0) {
                         img.scale -= e.deltaY
@@ -265,6 +268,11 @@ var $posts = {
                         var transform = `translateY(-50%) scale(${img.scale / 100})`
                         if (transform !== img.style.transform) {
                             img.style.transform = transform
+                            if (img.offsetWidth >= 2 * img.offsetHeight) {
+                                img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                            } else {
+                                img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                            }
                         }
                         return
                     }
@@ -284,6 +292,7 @@ var $posts = {
                 if (figure.classList.contains('full-screen')) {
                     figure.classList.remove('full-screen')
                     img.style.transform = ''
+                    img.sizes = '(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
                     canScroll = true
                     window.$claudia.enableScroll()
                 } else {
