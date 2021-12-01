@@ -239,6 +239,7 @@ var $posts = {
             })
             figure.addEventListener('touchmove', function(e) {
                 if (e.scale !== 1) {
+                    e.preventDefault()
                     img.scale = e.scale * img.scaleBase
                     if (img.scale < 100) {
                         img.scale = 100
