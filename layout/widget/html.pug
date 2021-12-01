@@ -2,6 +2,7 @@ doctype html
 html(lang=config.language class= `appearance-auto`)
   head
     meta(charset='UTF-8')
+    meta(name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1, viewport-fit=cover")
 
     link(rel="icon" href= url_for(theme.favicon))
     link(rel="stylesheet" href= url_for('/style/common/bulma.css'))
@@ -22,6 +23,10 @@ html(lang=config.language class= `appearance-auto`)
         overflow: hidden;
         text-overflow: ellipsis;
         width: calc( 100vw - 77px );
+      }
+      html {
+        width: 100vw;
+        overflow: hidden;
       }
       body {
         margin: 0 !important;
