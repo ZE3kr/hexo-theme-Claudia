@@ -64,7 +64,7 @@ window.$claudia = {
     keys: {37: 1, 38: 1, 39: 1, 40: 1},
 
     preventDefault(e) {
-        if (!e.ctrlKey && !( e.deltaX !== 0 && e.deltaY === 0)) {
+        if (e.deltaX === 0 || e.deltaY !== 0) {
             e.preventDefault();
         }
     },

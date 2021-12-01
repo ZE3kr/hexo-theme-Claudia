@@ -127,10 +127,8 @@ block script
                     if (url.searchParams.get('autoplay') !== 'true') {
                         var player = Stream(iframe)
                         player.addEventListener('play', () => {
-                            if (window.matchMedia("screen and (min-width: 769px), print").matches) {
-                                figure.classList.add('full-screen')
-                                window.$claudia.disableScroll()
-                            }
+                            figure.classList.add('full-screen')
+                            window.$claudia.disableScroll()
                         })
                         player.addEventListener('pause', () => {
                             figure.classList.remove('full-screen')
@@ -140,6 +138,18 @@ block script
                 })
             })
 
+            figure.querySelectorAll('img').forEach(function (img) {
+                img.addEventListener(window.$claudia.wheelEvent, function (e) {
+                    if (e.ctrlKey && e.deltaY !== 0) {
+                        if (!img.scale) {
+                            img.scale = 100 - e.deltaY;
+                        } else {
+                            img.scale -= e.deltaY;
+                        }
+                        img.style.transform = `translateY(-50%) scale(${img.scale / 100})`
+                    }
+                })
+            })
 
             figure.addEventListener('click', function () {
                 if (figure.classList.contains('full-screen')) {
@@ -147,35 +157,18 @@ block script
                     canScroll = true
                     window.$claudia.enableScroll()
                 } else {
-                    if (window.matchMedia("screen and (min-width: 769px), print").matches) {
-                        figure.querySelectorAll('img').forEach(function (img) {
-                            
-                            if (img.offsetWidth >= 2 * img.offsetHeight) {
-                                figure.classList.add('panorama')
-                                img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
-                            } else {
-                                img.sizes = 'max(100vw, 100vh)'
-                            }
-                        })
-                        figure.classList.add('full-screen')
-                        canScroll = false
-                        window.$claudia.disableScroll()
-                    }
+                    figure.querySelectorAll('img').forEach(function (img) {
+                        if (img.offsetWidth >= 2 * img.offsetHeight) {
+                            figure.classList.add('panorama')
+                            img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
+                        } else {
+                            img.sizes = 'max(100vw, 100vh)'
+                        }
+                    })
+                    figure.classList.add('full-screen')
+                    canScroll = false
+                    window.$claudia.disableScroll()
                 }
             })
-        })
-        var timeout2
-        window.addEventListener('resize', function () {
-            if (timeout2) {
-                clearTimeout(timeout2)
-            }
-            timeout2 = setTimeout(function () {
-                if (window.matchMedia("screen and (min-width: 769px), print").matches) {
-                    !canScroll && window.$claudia.disableScroll()
-                } else {
-                    window.$claudia.enableScroll()
-                }
-            }, 100)
-
         })
 
