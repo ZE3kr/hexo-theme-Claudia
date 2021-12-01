@@ -10,7 +10,7 @@ block append head
         script(src="//unpkg.com/valine/dist/Valine.min.js")
 block topic
     div#postTopic.is-full-height
-        - var title = truncate( page.title, {length: 65, omission: '..'} ) || ''
+        - let title = truncate( page.title, {length: 65, omission: '..'} ) || ''
         p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= title
         p.is-full-height.is-flex-shrink-0.is-flex.is-align-items-center.is-justify-content-center= __('click_back_to_the_top')
 
@@ -19,9 +19,9 @@ block content
     -
         function parseContent(content) {
             return content.replace(/<img([\w\W]+?)>/g, function(img) {
-                var srcset = ''
-                var src = ''
-                var alt = ''
+                let srcset = ''
+                let src = ''
+                let alt = ''
                 img.replace(/src="([^"]+)"/, function(str) {
                     src = str.slice(5, -1)
                     srcset = getSrcset(src)
@@ -29,16 +29,24 @@ block content
                 img.replace(/alt="([^"]+)"/, function(str) {
                     alt = str.slice(5, -1)
                 })
-                var imgtag = `<img src="${src}" srcset="${srcset}" alt="${alt}" sizes="(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" loading="lazy">`
+                let imgtag = `<img src="${src}" srcset="${srcset}" alt="${alt}" sizes="(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" loading="lazy">`
                 if (alt) {
                     return `<figure>${imgtag}<figcaption>${alt}</figcaption></figure>`
                 }
                 return `<figure>${imgtag}</figure>`
             }).replace(/<iframe([\w\W]+?)>/g, function(iframe) {
+                let src
+                iframe.replace(/src="([^"]+)"/, function(str) {
+                    src = new URL(str.slice(5, -1))
+                })
+                if (src && src.origin === 'https://iframe.videodelivery.net') {
+                    const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/><meta name="description" content="Stream"/><title>Stream</title><style>html, body { height: 100%; } body { margin: 0px; overflow: hidden;}</style></head><body><stream width="100%" height="100%" src="${ src.pathname.slice(1) }"${ src.searchParams.get('preload') === 'true' ? ' preload=auto' : src.searchParams.get('preload') === 'metadata' ? ' metadata' : '' }${ src.searchParams.get('autoplay') === 'true' ? ' autoplay' : '' }${ src.searchParams.get('controls') === 'false' ? '' : ' controls' }${ src.searchParams.get('poster') ? ` poster="${ src.searchParams.get('poster') }"` : '' }${ src.searchParams.get('muted') === 'true' ? ' muted' : '' }${ src.searchParams.get('loop') === 'true' ? ' loop' : '' }${ src.searchParams.get('startTime') ? ` start-time="${ src.searchParams.get('startTime') }` : '' }${ src.searchParams.get('primaryColor') ? ` primary-color="${ src.searchParams.get('primaryColor') }"` : '' }></stream><script data-cfasync="false" defer="" type="text/javascript" src="/js/sdk-iframe-integration.fla9.latest.js"></script></body></html>`
+                    return `<iframe srcdoc='${srcdoc}' loading="lazy"${iframe.slice(7)}`
+                }
                 return `<iframe loading="lazy"${iframe.slice(7)}`
             })
         }
-    - var tocContent = toc(page.content, {list_number: false})
+    - const tocContent = toc(page.content, {list_number: false})
     main.container.is-max-widescreen.content.section.post-page.pt-4.px-4
         .columns.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse
             .column.is-3.is-hidden-mobile(class= tocContent.length < 1 && 'is-hidden')!= tocContent
@@ -57,14 +65,14 @@ block content
                 section.jump-container.is-flex.is-justify-content-space-between.my-6
                     // em is empty placeholder
                     if page.prev
-                        - var preContent= `${ page.prev.title }`
+                        - const preContent= `${ page.prev.title }`
                         a.button.is-default(href= url_for(page.prev.path) title= page.prev.title)
                             i.iconfont.icon-prev.mr-2.has-text-grey
                             span.has-text-weight-semibold= preContent
                     else
                         em
                     if page.next
-                        - var nextContent= `${ page.next.title }`
+                        - const nextContent= `${ page.next.title }`
                         a.button.is-default(href= url_for(page.next.path) title= page.next.title)
                             span.has-text-weight-semibold= nextContent
                             i.iconfont.icon-next.ml-2.has-text-grey
@@ -73,7 +81,7 @@ block content
                         script(
                             async
                             repo= theme.comment_utteranc.repo
-                            src= "https://utteranc.es/client.js"
+                            src= "/js/client.js"
                             label= theme.comment_utteranc.label
                             issue-term= theme.comment_utteranc.issue_term || "pathname"
                             theme= theme.comment_utteranc.theme || "preferred-color-scheme"
