@@ -11668,7 +11668,13 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     top: 50%;
     transform: translateY(-50%);
   }
-
+  .content figure.full-screen.panorama {
+    overflow-x: auto;
+  }
+  .content figure.full-screen.panorama > :first-child {
+    width: unset;
+    max-width: unset;
+  }
   .content figure.full-screen > :first-child iframe {
     position: relative;
   }

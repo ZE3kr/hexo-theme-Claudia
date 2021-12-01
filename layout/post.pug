@@ -117,6 +117,7 @@ block script
             }, 100)
         }
 
+        var canScroll = true
         window.addEventListener('load', function () { setTimeout(postScroll, 500) })
         window.addEventListener('scroll', postScroll)
         document.querySelectorAll('.content figure').forEach(function (figure) {
@@ -126,8 +127,10 @@ block script
                     if (url.searchParams.get('autoplay') !== 'true') {
                         var player = Stream(iframe)
                         player.addEventListener('play', () => {
-                            figure.classList.add('full-screen')
-                            window.$claudia.disableScroll()
+                            if (window.matchMedia("screen and (min-width: 769px), print").matches) {
+                                figure.classList.add('full-screen')
+                                window.$claudia.disableScroll()
+                            }
                         })
                         player.addEventListener('pause', () => {
                             figure.classList.remove('full-screen')
@@ -141,14 +144,38 @@ block script
             figure.addEventListener('click', function () {
                 if (figure.classList.contains('full-screen')) {
                     figure.classList.remove('full-screen')
+                    canScroll = true
                     window.$claudia.enableScroll()
                 } else {
-                    figure.querySelectorAll('img').forEach(function (img) {
-                        img.sizes = 'max(100vw, 100vh)'
-                    })
-                    figure.classList.add('full-screen')
-                    window.$claudia.disableScroll()
+                    if (window.matchMedia("screen and (min-width: 769px), print").matches) {
+                        figure.querySelectorAll('img').forEach(function (img) {
+                            
+                            if (img.offsetWidth >= 2 * img.offsetHeight) {
+                                figure.classList.add('panorama')
+                                img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
+                            } else {
+                                img.sizes = 'max(100vw, 100vh)'
+                            }
+                        })
+                        figure.classList.add('full-screen')
+                        canScroll = false
+                        window.$claudia.disableScroll()
+                    }
                 }
             })
+        })
+        var timeout2
+        window.addEventListener('resize', function () {
+            if (timeout2) {
+                clearTimeout(timeout2)
+            }
+            timeout2 = setTimeout(function () {
+                if (window.matchMedia("screen and (min-width: 769px), print").matches) {
+                    !canScroll && window.$claudia.disableScroll()
+                } else {
+                    window.$claudia.enableScroll()
+                }
+            }, 100)
+
         })
 
