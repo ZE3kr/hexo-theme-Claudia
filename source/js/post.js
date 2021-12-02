@@ -229,10 +229,9 @@ var $posts = {
             var img = figure.querySelector('img')
 
             img.scale = 100
-            img.translateX = 0
             img.translateY = 0
             img.scaleBase = 100
-
+    
             figure.addEventListener('touchstart', function(e) {
                 img.scaleBase = img.scale
             })
@@ -240,21 +239,39 @@ var $posts = {
                 if (figure.classList.contains('full-screen') && e.scale !== 1) {
                     e.preventDefault()
                     img.scale = e.scale * img.scaleBase
-                    if (img.scale < 100) {
-                        img.scale = 100
-                    }
                     window.$claudia.throttle( function () {
                         if (img.offsetWidth >= 2 * img.offsetHeight) {
+                            var min = 100 * img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                            if (img.scale < min) {
+                                img.scale = min
+                            } else if (img.scale > 200) {
+                                img.scale = 200
+                            }
                             img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                            img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                            img.style.height = 'auto'
                         } else {
+                            if (img.scale < 100) {
+                                img.scale = 100
+                            } else if (img.scale > 600) {
+                                img.scale = 600
+                            }
                             img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                            if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                img.style.width = `${ img.scale }vw`
+                                img.style.height = 'auto'
+                            } else {
+                                img.style.width = 'auto'
+                                img.style.height = `${ img.scale }vh`
+                            }
                         }
-                        if (img.offsetHeight * img.scale / 100 > window.innerHeight) {
-                            img.style.transform = `scale(${img.scale / 100})`
+                        if (img.offsetHeight > window.innerHeight) {
                             img.style.top = 0
                         } else {
-                            img.style.transform = `scale(${img.scale / 100})`
-                            img.style.top = `${ (window.innerHeight - img.offsetHeight * img.scale / 100)/2 }px`
+                            img.style.top = `${ (window.innerHeight - img.offsetHeight)/2 }px`
+                        }
+                        if (img.style.transform !== 'unset') {
+                            img.style.transform = 'unset'
                         }
                     }, 8 )()
                 }
@@ -265,20 +282,42 @@ var $posts = {
                     if (e.ctrlKey && e.deltaY !== 0) {
                         img.scale -= e.deltaY
                         figure.scrollLeft -= e.deltaY * window.innerWidth / 200
-                        figure.scrollTop -= e.deltaY * window.innerHeight / 200
-                        img.translateY = figure.scrollTop * 100 / window.innerHeight
-                        if (img.scale < 100) {
-                            img.scale = 100
-                        }
-                        var transform = `translateY(-50%) scale(${img.scale / 100})`
-                        if (transform !== img.style.transform) {
-                            img.style.transform = transform
+                        window.$claudia.throttle( function () {
                             if (img.offsetWidth >= 2 * img.offsetHeight) {
+                                var min = img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                                if (img.scale < min) {
+                                    img.scale = min
+                                } else if (img.scale > 200) {
+                                    img.scale = 200
+                                }
                                 img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                                img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                                img.style.height = 'auto'
                             } else {
+                                if (img.scale < 100) {
+                                    img.scale = 100
+                                } else if (img.scale > 600) {
+                                    img.scale = 600
+                                }
                                 img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
+                                if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                    img.style.width = `${ img.scale }vw`
+                                    img.style.height = 'auto'
+                                } else {
+                                    img.style.width = 'auto'
+                                    img.style.height = `${ img.scale }vh`
+                                }
                             }
-                        }
+                            if (img.offsetHeight > window.innerHeight) {
+                                img.style.top = 0
+                                if (img.style.transform !== 'unset') {
+                                    img.style.transform = 'unset'
+                                }
+                            } else if (img.style.transform !== '') {
+                                img.style.top = ''
+                                img.style.transform = ''
+                            }
+                        }, 8 )()
                         return
                     }
 
@@ -299,14 +338,17 @@ var $posts = {
                     img.style.transform = ''
                     img.style.width = ''
                     img.style.height = ''
+                    img.style.maxWidth = ''
+                    img.style.maxHeight = ''
                     img.style.top = ''
                     img.sizes = '(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
                     window.$claudia.enableScroll()
                 } else {
                     img.scale = 100
-                    img.translateX = 0
                     img.translateY = 0
                     figure.querySelectorAll('img').forEach(function(img) {
+                        img.style.maxWidth = 'unset'
+                        img.style.maxHeight = 'unset'
                         if (img.offsetWidth >= 2 * img.offsetHeight) {
                             figure.classList.add('panorama')
                             img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
