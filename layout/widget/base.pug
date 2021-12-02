@@ -18,6 +18,8 @@ html(lang=config.language class= `appearance-${ appearance }`)
 
     link(rel="icon" href= url_for(theme.favicon))
     link(rel="apple-touch-icon" href= url_for(theme.favicon))
+    if theme.favicon_svg
+      link(rel="icon" type="image/svg+xml" href= url_for(theme.favicon_svg))
     link(rel="stylesheet" href= url_for('/style/common/bulma.css'))
     link(rel="stylesheet" href= url_for('/style/base.css'))
     link(rel="stylesheet" href= url_for('/style/common/helper.css'))
@@ -32,6 +34,12 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="preconnect" href= 'https://matomo.tloxygen.com')
     link(rel="dns-prefetch" href= 'http://utteranc.es')
     link(rel="preconnect" href= 'https://utteranc.es')
+    link(rel="dns-prefetch" href= 'http://api.utteranc.es')
+    link(rel="preconnect" href= 'https://api.utteranc.es')
+    link(rel="dns-prefetch" href= 'http://api.github.com')
+    link(rel="preconnect" href= 'https://api.github.com')
+    link(rel="dns-prefetch" href= 'http://avatars.githubusercontent.com')
+    link(rel="preconnect" href= 'https://avatars.githubusercontent.com')
 
     script(src= url_for("/js/common.js"))
     block head
