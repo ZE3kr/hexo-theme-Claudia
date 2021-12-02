@@ -312,13 +312,13 @@ var $posts = {
                             img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
                         } else {
                             img.sizes = 'max(100vw, 100vh)'
-                        }
-                        if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
-                            img.style.width = '100vw'
-                            img.style.height = 'auto'
-                        } else {
-                            img.style.width = 'auto'
-                            img.style.height = '100vh'
+                            if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                img.style.width = '100vw'
+                                img.style.height = 'auto'
+                            } else {
+                                img.style.width = 'auto'
+                                img.style.height = '100vh'
+                            }
                         }
                     })
                     figure.classList.add('full-screen')
