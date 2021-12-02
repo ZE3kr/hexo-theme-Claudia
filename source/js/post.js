@@ -210,81 +210,42 @@ var $posts = {
         window.addEventListener('scroll', postScroll)
         document.querySelectorAll('.content figure').forEach(function(figure) {
             window.addEventListener('load', function() {
-                figure.querySelectorAll('iframe').forEach(function(iframe) {
+                var iframe = figure.querySelector('iframe')
+                if (iframe) {
                     var url = new URL(iframe.src)
                     if (url.searchParams.get('autoplay') !== 'true') {
                         var player = Stream(iframe)
                         player.addEventListener('play', () => {
                             figure.classList.add('full-screen')
                             window.$claudia.disableScroll()
+                            window.addEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
                         })
                         player.addEventListener('pause', () => {
                             figure.classList.remove('full-screen')
                             window.$claudia.enableScroll()
+                            window.removeEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
                         })
                     }
-                })
+                }
             })
 
             var img = figure.querySelector('img')
 
-            img.scale = 100
-            img.translateY = 0
-            img.scaleBase = 100
+            if (img) {
+                img.scale = 100
+                img.translateY = 0
+                img.scaleBase = 100
     
-            figure.addEventListener('touchstart', function(e) {
-                img.scaleBase = img.scale
-            })
-            figure.addEventListener('touchmove', function(e) {
-                if (figure.classList.contains('full-screen') && e.scale !== 1) {
-                    e.preventDefault()
-                    img.scale = e.scale * img.scaleBase
-                    window.$claudia.throttle( function () {
-                        if (img.offsetWidth >= 2 * img.offsetHeight) {
-                            var min = 100 * img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
-                            if (img.scale < min) {
-                                img.scale = min
-                            } else if (img.scale > 200) {
-                                img.scale = 200
-                            }
-                            img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
-                            img.style.height = 'auto'
-                        } else {
-                            if (img.scale < 100) {
-                                img.scale = 100
-                            } else if (img.scale > 600) {
-                                img.scale = 600
-                            }
-                            if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
-                                img.style.width = `${ img.scale }vw`
-                                img.style.height = 'auto'
-                                img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
-                            } else {
-                                img.style.width = 'auto'
-                                img.style.height = `${ img.scale }vh`
-                                img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
-                            }
-                        }
-                        if (img.offsetHeight > window.innerHeight) {
-                            img.style.top = 0
-                        } else {
-                            img.style.top = `${ (window.innerHeight - img.offsetHeight)/2 }px`
-                        }
-                        if (img.style.transform !== 'unset') {
-                            img.style.transform = 'unset'
-                        }
-                    }, 8 )()
-                }
-            })
-
-            figure.addEventListener(window.$claudia.wheelEvent, function(e) {
-                if (figure.classList.contains('full-screen')) {
-                    if (e.ctrlKey && e.deltaY !== 0) {
-                        img.scale -= e.deltaY
-                        figure.scrollLeft -= e.deltaY * window.innerWidth / 200
+                figure.addEventListener('touchstart', function(e) {
+                    img.scaleBase = img.scale
+                })
+                figure.addEventListener('touchmove', function(e) {
+                    if (figure.classList.contains('full-screen') && e.scale !== 1) {
+                        e.preventDefault()
+                        img.scale = e.scale * img.scaleBase
                         window.$claudia.throttle( function () {
                             if (img.offsetWidth >= 2 * img.offsetHeight) {
-                                var min = img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                                var min = 100 * img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
                                 if (img.scale < min) {
                                     img.scale = min
                                 } else if (img.scale > 200) {
@@ -310,63 +271,107 @@ var $posts = {
                             }
                             if (img.offsetHeight > window.innerHeight) {
                                 img.style.top = 0
-                                if (img.style.transform !== 'unset') {
-                                    img.style.transform = 'unset'
-                                }
-                            } else if (img.style.transform !== '') {
-                                img.style.top = ''
-                                img.style.transform = ''
+                            } else {
+                                img.style.top = `${ (window.innerHeight - img.offsetHeight)/2 }px`
+                            }
+                            if (img.style.transform !== 'unset') {
+                                img.style.transform = 'unset'
                             }
                         }, 8 )()
-                        return
                     }
+                })
 
-                    img.translateY += e.deltaY * 100 / window.innerHeight
-                    if (img.translateY > img.scale) {
-                        img.translateY = img.scale
-                    }
-                    if (img.translateY < 0) {
-                        img.translateY = 0
-                    }
-                    figure.scrollTop = img.translateY / 100 * window.innerHeight
-                }
-            })
-
-            figure.addEventListener('click', function() {
-                if (figure.classList.contains('full-screen')) {
-                    figure.classList.remove('full-screen')
-                    img.style.transform = ''
-                    img.style.width = ''
-                    img.style.height = ''
-                    img.style.maxWidth = ''
-                    img.style.maxHeight = ''
-                    img.style.top = ''
-                    img.sizes = '(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
-                    window.$claudia.enableScroll()
-                } else {
-                    img.scale = 100
-                    img.translateY = 0
-                    figure.querySelectorAll('img').forEach(function(img) {
-                        img.style.maxWidth = 'unset'
-                        img.style.maxHeight = 'unset'
-                        if (img.offsetWidth >= 2 * img.offsetHeight) {
-                            figure.classList.add('panorama')
-                            img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
-                        } else {
-                            img.sizes = 'max(100vw, 100vh)'
-                            if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
-                                img.style.width = '100vw'
-                                img.style.height = 'auto'
-                            } else {
-                                img.style.width = 'auto'
-                                img.style.height = '100vh'
-                            }
+                figure.addEventListener(window.$claudia.wheelEvent, function(e) {
+                    if (figure.classList.contains('full-screen')) {
+                        if (e.ctrlKey && e.deltaY !== 0) {
+                            img.scale -= e.deltaY
+                            figure.scrollLeft -= e.deltaY * window.innerWidth / 200
+                            window.$claudia.throttle( function () {
+                                if (img.offsetWidth >= 2 * img.offsetHeight) {
+                                    var min = img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                                    if (img.scale < min) {
+                                        img.scale = min
+                                    } else if (img.scale > 200) {
+                                        img.scale = 200
+                                    }
+                                    img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                                    img.style.height = 'auto'
+                                } else {
+                                    if (img.scale < 100) {
+                                        img.scale = 100
+                                    } else if (img.scale > 600) {
+                                        img.scale = 600
+                                    }
+                                    if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                        img.style.width = `${ img.scale }vw`
+                                        img.style.height = 'auto'
+                                        img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
+                                    } else {
+                                        img.style.width = 'auto'
+                                        img.style.height = `${ img.scale }vh`
+                                        img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
+                                    }
+                                }
+                                if (img.offsetHeight > window.innerHeight) {
+                                    img.style.top = 0
+                                    if (img.style.transform !== 'unset') {
+                                        img.style.transform = 'unset'
+                                    }
+                                } else if (img.style.transform !== '') {
+                                    img.style.top = ''
+                                    img.style.transform = ''
+                                }
+                            }, 8 )()
+                            return
                         }
-                    })
-                    figure.classList.add('full-screen')
-                    window.$claudia.disableScroll()
-                }
-            })
+
+                        img.translateY += e.deltaY * 100 / window.innerHeight
+                        if (img.translateY > img.scale) {
+                            img.translateY = img.scale
+                        }
+                        if (img.translateY < 0) {
+                            img.translateY = 0
+                        }
+                        figure.scrollTop = img.translateY / 100 * window.innerHeight
+                    }
+                })
+
+                figure.addEventListener('click', function() {
+                    if (figure.classList.contains('full-screen')) {
+                        figure.classList.remove('full-screen')
+                        img.style.transform = ''
+                        img.style.width = ''
+                        img.style.height = ''
+                        img.style.maxWidth = ''
+                        img.style.maxHeight = ''
+                        img.style.top = ''
+                        img.sizes = '(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
+                        window.$claudia.enableScroll()
+                    } else {
+                        img.scale = 100
+                        img.translateY = 0
+                        figure.querySelectorAll('img').forEach(function(img) {
+                            img.style.maxWidth = 'unset'
+                            img.style.maxHeight = 'unset'
+                            if (img.offsetWidth >= 2 * img.offsetHeight) {
+                                figure.classList.add('panorama')
+                                img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
+                            } else {
+                                img.sizes = 'max(100vw, 100vh)'
+                                if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                    img.style.width = '100vw'
+                                    img.style.height = 'auto'
+                                } else {
+                                    img.style.width = 'auto'
+                                    img.style.height = '100vh'
+                                }
+                            }
+                        })
+                        figure.classList.add('full-screen')
+                        window.$claudia.disableScroll()
+                    }
+                })
+            }
         })
     }
 }
