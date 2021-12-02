@@ -247,8 +247,7 @@ var $posts = {
                             } else if (img.scale > 200) {
                                 img.scale = 200
                             }
-                            img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
-                            img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                            img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
                             img.style.height = 'auto'
                         } else {
                             if (img.scale < 100) {
@@ -256,13 +255,14 @@ var $posts = {
                             } else if (img.scale > 600) {
                                 img.scale = 600
                             }
-                            img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
                             if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
                                 img.style.width = `${ img.scale }vw`
                                 img.style.height = 'auto'
+                                img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
                             } else {
                                 img.style.width = 'auto'
                                 img.style.height = `${ img.scale }vh`
+                                img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
                             }
                         }
                         if (img.offsetHeight > window.innerHeight) {
@@ -290,8 +290,7 @@ var $posts = {
                                 } else if (img.scale > 200) {
                                     img.scale = 200
                                 }
-                                img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
-                                img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                                img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
                                 img.style.height = 'auto'
                             } else {
                                 if (img.scale < 100) {
@@ -299,13 +298,14 @@ var $posts = {
                                 } else if (img.scale > 600) {
                                     img.scale = 600
                                 }
-                                img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
                                 if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
                                     img.style.width = `${ img.scale }vw`
                                     img.style.height = 'auto'
+                                    img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
                                 } else {
                                     img.style.width = 'auto'
                                     img.style.height = `${ img.scale }vh`
+                                    img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
                                 }
                             }
                             if (img.offsetHeight > window.innerHeight) {
