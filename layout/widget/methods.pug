@@ -23,13 +23,11 @@
             ) {
                 const prefix = imageUrl.slice(0, -5);
                 return prefix + 'wide10k 10000w, ' +
-                    prefix + 'wide6k 6000w, ' +
+                    prefix + 'wide6k 6500w, ' +
                     prefix + 'wide4k 4000w, ' +
-                    prefix + 'wide 2400w, ' +
-                    prefix + 'larger 1600w, ' +
-                    prefix + 'large 1200w, ' +
-                    prefix + 'medium 800w, ' +
-                    prefix + 'small 400w'
+                    prefix + 'wide 2600w, ' +
+                    prefix + 'large 1400w, ' +
+                    prefix + 'medium 800w'
             } else if ( imageUrl.slice(0, 26) === 'https://videodelivery.net/' ) {
                 const w2000 = new URL(imageUrl)
                 w2000.searchParams.set('width', '2000')
