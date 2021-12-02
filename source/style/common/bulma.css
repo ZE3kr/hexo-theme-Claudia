@@ -11680,9 +11680,15 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   }
 }
 
+@media screen and (min-width: 1408px) {
+  .post-content img {
+    max-height: 1002px;
+  }
+}
+
 @media screen and (min-width: 1805px) {
   .post-content img {
-    max-height: 1263px;
+    max-height: 1300px;
   }
 }
 

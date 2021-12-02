@@ -341,7 +341,7 @@ var $posts = {
                     img.style.maxWidth = ''
                     img.style.maxHeight = ''
                     img.style.top = ''
-                    img.sizes = '(min-width: 1805px) 1300px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
+                    img.sizes = '(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
                     window.$claudia.enableScroll()
                 } else {
                     img.scale = 100
