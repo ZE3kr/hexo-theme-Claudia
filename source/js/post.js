@@ -204,7 +204,6 @@ var $posts = {
             }, 100)
         }
 
-        var canScroll = true
         window.addEventListener('load', function() {
             setTimeout(postScroll, 500)
         })
@@ -302,7 +301,6 @@ var $posts = {
                     img.style.height = ''
                     img.style.top = ''
                     img.sizes = '(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
-                    canScroll = true
                     window.$claudia.enableScroll()
                 } else {
                     img.scale = 100
@@ -324,7 +322,6 @@ var $posts = {
                         }
                     })
                     figure.classList.add('full-screen')
-                    canScroll = false
                     window.$claudia.disableScroll()
                 }
             })
