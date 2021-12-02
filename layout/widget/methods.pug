@@ -29,11 +29,13 @@
                     prefix + 'large 1500w, ' +
                     prefix + 'medium 800w'
             } else if ( imageUrl.slice(0, 26) === 'https://videodelivery.net/' ) {
-                const w1500 = new URL(imageUrl)
-                w1500.searchParams.set('width', '1500')
+                const w2000 = new URL(imageUrl)
+                w2000.searchParams.set('width', '2000')
+                const w1200 = new URL(imageUrl)
+                w1200.searchParams.set('width', '1200')
                 const w800 = new URL(imageUrl)
                 w800.searchParams.set('width', '800')
-                return w1500 + ' 1500w, ' + w800 + ' 800w'
+                return w2000 + ' 2000w, ' + w1200 + ' 1200w, ' + w800 + ' 800w'
             }
         }
         
