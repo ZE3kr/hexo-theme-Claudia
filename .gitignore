@@ -4,4 +4,3 @@ tmp
 .idea/
 /source/js/*.chunk.js
 /source/js/sdk*
-/source/js/client.js
