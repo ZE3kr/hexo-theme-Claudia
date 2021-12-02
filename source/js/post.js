@@ -244,15 +244,20 @@ var $posts = {
                     if (img.scale < 100) {
                         img.scale = 100
                     }
-                    var transform = `translateY(-50%) scale(${img.scale / 100})`
-                    if (transform !== img.style.transform) {
-                        img.style.transform = transform
+                    window.$claudia.throttle( function () {
                         if (img.offsetWidth >= 2 * img.offsetHeight) {
                             img.sizes = ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
                         } else {
                             img.sizes = (Math.max(img.offsetHeight, img.offsetWidth) * img.scale / 100).toFixed(0) + 'px'
                         }
-                    }
+                        if (img.offsetHeight * img.scale / 100 > window.innerHeight) {
+                            img.style.transform = `scale(${img.scale / 100})`
+                            img.style.top = 0
+                        } else {
+                            img.style.transform = `scale(${img.scale / 100})`
+                            img.style.top = `${ (window.innerHeight - img.offsetHeight * img.scale / 100)/2 }px`
+                        }
+                    }, 8 )()
                 }
             })
 
@@ -293,6 +298,9 @@ var $posts = {
                 if (figure.classList.contains('full-screen')) {
                     figure.classList.remove('full-screen')
                     img.style.transform = ''
+                    img.style.width = ''
+                    img.style.height = ''
+                    img.style.top = ''
                     img.sizes = '(min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
                     canScroll = true
                     window.$claudia.enableScroll()
@@ -306,6 +314,13 @@ var $posts = {
                             img.sizes = (window.innerHeight / img.offsetHeight * img.offsetWidth) + 'px'
                         } else {
                             img.sizes = 'max(100vw, 100vh)'
+                        }
+                        if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                            img.style.width = '100vw'
+                            img.style.height = 'auto'
+                        } else {
+                            img.style.width = 'auto'
+                            img.style.height = '100vh'
                         }
                     })
                     figure.classList.add('full-screen')
