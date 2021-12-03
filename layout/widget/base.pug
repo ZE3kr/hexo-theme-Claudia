@@ -33,8 +33,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="dns-prefetch" href= 'http://videodelivery.net/')
     link(rel="preconnect" href= 'https://videodelivery.net/')
     link(rel="preconnect" href= 'https://videodelivery.net/' crossorigin)
-    link(rel="dns-prefetch" href= 'http://matomo.tloxygen.com/')
-    link(rel="preconnect" href= 'https://matomo.tloxygen.com/')
     link(rel="dns-prefetch" href= 'http://utteranc.es/')
     link(rel="preconnect" href= 'https://utteranc.es/')
     link(rel="dns-prefetch" href= 'http://api.utteranc.es/')
@@ -70,7 +68,7 @@ html(lang=config.language class= `appearance-${ appearance }`)
     script(src= url_for("/js/sdk.latest.js"))
     block script
     noscript
-      img(referrerpolicy="no-referrer-when-downgrade" src=`https://matomo.tloxygen.com/matomo.php?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
+      img(referrerpolicy="no-referrer-when-downgrade" src=`/api/b?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
     script.
       var _paq = window._paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -79,10 +77,10 @@ html(lang=config.language class= `appearance-${ appearance }`)
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
-          var u="https://matomo.tloxygen.com/";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
+          var u="/api/";
+          _paq.push(['setTrackerUrl', u+'b']);
           _paq.push(['setSiteId', '3']);
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+          g.async=true; g.src=u+'a'; s.parentNode.insertBefore(g,s);
         })();
 
