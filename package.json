@@ -2,11 +2,8 @@
   "name": "hexo-theme-claudia",
   "version": "2.0.0",
   "peerDependencies": {
-    "hexo": "^5.0.2",
-    "hexo-renderer-pug": "^1.0.0",
+    "hexo": "^5.4.1",
+    "hexo-renderer-pug": "^3.0.0",
     "hexo-renderer-sass": "git+https://github.com/ZE3kr/hexo-renderer-sass.git"
-  },
-  "scripts": {
-    "install": "curl -s 'https://embed.videodelivery.net/embed/sdk-iframe-integration.fla9.latest.js' | sed 's/https:\/\/embed.videodelivery.net\/embed\//\/js\//g' > ./source/js/sdk-iframe-integration.fla9.latest.js && curl -s 'https://embed.videodelivery.net/embed/sdk.latest.js' | sed 's/https:\/\/embed.videodelivery.net\/embed\//\/js\//g' > ./source/js/sdk.latest.js && curl -s 'https://embed.videodelivery.net/embed/4.3aea8535.chunk.js' -o ./source/js/4.3aea8535.chunk.js && curl -s 'https://embed.videodelivery.net/embed/5.ce6f7004.chunk.js' -o ./source/js/5.ce6f7004.chunk.js && curl -s 'https://embed.videodelivery.net/embed/6.4c6e1fea.chunk.js' -o ./source/js/6.4c6e1fea.chunk.js && curl -s 'https://embed.videodelivery.net/embed/7.9bfc254e.chunk.js' -o ./source/js/7.9bfc254e.chunk.js"
   }
 }
