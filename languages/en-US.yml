@@ -25,6 +25,8 @@ recent: 'Recent'
 read_more: 'Read more'
 user_name: 'User name'
 click_back_to_the_top: 'Click back to the top'
+blog: 'Blog'
+portfolio: 'Portfolio'
 
 search_input_placeholder: 'Search everything..'
 
