@@ -73,15 +73,12 @@ html(lang=config.language class= `appearance-${ appearance }`)
       img(referrerpolicy="no-referrer-when-downgrade" src=`/api/b?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
     script.
       var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(["setCookieDomain", "*.guozeyu.com"]);
-        _paq.push(["setDomains", ["*.guozeyu.com"]]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
           var u="/api/";
           _paq.push(['setTrackerUrl', u+'a']);
-          _paq.push(['setSiteId', '3']);
+          _paq.push(['setSiteId', '#{theme.piwik}']);
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.async=true; g.src=u+'a.js'; s.parentNode.insertBefore(g,s);
         })();
