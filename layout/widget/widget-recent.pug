@@ -20,8 +20,8 @@ block content
                         section.is-flex-grow-2
                             p.has-text-weight-semibold.recent-post-ellipses(style= "line-height: 20px; font-size: 14px")
                                 a(href=url_for(post.path) target="_top")
-                                    if post.categories.toArray().find(category => category.name === '视频')
-                                        i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc; margin-right: 5px")="视频"
+                                    if post.categories.toArray().find(category => category.name === 'Movies')
+                                        i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc; margin-right: 5px")="Movies"
                                     span= post.title || __('title')
                             if post.date
                                 time(datetime=post.date.toJSON()).has-text-weight-semibold.has-text-grey

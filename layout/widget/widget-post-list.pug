@@ -25,11 +25,11 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                         a.post-cover-link.has-text-centered.skeleton(href= postURL)
                                             img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                             section.content.post-card-content.p-4.pb-5
-                                if post.categories.toArray().find(category => category.name === '视频') || (post.tags && post.tags.length > 0)
+                                if post.categories.toArray().find(category => category.name === 'Movies') || (post.tags && post.tags.length > 0)
                                     header
-                                        if post.categories.toArray().find(category => category.name === '视频')
-                                            a(href= url_for(`/categories/视频/`))
-                                                i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")="视频"
+                                        if post.categories.toArray().find(category => category.name === 'Movies')
+                                            a(href= url_for(`/categories/Movies/`))
+                                                i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")="Movies"
                                         each tag in post.tags.toArray()
                                             a(href= url_for(`/tags/${tag.name}`))
                                                 i.tag.post-item-tag= tag.name

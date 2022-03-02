@@ -61,7 +61,7 @@ block content
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
                 article.mt-2.post-content!= parseContent(page.content)
                 if page.video
-                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow") 下载视频
+                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow") Download Movie
                 section.jump-container.is-flex.is-justify-content-space-between.my-6
                     // em is empty placeholder
                     if page.prev
