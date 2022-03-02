@@ -29,7 +29,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                     header
                                         if post.categories.toArray().find(category => category.name === 'Movies')
                                             a(href= url_for(`/categories/Movies/`))
-                                                i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")="Movies"
+                                                i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")="Movie"
                                         each tag in post.tags.toArray()
                                             a(href= url_for(`/tags/${tag.name}`))
                                                 i.tag.post-item-tag= tag.name
