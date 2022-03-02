@@ -40,7 +40,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                     time.has-text-grey(datetime=post.date.toJSON())= date(post.date, date_format)
                                 p.is-flex-grow-2.mt-2
                                     = truncate( strip_html(postContent), {length: 360, omission: '..'} )
-                                a.button.is-default.mt-2.has-text-weight-semibold(href= postURL)= post.video ? '播放' : __('read_more')
+                                a.button.is-default.mt-2.has-text-weight-semibold(href= postURL)= post.video ? 'Play with Sound' : __('read_more')
                     -
                         // turnPage
                         var paginatorResult = paginator({
