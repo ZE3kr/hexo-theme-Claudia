@@ -4,10 +4,10 @@ block content
     include methods
     main.aside-card-container.recent-widget
         h3
-            a(href=url_for("/") target="_top")= theme.short
+            a(href=url_for(theme.widget_url ? theme.widget_url : "/") target="_top")= theme.short
         ul
             if site.posts.length > 0
-                each post in site.posts.sort('date', -1).limit(6).toArray()
+                each post in site.posts.sort('date', -1).toArray().filter(post => post.categories.toArray().find(category => theme.widget_filter ? category.name === widget_filter : true)).slice(0, 6)
                     li.is-flex
                         - var title = post.title || __('title')
                         // change to element replace image placeholder

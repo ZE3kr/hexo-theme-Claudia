@@ -24,6 +24,9 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="stylesheet" href= url_for('/style/base.css'))
     link(rel="stylesheet" href= url_for('/style/common/helper.css'))
     link(rel="canonical" href= currentUrl)
+    if page.languages
+      each url, lang in page.languages
+        link(rel="alternate" href= url hreflang= lang)
     link(rel="dns-prefetch" href= 'http://guozeyu.com/')
     link(rel="preconnect" href= 'https://guozeyu.com/')
     link(rel="dns-prefetch" href= 'http://ze3kr.com/')
