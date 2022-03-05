@@ -9,7 +9,7 @@ header.header-widget.is-flex-shrink-0.is-hidden-mobile
             if theme.menu
                 each url, label in theme.menu
                     h3.is-inline-block
-                        if label === '中文'
+                        if label === '简体中文'
                             if page.languages && page.languages['zh-CN']
                                 a(href= url_for(page.languages['zh-CN']) target="_top")= label
                             else if !page.title
