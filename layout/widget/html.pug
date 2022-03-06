@@ -36,3 +36,16 @@ html(lang=config.language class= `appearance-auto`)
   body.is-flex.is-flex-direction-column
     main.post-container
       block content
+
+    if config.language1 && config.language2 
+      script.
+        switch( (navigator.language || navigator.userLanguage || "").slice(0, 2).toLowerCase() ) {
+          case "#{config.language1}".slice(0, 2).toLowerCase():
+            document.querySelectorAll('span[lang="#{config.language1}"], i[lang="#{config.language1}"], a[lang="#{config.language1}"]').forEach(span => span.classList.remove('is-hidden'))
+            document.querySelectorAll('span[lang="#{config.language2}"], i[lang="#{config.language2}"], a[lang="#{config.language2}"]').forEach(span => span.classList.add('is-hidden'))
+            break;
+          case "#{config.language2}".slice(0, 2).toLowerCase():
+            document.querySelectorAll('span[lang="#{config.language2}"], i[lang="#{config.language2}"], a[lang="#{config.language2}"]').forEach(span => span.classList.remove('is-hidden'))
+            document.querySelectorAll('span[lang="#{config.language1}"], i[lang="#{config.language1}"], a[lang="#{config.language1}"]').forEach(span => span.classList.add('is-hidden'))
+            break;
+        }
