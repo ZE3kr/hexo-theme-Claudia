@@ -29,18 +29,39 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                     header
                                         if post.categories.toArray().find(category => category.name === 'Movies')
                                             a(href= url_for(`/categories/Movies/`))
-                                                i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")="Movie"
+                                                i.tag.post-item-tag(lang=config.language1 style="color: #3273dc; border-color: #3273dc")= __('movie')
+                                                i.tag.post-item-tag.is-hidden(lang=config.language2 style="color: #3273dc; border-color: #3273dc")= __(`${config.language2}.movie`)
                                         each tag in post.tags.toArray()
                                             a(href= url_for(`/tags/${tag.name}`))
-                                                i.tag.post-item-tag= tag.name
+                                                if __(`${config.language2}.${tag.name}`) != `${config.language2}.${tag.name}`
+                                                    i.tag.post-item-tag(lang=config.language1)= tag.name
+                                                    i.tag.post-item-tag.is-hidden(lang=config.language2)= __(`${config.language2}.${tag.name}`)
+                                                else
+                                                    i.tag.post-item-tag= tag.name
+
                                 if post.title
                                     h2.mt-4.mb-0.is-family-serif
-                                        a(href= postURL)= post.title
+                                        if post.title_cn
+                                            a(href=postURL lang="en-US")= post.title
+                                            a.is-hidden(href=postURL lang="zh-CN")= post.title_cn
+                                        else
+                                            a(href=postURL)= post.title
                                 if post.date
                                     time.has-text-grey(datetime=post.date.toJSON())= date(post.date, date_format)
                                 p.is-flex-grow-2.mt-2
                                     = truncate( strip_html(postContent), {length: 360, omission: '..'} )
-                                a.button.is-default.mt-2.has-text-weight-semibold(href= postURL)= post.video ? 'Play with Sound' : __('read_more')
+                                if post.categories.toArray().find(category => category.name === 'Portfolio')
+                                    if post.video
+                                        a.button.is-default.mt-2.has-text-weight-semibold(href=postURL lang=config.language1)= __('play')
+                                        a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=postURL lang=config.language2)= __(`${config.language2}.play`)
+                                    else
+                                        a.button.is-default.mt-2.has-text-weight-semibold(href=postURL lang=config.language1)= __('read_more')
+                                        a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=postURL lang=config.language2)= __(`${config.language2}.read_more`)
+                                else
+                                    if post.video
+                                        a.button.is-default.mt-2.has-text-weight-semibold(href=postURL)= __('play')
+                                    else
+                                        a.button.is-default.mt-2.has-text-weight-semibold(href=postURL)= __('read_more')
                     -
                         // turnPage
                         var paginatorResult = paginator({

@@ -31,3 +31,18 @@ portfolio: 'Portfolio'
 search_input_placeholder: 'Search everything..'
 
 friend: 'Links'
+play: Play with Sound
+movie: Movie
+download_movie: Download Movie
+
+zh-CN:
+  play: 取消静音播放
+  movie: 影片
+  download_movie: 下载影片
+  read_more: 更多
+  # Tags
+  Aerial: 航拍
+  Time Lapse: 间隔拍摄
+  Panorama: 全景
+  Telephoto: 长焦
+  Macro: 微距

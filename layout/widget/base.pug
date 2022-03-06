@@ -76,13 +76,25 @@ html(lang=config.language class= `appearance-${ appearance }`)
       img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
     script.
       var _paq = window._paq = window._paq || [];
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-          var u="/api/";
-          _paq.push(['setTrackerUrl', u+'a']);
-          _paq.push(['setSiteId', '#{theme.piwik}']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'a.js'; s.parentNode.insertBefore(g,s);
-        })();
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="/api/";
+        _paq.push(['setTrackerUrl', u+'a']);
+        _paq.push(['setSiteId', '#{theme.piwik}']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'a.js'; s.parentNode.insertBefore(g,s);
+      })();
 
+    if config.language1 && config.language2 
+      script.
+        switch( (navigator.language || navigator.userLanguage || "").slice(0, 2).toLowerCase() ) {
+          case "#{config.language1}".slice(0, 2).toLowerCase():
+            document.querySelectorAll('span[lang="#{config.language1}"], i[lang="#{config.language1}"], a[lang="#{config.language1}"]').forEach(span => span.classList.remove('is-hidden'))
+            document.querySelectorAll('span[lang="#{config.language2}"], i[lang="#{config.language2}"], a[lang="#{config.language2}"]').forEach(span => span.classList.add('is-hidden'))
+            break;
+          case "#{config.language2}".slice(0, 2).toLowerCase():
+            document.querySelectorAll('span[lang="#{config.language2}"], i[lang="#{config.language2}"], a[lang="#{config.language2}"]').forEach(span => span.classList.remove('is-hidden'))
+            document.querySelectorAll('span[lang="#{config.language1}"], i[lang="#{config.language1}"], a[lang="#{config.language1}"]').forEach(span => span.classList.add('is-hidden'))
+            break;
+        }

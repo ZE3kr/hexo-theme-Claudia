@@ -55,13 +55,24 @@ block content
                     if page.tags && page.tags.length > 0
                         each tag in page.tags.toArray()
                             a(href= url_for(`/tags/${tag.name}`))
-                                i.tag.post-item-tag= tag.name
-                h1.mt-0.mb-1.is-family-serif#postTitle= page.title
+                                if __(`${config.language2}.${tag.name}`) != `${config.language2}.${tag.name}`
+                                    i.tag.post-item-tag
+                                        span(lang=config.language1)= tag.name
+                                        span.is-hidden(lang=config.language2)= __(`${config.language2}.${tag.name}`)
+                                else
+                                    i.tag.post-item-tag= tag.name
+                if page.title_cn
+                    h1.mt-0.mb-1.is-family-serif#postTitle
+                        span(lang="en-US")= page.title
+                        span.is-hidden(lang="zh-CN")= page.title_cn
+                else
+                    h1.mt-0.mb-1.is-family-serif#postTitle= page.title
                 if page.date
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
                 article.mt-2.post-content!= parseContent(page.content)
                 if page.video
-                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow") Download Movie
+                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
+                    a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
                 section.jump-container.is-flex.is-justify-content-space-between.my-6
                     // em is empty placeholder
                     if page.prev

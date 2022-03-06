@@ -1,7 +1,12 @@
 include methods
     main.aside-card-container.recent-widget
         h3
-            a(href=url_for(theme.widget_url ? theme.widget_url : "/") target="_top")= theme.short
+            a(href=url_for(theme.widget_url ? theme.widget_url : "/") target="_top")
+                if theme.short_cn
+                    span(lang="en-US")= theme.short
+                    span.is-hidden(lang="zh-CN")= theme.short_cn
+                else
+                    span= theme.short
         ul
             if site.posts.length > 0
                 each post in (theme.widget_filter ? site.categories.findOne({name: theme.widget_filter}).posts : site.posts).sort('date', -1).toArray().slice(0, 6)
@@ -18,8 +23,13 @@ include methods
                             p.has-text-weight-semibold.recent-post-ellipses(style= "line-height: 20px; font-size: 14px")
                                 a(href=url_for(post.path) target="_top")
                                     if post.categories.toArray().find(category => category.name === 'Movies')
-                                        i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc; margin-right: 5px")="Movie"
-                                    span= post.title || __('title')
+                                        i.tag.post-item-tag(lang=config.language1 style="color: #3273dc; border-color: #3273dc")= __('movie')
+                                        i.tag.post-item-tag.is-hidden(lang=config.language2 style="color: #3273dc; border-color: #3273dc")= __(`${config.language2}.movie`)
+                                    if post.title_cn 
+                                        span(lang="en-US")= post.title || __('title')
+                                        span.is-hidden(lang="zh-CN")= post.title_cn
+                                    else
+                                        span= post.title || __('title')
                             if post.date
                                 time(datetime=post.date.toJSON()).has-text-weight-semibold.has-text-grey
                                     = date(post.date, date_format)

@@ -3,4 +3,8 @@ main.aside-card-container.tag-widget(class= is_tag() && 'is-in-tag-page')
     section
         each tag in site.tags.toArray()
             a(href= url_for(`/${tag.path}`))
-                span.tag.post-item-tag(style="margin-bottom: 5px;")= tag.name
+                if __(`${config.language2}.${tag.name}`) != `${config.language2}.${tag.name}`
+                    span.tag.post-item-tag(style="margin-bottom: 5px;" lang=config.language1)= tag.name
+                    span.tag.post-item-tag.is-hidden(style="margin-bottom: 5px;" lang=config.language2)= __(`${config.language2}.${tag.name}`)
+                else
+                    span.tag.post-item-tag(style="margin-bottom: 5px;")= tag.name
