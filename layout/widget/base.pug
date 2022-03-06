@@ -4,7 +4,7 @@
 - if (is_category()) pageTitle = 'Category: ' + page.category
 - if (is_month()) pageTitle += ': ' + page.month + '/' + page.year
 - if (is_year()) pageTitle += ': ' + page.year
-- var pageTitle = page.title
+- var pageTitle = page.category ? `${ _p('category') } · ${ page.category || __('all') }` : page.tag ? `${ _p('tag') } · ${ page.tag || __('all') }` : page.year ? `${ _p('archive') } · ${ page.year || __('all') }` : page.title
 - var appearance = theme.appearance ? theme.appearance : 'auto'
 - var currentUrl = url.slice(-11) === '/index.html' ? url.slice(0, -10) : url
 
