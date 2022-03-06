@@ -25,5 +25,16 @@ header.is-flex.header-widget.is-flex-shrink-0.is-align-items-center.is-justify-c
         if theme.menu
             each url, label in theme.menu
                 h3.is-inline-block
-                    a(href= url_for(url) target="_top")= label && _p(label.toLowerCase())
+                    if label === '简体中文'
+                        if page.languages && page.languages['zh-CN']
+                            a(href= url_for(page.languages['zh-CN']) target="_top")= label
+                        else if !page.title
+                            a(href= url_for(url) target="_top")= label
+                    else if label === 'English'
+                        if page.languages && page.languages['en-US']
+                            a(href= url_for(page.languages['en-US']) target="_top")= label
+                        else if !page.title
+                            a(href= url_for(url) target="_top")= label
+                    else
+                        a(href= url_for(url) target="_top")= label && _p(label.toLowerCase())
 
