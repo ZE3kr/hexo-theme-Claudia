@@ -87,7 +87,7 @@ block content
                         a.button.is-default(href= url_for(page.next.path) title= page.next.title)
                             span.has-text-weight-semibold= nextContent
                             i.iconfont.icon-next.ml-2.has-text-grey
-                if theme.comment_utteranc && theme.comment_utteranc.enable
+                if theme.comment_utteranc && theme.comment_utteranc.enable && (page.comments || typeof page.comments === "undefined")
                     article.mt-6.comment-container
                         script(
                             async
