@@ -2086,6 +2086,8 @@ header .container {
   top: 50%;
   transform: translateY(-50%);
   transform-origin: left top;
+  padding-top: unset!important;
+  height: 100vh;
 }
 .content figure.full-screen.panorama > :first-child {
   width: unset;
