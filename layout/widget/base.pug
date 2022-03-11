@@ -69,7 +69,7 @@ html(lang=config.language class= `appearance-${ appearance }`)
       div
         span!= theme.user && theme.user.footnotes
 
-    script(src= url_for("/js/hls.js"))
+    script(src= url_for("/js/hls.js") async)
     script(src= url_for("/js/sdk.latest.js"))
     block script
     noscript

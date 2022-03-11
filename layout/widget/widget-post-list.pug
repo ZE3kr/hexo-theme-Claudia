@@ -121,18 +121,22 @@ block append script
                             }
                             if (!video['data-loaded']) {
                                 video['data-loaded'] = true
-                                if (Hls.isSupported() && !video.canPlayType('application/x-mpegURL') && !video.canPlayType('application/dash+xml')) {
-                                    var hls = new Hls();
-                                    video['data-hls'] = hls;
-                                    // bind them together
-                                    hls.attachMedia(video);
-                                    // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
-                                    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                                        video.querySelectorAll('source[type="application/x-mpegURL"]').forEach( function (source) {
-                                            hls.loadSource(source.src)
-                                        })
-                                    });
+                                var runHls = function() {
+                                    if (Hls && Hls.isSupported() && !video.canPlayType('application/x-mpegURL') && !video.canPlayType('application/dash+xml')) {
+                                        var hls = new Hls();
+                                        video['data-hls'] = hls;
+                                        // bind them together
+                                        hls.attachMedia(video);
+                                        // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
+                                        hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                                            video.querySelectorAll('source[type="application/x-mpegURL"]').forEach( function (source) {
+                                                hls.loadSource(source.src)
+                                            })
+                                        });
+                                    }
                                 }
+                                window.addEventListener('load', runHls);
+                                runHls()
                             }
                             try {
                                 video.play()
