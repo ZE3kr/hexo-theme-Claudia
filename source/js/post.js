@@ -216,14 +216,14 @@ var $posts = {
                     if (url.searchParams.get('autoplay') !== 'true') {
                         var player = Stream(iframe)
                         player.addEventListener('play', () => {
-                            figure.classList.add('full-screen')
-                            window.$claudia.disableScroll()
-                            window.addEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
+                            // figure.classList.add('full-screen')
+                            // window.$claudia.disableScroll()
+                            // window.addEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
                         })
                         player.addEventListener('pause', () => {
-                            figure.classList.remove('full-screen')
-                            window.$claudia.enableScroll()
-                            window.removeEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
+                            // figure.classList.remove('full-screen')
+                            // window.$claudia.enableScroll()
+                            // window.removeEventListener('touchmove', window.$claudia.preventDefault, window.$claudia.wheelOpt)
                         })
                     }
                 }
@@ -373,6 +373,138 @@ var $posts = {
                 })
             }
         })
+        // https://developer.matomo.org/guides/media-analytics/custom-player
+        window.matomoMediaAnalyticsAsyncInit = function () {
+            var MA = Matomo.MediaAnalytics;
+
+            function MyPlayer(node, mediaType) {
+                // in this class we track interactions with the player
+                // instance is created whenever a media for this player was found
+                if (node.hasPlayerInstance) {
+                    // prevent creating multiple trackers for the same media 
+                    // when scanning for media multiple times 
+                    return;
+                }
+
+                var player = Stream(iframe)
+
+                node.hasPlayerInstance = true;
+
+                // find the actual resource / URL of the video
+                var actualResource = MA.element.getAttribute(node, 'src');
+                // a user can overwrite the actual resource by defining a "data-matomo-resource" attribute. 
+                // the method `getMediaResource` will detect whether such an attribute was set 
+                var resource = MA.element.getMediaResource(node, actualResource);
+
+                // create an instance of the media tracker. 
+                // Make sure to replace myPlayerName with your player name.
+                var tracker = new MA.MediaTracker('cloudflareStream', mediaType, resource);
+
+                // for video you should detect the width, height, and fullscreen usage, if possible
+                tracker.setWidth(node.clientWidth);
+                tracker.setHeight(node.clientHeight);
+                tracker.setFullscreen(MA.element.isFullscreen(node));
+
+                // the method `getMediaTitle` will try to get a media title from a
+                // "data-matomo-title", "title" or "alt" HTML attribute. Sometimes it might be possible
+                // to retrieve the media title directly from the video or audio player
+                var caption = node.parentElement.parentElement.querySelector('caption')
+                caption = caption && caption.innerText
+                var title = caption || MA.element.getMediaTitle(node);
+                tracker.setMediaTitle(title);
+
+                // some media players let you already detect the total length of the video 
+                tracker.setMediaTotalLengthInSeconds(player.duration);
+
+                var useCapture = true;
+
+
+                player.addEventListener('play', function() {
+                    // notify the tracker the media is now playing
+                    tracker.play();
+
+                }, useCapture);
+
+
+                player.addEventListener('pause', function() {
+                    // notify the tracker the media is now paused
+                    tracker.pause();
+                }, useCapture);
+
+
+                player.addEventListener('ended', function() { 
+                    // notify the tracker the media is now finished
+                    tracker.finish(); 
+                }, useCapture);
+
+
+                player.addEventListener('timeupdate', function() {
+                    // notify the tracker the media is still playing
+
+                    // we update the current made progress (time position) and duration of 
+                    // the media. Not all players might give you that information
+                    tracker.setMediaProgressInSeconds(node.currentTime);
+                    tracker.setMediaTotalLengthInSeconds(node.duration);
+
+                    // it is important to call the tracker.update() method regularly while the 
+                    // media is playing. If this method is not called eg every X seconds no 
+                    // updated data will be tracked. 
+                    // The method itself will not actually send a tracking request whenever it 
+                    // is called. Instead it will make sure to respect the set ping interval and
+                    // eg only send a tracking request every 5 seconds.
+                    tracker.update();
+
+                }, useCapture);
+
+
+                player.addEventListener('seeking', function() {
+                    // "seekStart" is needed when the player is seeking or buffering. 
+                    // It will stop the timer that tracks for how long the media has been played.
+                    tracker.seekStart(); 
+                }, true);
+
+
+                player.addEventListener('seeked', function() {
+                    // we update the current made progress (time position) and duration of 
+                    // the media. Not all players might give you that information
+                    tracker.setMediaProgressInSeconds(node.currentTime);
+                    tracker.setMediaTotalLengthInSeconds(node.duration);
+
+                    // "seekFinish" is needed when the player has finished seeking or buffering. 
+                    // It will start the timer again that tracks for how long the media has been played.
+                    tracker.seekFinish();
+                }, useCapture);
+
+
+                // for videos it might be useful to listen to the resize event to detect a 
+                // changed video width or when the video has gone fullscreen
+                window.addEventListener('resize', function () {
+                    tracker.setWidth(node.clientWidth);
+                    tracker.setHeight(node.clientHeight);
+                    tracker.setFullscreen(MA.element.isFullscreen(node));
+                }, useCapture);
+
+
+                // here we make sure to send an initial tracking request for this media. 
+                // This basically tracks an impression for this media. 
+                tracker.trackUpdate();
+            }
+            MyPlayer.scanForMedia = function(documentOrElement) {
+                // called whenever it is needed to scan the entire document 
+                // or when a certain element area is scanned for new videos or audio
+                documentOrElement.querySelectorAll('figure > div > iframe').forEach(function(video) {
+                    // for each of the medias found, create an instance of your player as long as the media is 
+                    // not supposed to be ignored via a "data-matomo-ignore" attribute
+                    if (!MA.element.isMediaIgnored(video)) {
+                        new MyPlayer(video, MA.mediaType.VIDEO); 
+                        // there is also a MA.mediaType.AUDIO constant if you want to track audio
+                    }
+                })
+            };
+
+            // adding the newly created player to the Media Analytics tracker
+            MA.addPlayer('cloudflareStream', MyPlayer);
+        };
     }
 }
 
