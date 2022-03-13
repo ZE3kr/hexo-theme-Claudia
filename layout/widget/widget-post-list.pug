@@ -1,7 +1,7 @@
 include methods
 
 article.post-container.is-flex.is-justify-content-center.section.container.pt-4.px-2
-        div.columns.is-variable.is-1-tablet.is-3-desktop-only.is-2-widescreen.is-full-width
+        div.columns.is-variable.is-1-tablet.is-3-desktop-only.is-2-widescreen.is-full-width#columns
             section.column
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()
@@ -49,7 +49,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                 if post.date
                                     time.has-text-grey(datetime=post.date.toJSON())= date(post.date, date_format)
                                 p.is-flex-grow-2.mt-2
-                                    = truncate( strip_html(postContent), {length: 360, omission: '..'} )
+                                    != truncate( strip_html(postContent), {length: 360, omission: '..'} )
                                 if post.categories.toArray().find(category => category.name === 'Portfolio')
                                     if post.video
                                         a.button.is-default.mt-2.has-text-weight-semibold(href=postURL lang=config.language1)= __('play')

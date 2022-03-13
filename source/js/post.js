@@ -248,9 +248,49 @@ var $posts = {
                     if (figure.classList.contains('full-screen') && e.scale !== 1) {
                         e.preventDefault()
                         img.scale = e.scale * img.scaleBase
-                        window.$claudia.throttle( function () {
+                        if (img.offsetWidth >= 2 * img.offsetHeight) {
+                            var min = 100 * img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                            if (img.scale < min) {
+                                img.scale = min
+                            } else if (img.scale > 200) {
+                                img.scale = 200
+                            }
+                            img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
+                            img.style.height = 'auto'
+                        } else {
+                            if (img.scale < 100) {
+                                img.scale = 100
+                            } else if (img.scale > 600) {
+                                img.scale = 600
+                            }
+                            if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
+                                img.style.width = `${ img.scale }vw`
+                                img.style.height = 'auto'
+                                img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
+                            } else {
+                                img.style.width = 'auto'
+                                img.style.height = `${ img.scale }vh`
+                                img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
+                            }
+                        }
+                        if (img.offsetHeight > window.innerHeight) {
+                            img.style.top = 0
+                        } else {
+                            img.style.top = `${ (window.innerHeight - img.offsetHeight)/2 }px`
+                        }
+                        if (img.style.transform !== 'unset') {
+                            img.style.transform = 'unset'
+                        }
+                    }
+                })
+
+                figure.addEventListener(window.$claudia.wheelEvent, function(e) {
+                    if (figure.classList.contains('full-screen')) {
+                        if (e.ctrlKey && e.deltaY !== 0) {
+                            img.scale -= e.deltaY
+                            figure.scrollLeft -= e.deltaY * window.innerWidth / 200
                             if (img.offsetWidth >= 2 * img.offsetHeight) {
-                                var min = 100 * img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
+                                var min = img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
                                 if (img.scale < min) {
                                     img.scale = min
                                 } else if (img.scale > 200) {
@@ -276,57 +316,13 @@ var $posts = {
                             }
                             if (img.offsetHeight > window.innerHeight) {
                                 img.style.top = 0
-                            } else {
-                                img.style.top = `${ (window.innerHeight - img.offsetHeight)/2 }px`
-                            }
-                            if (img.style.transform !== 'unset') {
-                                img.style.transform = 'unset'
-                            }
-                        }, 8 )()
-                    }
-                })
-
-                figure.addEventListener(window.$claudia.wheelEvent, function(e) {
-                    if (figure.classList.contains('full-screen')) {
-                        if (e.ctrlKey && e.deltaY !== 0) {
-                            img.scale -= e.deltaY
-                            figure.scrollLeft -= e.deltaY * window.innerWidth / 200
-                            window.$claudia.throttle( function () {
-                                if (img.offsetWidth >= 2 * img.offsetHeight) {
-                                    var min = img.offsetHeight / img.offsetWidth * window.innerWidth / window.innerHeight
-                                    if (img.scale < min) {
-                                        img.scale = min
-                                    } else if (img.scale > 200) {
-                                        img.scale = 200
-                                    }
-                                    img.sizes = img.style.width = `${ ((window.innerHeight / img.offsetHeight * img.offsetWidth) * img.scale / 100).toFixed(0) }px`
-                                    img.style.height = 'auto'
-                                } else {
-                                    if (img.scale < 100) {
-                                        img.scale = 100
-                                    } else if (img.scale > 600) {
-                                        img.scale = 600
-                                    }
-                                    if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
-                                        img.style.width = `${ img.scale }vw`
-                                        img.style.height = 'auto'
-                                        img.sizes = (window.innerWidth * img.scale / 100).toFixed(0) + 'px'
-                                    } else {
-                                        img.style.width = 'auto'
-                                        img.style.height = `${ img.scale }vh`
-                                        img.sizes = (window.innerHeight * img.scale / 100).toFixed(0) + 'px'
-                                    }
+                                if (img.style.transform !== 'unset') {
+                                    img.style.transform = 'unset'
                                 }
-                                if (img.offsetHeight > window.innerHeight) {
-                                    img.style.top = 0
-                                    if (img.style.transform !== 'unset') {
-                                        img.style.transform = 'unset'
-                                    }
-                                } else if (img.style.transform !== '') {
-                                    img.style.top = ''
-                                    img.style.transform = ''
-                                }
-                            }, 8 )()
+                            } else if (img.style.transform !== '') {
+                                img.style.top = ''
+                                img.style.transform = ''
+                            }
                             return
                         }
 

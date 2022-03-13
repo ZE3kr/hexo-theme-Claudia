@@ -13,26 +13,78 @@ style.
         z-index: 2;
 
         width: 100%;
-        height: 0;
-        max-height: 550px;
+        height: auto;
+        max-height: 0;
 
         overflow: auto;
         box-sizing: border-box;
 
-        background: var(--top-bar-bg-color);
+        background: var(--second-bg-color);
         backdrop-filter: blur(var(--backdropFilter));
         -webkit-backdrop-filter: blur(var(--backdropFilter));
 
         border-bottom-left-radius: var(--borderRadius);
         border-bottom-right-radius: var(--borderRadius);
         box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+
+        transition: max-height 500ms;
+        margin: -1px;
+        width: calc(100% + 2px);
     }
 
     .search-widget .search-content a:hover h5 {
         color: #3273dc!important;
     }
 
-main.aside-card-container.search-widget.is-relative
+    .search-widget {
+        transition-property: width, transform;
+        transition-duration: 500ms;
+        z-index: 2;
+        width: 100%;
+    }
+
+    .search-widget.focus-within .search-content {
+        border: 1px solid var(--border-line-color);
+    }
+
+    @media screen and (min-width: 769px) {
+        .search-widget:focus-within, .search-widget.focus-within {
+            width: calc(100vw - 24px);
+            transform: translateX(calc((16px - 100vw)/3*2));
+        }
+
+        .columns section.column {
+            margin-top: 0;
+            transition: margin-top 500ms;
+        }
+
+        .columns:focus-within section.column, .columns.focus-within section.column {
+            margin-top: 61px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .search-widget:focus-within, .search-widget.focus-within {
+            width: 920px;
+            transform: translateX(-629.33px);
+        }
+    }
+
+    @media screen and (min-width: 1216px) {
+        .search-widget:focus-within, .search-widget.focus-within {
+            width: 1120px;
+            transform: translateX(-852px);
+        }
+    }
+
+    @media screen and (min-width: 1408px) {
+        .search-widget:focus-within, .search-widget.focus-within {
+            width: 1312px;
+            transform: translateX(-996px);
+        }
+    }
+
+main.aside-card-container.search-widget.is-relative#searchContainer
     label(for="searchInput")
         div#searchButton.is-flex.px-4
                 i.iconfont.icon--search1.mr-1
@@ -41,20 +93,29 @@ main.aside-card-container.search-widget.is-relative
 
 script.
     var searchDatabase = []
+    var columnsEl = document.getElementById('columns')
+    var searchContainerEl = document.getElementById('searchContainer')
     var searchInputEl = document.getElementById('searchInput')
     var searchButtonEl = document.getElementById('searchButton')
     var searchResultEl = document.getElementById('searchContent')
+
+    var matomoTrack = $claudia.throttle(function (e) {
+        window._paq && _paq.push(e)
+    }, 500)
 
     searchInputEl.oninput = function (evt) {
         var searchValue = evt.srcElement.value
         var haveSearchValue = Boolean(searchValue.trim())
         if (!haveSearchValue) {
-            searchResultEl.style.height = 0
-            searchResultEl.innerHTML = null
+            searchResultEl.style.maxHeight = 0
+            searchContainerEl.classList.remove("focus-within")
+            columnsEl && columnsEl.classList.remove("focus-within")
             return
         }
 
+
         var searchResults = searching(searchValue)
+        matomoTrack(['trackSiteSearch', searchValue, null, searchResults.length])
 
         if (searchResults.length > 0) {
             renderSearchResults(searchResults)
@@ -72,7 +133,7 @@ script.
 
             title.className = 'mb-1'
             title.innerText = item.title
-            content.innerText = item.content
+            content.innerHTML = item.content
 
             link.href = item.link
             link.appendChild(title)
@@ -83,7 +144,9 @@ script.
         })
 
         searchResultEl.appendChild(fragment)
-        searchResultEl.style.height = 'auto'
+        searchResultEl.style.maxHeight = '550px'
+        searchContainerEl.classList.add("focus-within")
+        columnsEl && columnsEl.classList.add("focus-within")
     }
 
     function searching(inputText) {
@@ -99,7 +162,8 @@ script.
                 var title = entry.getElementsByTagName('title')[0].textContent
                 var link = entry.getElementsByTagName('link')[0].getAttribute('href')
                 var contentWithTags = entry.getElementsByTagName('content')[0].textContent
-                var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+                var content = contentWithTags.trim().replace(/<[^>]+>/g, '')
+                var rawContent = content.toLowerCase()
 
                 var LENGTH = 80
                 var finalContent = ''
@@ -116,7 +180,7 @@ script.
 
                 endIdx > contentLength && (endIdx = contentLength)
 
-                finalContent = rawContent.substring(startIdx, endIdx)
+                finalContent = content.substring(startIdx, endIdx)
 
                 if (title.indexOf(key) > -1 || searchResultIdx > -1) {
                     searchResults.push({
