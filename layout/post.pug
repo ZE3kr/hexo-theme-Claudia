@@ -109,4 +109,6 @@ block content
                         script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
 block script
     script(src= url_for("/js/post.js"))
-    script(async src= url_for("/js/highlight.pack.js"))
+    script(src= url_for("/js/highlight.pack.js"))
+    script.
+        hljs.highlightAll()
