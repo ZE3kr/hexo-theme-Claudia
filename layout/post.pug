@@ -3,7 +3,6 @@ block append head
     link(rel='stylesheet', href= url_for('/style/post.css'))
     if theme.highlight
         link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
-        script(src= url_for("/js/highlight.pack.js"))
 
     meta(name="description", content!= truncate( strip_html(page.content), {length: 360, omission: '..'} ))
     if theme.comment_valine && theme.comment_valine.enable
@@ -110,4 +109,4 @@ block content
                         script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
 block script
     script(src= url_for("/js/post.js"))
-
+    script(async src= url_for("/js/highlight.pack.js"))
