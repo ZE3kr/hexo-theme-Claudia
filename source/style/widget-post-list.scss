@@ -142,6 +142,7 @@ $coverBlurEffect: 20px;
       position: relative;
 
       width: $avatarSize;
+      max-width: calc(50vw - 51px);
       margin: 10px;
 
       // fix on safari will-change bugs
@@ -149,6 +150,21 @@ $coverBlurEffect: 20px;
 
       border-radius: 50%;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    }
+
+    @media screen and (max-width: 384px) {
+      .avatar {
+        display: none!important;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .avatar {
+        max-width: unset;
+        height: $avatarSize;
+        border: 7px solid var(--avatar-border-color);
+        margin: 10px 0 0;
+      }
     }
 
     .avatar-placeholder:after {
@@ -209,20 +225,9 @@ $coverBlurEffect: 20px;
     }
   }
 
-  @media screen and (max-width: 384px) {
-    .avatar {
-      display: none!important;
-    }
-  }
-
   @media screen and (min-width: 769px) {
     .profile-widget {
       flex-direction: column;
-    }
-    .avatar {
-      height: $avatarSize;
-      border: 7px solid var(--avatar-border-color);
-      margin: 10px 0 0;
     }
   }
 
