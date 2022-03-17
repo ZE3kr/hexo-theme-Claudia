@@ -253,7 +253,7 @@ var $posts = {
                                 const topPos = element.getBoundingClientRect().top + pageYOffset
                                 lastScroll = Date.now()
                                 window.scrollTo({ top: topPos })
-                        })
+                        }, 100)
                     }
                 }
     
