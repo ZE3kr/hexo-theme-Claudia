@@ -17,9 +17,9 @@ html(lang=config.language class= `appearance-${ appearance }`)
       each url, lang in page.languages
         link(rel="alternate" href= url hreflang= lang)
     if page.prev_link
-      link(rel="prev" href= page.prev_link)
+      link(rel="prev" href= url_for(page.prev_link))
     if page.next_link
-      link(rel="next" href= page.next_link)
+      link(rel="next" href= url_for(page.next_link))
     title= pageTitle ? `${ pageTitle } | ${ theme.short2 }` : theme.title
     meta(name="description" content= config.description || theme.user && theme.user.description)
     meta(name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover")
