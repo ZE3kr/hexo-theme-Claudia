@@ -12,7 +12,15 @@ doctype html
 html(lang=config.language class= `appearance-${ appearance }`)
   head
     meta(charset='UTF-8')
-    title= pageTitle ? `${ pageTitle } | ${ theme.short2 }` : theme.title 
+    link(rel="canonical" href= currentUrl)
+    if page.languages
+      each url, lang in page.languages
+        link(rel="alternate" href= url hreflang= lang)
+    if page.prev_link
+      link(rel="prev" href= page.prev_link)
+    if page.next_link
+      link(rel="next" href= page.next_link)
+    title= pageTitle ? `${ pageTitle } | ${ theme.short2 }` : theme.title
     meta(name="description" content= config.description || theme.user && theme.user.description)
     meta(name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover")
 
@@ -23,10 +31,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="stylesheet" href= url_for('/style/common/bulma.css'))
     link(rel="stylesheet" href= url_for('/style/base.css'))
     link(rel="stylesheet" href= url_for('/style/common/helper.css'))
-    link(rel="canonical" href= currentUrl)
-    if page.languages
-      each url, lang in page.languages
-        link(rel="alternate" href= url hreflang= lang)
     link(rel="dns-prefetch" href= 'http://guozeyu.com/')
     link(rel="preconnect" href= 'https://guozeyu.com/')
     link(rel="dns-prefetch" href= 'http://ze3kr.com/')
