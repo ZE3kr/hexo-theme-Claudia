@@ -6,9 +6,10 @@ block append head
 block content
     include widget/widget-post-list
         block sidebar
-            include widget/widget-search
-            if theme.widgets.includes('profile')
-                include widget/widget-profile
+            div(class= `${page.current === 1 ? 'is-hidden-mobile-and-portrait' : ''}`)
+                include widget/widget-search
+                if theme.widgets.includes('profile')
+                    include widget/widget-profile
             if theme.iframe
                 iframe(src= theme.iframe style="width: 100%; height: 446px; box-shadow: 0 6px 30px -10px rgba(0, 0, 0, 0.1)" loading="lazy")
             if theme.widget_filter

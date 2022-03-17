@@ -10668,8 +10668,24 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   }
 }
 
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .is-hidden-mobile-and-portrait {
+    display: none !important;
+  }
+}
+
 @media screen and (min-width: 769px), print {
   .is-hidden-tablet {
+    display: none !important;
+  }
+
+  .is-hidden-tablet-or-landscape {
+    display: none !important;
+  }
+}
+
+@media screen and (orientation: landscape), print {
+  .is-hidden-tablet-or-landscape {
     display: none !important;
   }
 }

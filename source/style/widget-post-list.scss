@@ -130,8 +130,9 @@ $coverBlurEffect: 20px;
   }
 
   .profile-widget {
-    min-height: 300px;
-    padding-bottom: 0;
+    // min-height: 300px;
+    // padding-bottom: 0;
+    justify-content: space-evenly;
 
     img {
       object-fit: cover;
@@ -141,15 +142,13 @@ $coverBlurEffect: 20px;
       position: relative;
 
       width: $avatarSize;
-      height: $avatarSize;
-      margin-top: 10px;
+      margin: 10px;
 
       // fix on safari will-change bugs
       z-index: 1;
 
       border-radius: 50%;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-      border: 7px solid var(--avatar-border-color);
     }
 
     .avatar-placeholder:after {
@@ -209,6 +208,24 @@ $coverBlurEffect: 20px;
       }
     }
   }
+
+  @media screen and (max-width: 384px) {
+    .avatar {
+      display: none!important;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    .profile-widget {
+      flex-direction: column;
+    }
+    .avatar {
+      height: $avatarSize;
+      border: 7px solid var(--avatar-border-color);
+      margin: 10px 0 0;
+    }
+  }
+
   .recent-widget {
     ul li {
       margin-bottom: 15px;

@@ -3,6 +3,10 @@ include methods
 article.post-container.is-flex.is-justify-content-center.section.container.pt-4.px-2
         div.columns.is-variable.is-1-tablet.is-3-desktop-only.is-2-widescreen.is-full-width#columns
             section.column
+                if page.current === 1
+                    div.is-hidden-tablet-or-landscape
+                        include widget-search
+                        include widget-profile    
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()
                         - var postURL = url_for(post.path)
