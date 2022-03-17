@@ -16,9 +16,9 @@ html(lang=config.language class= `appearance-${ appearance }`)
     if page.languages
       each url, lang in page.languages
         link(rel="alternate" href= url hreflang= lang)
-    if page.prev > 0
+    if typeof page.prev === number && page.prev > 0
       link(rel="prev" href= url_for(page.prev_link))
-    if page.next > 0
+    if typeof page.next === number && page.next > 0
       link(rel="next" href= url_for(page.next_link))
     title= pageTitle ? `${ pageTitle } | ${ theme.short2 }` : theme.title
     meta(name="description" content= config.description || theme.user && theme.user.description)
