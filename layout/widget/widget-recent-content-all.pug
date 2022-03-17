@@ -1,0 +1,30 @@
+include methods
+    main.aside-card-container.recent-widget
+        h3
+            a(href=url_for(theme.widget_url ? theme.widget_url : "/") target=target)= __('recent')
+        ul
+            if site.posts.length > 0
+                each post in site.posts.sort('date', -1).toArray().slice(0, 6)
+                    li.is-flex
+                        - var title = post.title || __('title')
+                        // change to element replace image placeholder
+                        - var backgroundColor = 'f5f5f5'
+                        - var uiAvatarURL = `background=${backgroundColor}&name=${title.slice(0, 2)}`
+                        - var imgURL = getThumbnail(post.cover || getPostCoverImg(post))
+                        img(src= imgURL || `https://ui-avatars.tloxygen.com/api/?${uiAvatarURL}` alt="cover" loading="lazy")
+                        //else
+                        //    div.post-img-placeholder
+                        section.is-flex-grow-2
+                            p.has-text-weight-semibold.recent-post-ellipses(style= "line-height: 20px; font-size: 14px")
+                                a(href=url_for(post.path) target=target)
+                                    if post.categories.toArray().find(category => category.name === 'Movies')
+                                        i.tag.post-item-tag(lang=config.language1 style="color: #3273dc; border-color: #3273dc")= __('movie')
+                                        i.tag.post-item-tag.is-hidden(lang=config.language2 style="color: #3273dc; border-color: #3273dc")= __(`${config.language2}.movie`)
+                                    if post.title_cn 
+                                        span(lang="en-US")= post.title || __('title')
+                                        span.is-hidden(lang="zh-CN")= post.title_cn
+                                    else
+                                        span= post.title || __('title')
+                            if post.date
+                                time(datetime=post.date.toJSON()).has-text-weight-semibold.has-text-grey
+                                    = date(post.date, date_format)

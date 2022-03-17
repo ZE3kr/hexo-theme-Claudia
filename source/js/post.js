@@ -97,12 +97,12 @@ var $posts = {
         }
     },
     catalogueHighlight: function() {
-        var directory = document.querySelectorAll('.toc a')
+        var directory = document.querySelectorAll('.toc-container .toc a')
         if (directory.length === 0) {
             return false
         }
 
-        var tocContainer = document.querySelector('.toc')
+        var tocContainer = document.querySelector('.toc-container .toc')
         return function() {
             var contentTocList = []
             var activeClassName = 'is-active'
@@ -129,10 +129,10 @@ var $posts = {
                     activeTopicEl = currentTopic
                 }
 
-                var beforeActiveEl = document.querySelector('.toc' + ' .' + activeClassName)
+                var beforeActiveEl = document.querySelector('.toc-container .toc' + ' .' + activeClassName)
                 beforeActiveEl && beforeActiveEl.classList.remove(activeClassName)
 
-                var selectTarget = '.toc a[href="#' + encodeURI(activeTopicEl.id) + '"]'
+                var selectTarget = '.toc-container .toc a[href="#' + encodeURI(activeTopicEl.id) + '"]'
                 var direc = document.querySelector(selectTarget)
                 direc.classList.add(activeClassName)
 
@@ -187,8 +187,13 @@ var $posts = {
         window.Valine && this.addValineComment()
 
         var timeout
+        var lastScroll
+        var loadedHash
 
         function postScroll() {
+            if (lastScroll && lastScroll + 100 < Date.now() && loadedHash != location.hash) {
+                loadedHash = location.hash
+            }
             if (timeout) {
                 clearTimeout(timeout)
             }
@@ -207,7 +212,7 @@ var $posts = {
         window.addEventListener('load', function() {
             setTimeout(postScroll, 500)
         })
-        window.addEventListener('scroll', postScroll)
+        window.addEventListener('scroll', $claudia.throttle(postScroll, 500))
         document.querySelectorAll('.content figure').forEach(function(figure) {
             var figcaption = figure.querySelector('figcaption')
             var title = figcaption && figcaption.innerText
@@ -240,6 +245,17 @@ var $posts = {
                 img.scale = 100
                 img.translateY = 0
                 img.scaleBase = 100
+
+                img.onload = function() {
+                    if (location.hash && loadedHash != location.hash) {
+                        setTimeout(function () {
+                                const element = document.querySelector(location.hash)
+                                const topPos = element.getBoundingClientRect().top + pageYOffset
+                                lastScroll = Date.now()
+                                window.scrollTo({ top: topPos })
+                        })
+                    }
+                }
     
                 figure.addEventListener('touchstart', function(e) {
                     img.scaleBase = img.scale

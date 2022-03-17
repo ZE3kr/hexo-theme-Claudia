@@ -221,10 +221,41 @@ $coverBlurEffect: 20px;
     }
     img, .post-img-placeholder {
       width: 50px;
+      min-width: 50px;
       height: 50px;
       margin-right: 5px;
       object-fit: cover;
       border-radius: $borderRadius;
+    }
+
+    .recent-post-ellipses {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc( 100vw - 109px );
+    }
+    @media screen and (min-width: 769px) {
+      .recent-post-ellipses {
+        width: calc( (100vw - 8px) / 3 - 101px );
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      .recent-post-ellipses {
+        width: calc( 952px / 3 - 101px );
+      }
+    }
+
+    @media screen and (min-width: 1216px) {
+      .recent-post-ellipses {
+        width: calc( 1144px / 4 - 101px );
+      }
+    }
+
+    @media screen and (min-width: 1408px) {
+      .recent-post-ellipses {
+        width: calc( 1336px / 4 - 101px );
+      }
     }
 
     section {
