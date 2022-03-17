@@ -46,7 +46,7 @@ block content
                 return `<iframe loading="lazy"${iframe.slice(7)}`
             })
         }
-    - const tocContent = toc(page.content + `<h2 id="footer">${__('comment')}</h2>`, {list_number: false})
+    - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
     main.container.section.post-page.pt-4.px-4
         .columns.content.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse
             .column.is-3.toc-container.is-hidden-mobile!= tocContent
@@ -92,34 +92,35 @@ block content
                 //-             span.has-text-weight-semibold= nextContent
                 //-             i.iconfont.icon-next.ml-2.has-text-grey
 
-        div#footer
-        .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3
-            aside.column.is-4-tablet.is-3-widescreen.post-container
-                include widget/widget-recent-content-all
-                if theme.links && theme.links.length > 0
-                    include widget/widget-links
-            section.column.comment-box
-                if theme.comment_utteranc && theme.comment_utteranc.enable && (page.comments || typeof page.comments === "undefined")
-                    article.comment
-                        script(
-                            async
-                            repo= theme.comment_utteranc.repo
-                            src= "https://utteranc.es/client.js"
-                            label= theme.comment_utteranc.label
-                            issue-term= theme.comment_utteranc.issue_term || "pathname"
-                            theme= theme.comment_utteranc.theme || "preferred-color-scheme"
+        if page.comments || typeof page.comments === "undefined"
+            div#footer
+            .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3
+                aside.column.is-4-tablet.is-3-widescreen.post-container
+                    include widget/widget-recent-content-all
+                    if theme.links && theme.links.length > 0
+                        include widget/widget-links
+                section.column.comment-box
+                    if theme.comment_utteranc && theme.comment_utteranc.enable
+                        article.comment
+                            script(
+                                async
+                                repo= theme.comment_utteranc.repo
+                                src= "https://utteranc.es/client.js"
+                                label= theme.comment_utteranc.label
+                                issue-term= theme.comment_utteranc.issue_term || "pathname"
+                                theme= theme.comment_utteranc.theme || "preferred-color-scheme"
+                            )
+                    if theme.comment_valine && theme.comment_valine.enable
+                        article.comment#vcomments(
+                            data-comment_valine_id= theme.comment_valine.appId
+                            data-comment_valine_key= theme.comment_valine.appKey
                         )
-                if theme.comment_valine && theme.comment_valine.enable
-                    article.comment#vcomments(
-                        data-comment_valine_id= theme.comment_valine.appId
-                        data-comment_valine_key= theme.comment_valine.appKey
-                    )
-                if theme.comment_disqus && theme.comment_disqus.enable
-                    div#disqus_thread
-                    article.comment#disqus
-                        script="var disqus_config = function () {this.page.url = '"+theme.comment_disqus.url+url_for(page.path)+"';this.page.identifier = '"+theme.comment_disqus.name+"';};"
-                        script="(function() {var d = document, s = d.createElement('script');s.src = 'https://"+theme.comment_disqus.name+".disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();"
-                        script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
+                    if theme.comment_disqus && theme.comment_disqus.enable
+                        div#disqus_thread
+                        article.comment#disqus
+                            script="var disqus_config = function () {this.page.url = '"+theme.comment_disqus.url+url_for(page.path)+"';this.page.identifier = '"+theme.comment_disqus.name+"';};"
+                            script="(function() {var d = document, s = d.createElement('script');s.src = 'https://"+theme.comment_disqus.name+".disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();"
+                            script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
 
 block script
     script(src= url_for("/js/post.js"))
