@@ -2058,6 +2058,10 @@ header .container {
   transform: scale(1);
 }
 
+.content figure.table {
+  overflow-x: auto;
+}
+
 .content figure.full-screen {
   width: 100vw;
   height: 100vh;
