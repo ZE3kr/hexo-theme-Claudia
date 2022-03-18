@@ -274,29 +274,29 @@ $coverBlurEffect: 20px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: calc( 100vw - 109px );
+      width: calc( 100vw - 101px );
     }
     @media screen and (min-width: 769px) {
       .recent-post-ellipses {
-        width: calc( (100vw - 8px) / 3 - 101px );
+        width: calc( (100vw - 8px) / 3 - 85px );
       }
     }
 
     @media screen and (min-width: 1024px) {
       .recent-post-ellipses {
-        width: calc( 952px / 3 - 101px );
+        width: 219px;
       }
     }
 
     @media screen and (min-width: 1216px) {
       .recent-post-ellipses {
-        width: calc( 1144px / 4 - 101px );
+        width: 187px;
       }
     }
 
     @media screen and (min-width: 1408px) {
       .recent-post-ellipses {
-        width: calc( 1336px / 4 - 101px );
+        width: 235px;
       }
     }
 

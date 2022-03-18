@@ -47,8 +47,8 @@ block content
             })
         }
     - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
-    main.container.section.post-page.pt-4.px-4
-        .columns.content.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse
+    main.container.section.post-page.pt-4.px-3
+        .columns.content.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse.px-1
             .column.is-3.toc-container.is-hidden-mobile!= tocContent
             .column.is-9
                 header.my-4
