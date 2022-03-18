@@ -2054,7 +2054,7 @@ header .container {
   object-fit: contain;
 }
 
-.content figure:hover, .content figure.hover, .content figure.full-screen {
+.content figure:hover, .content figure.table, .content figure.hover, .content figure.full-screen {
   transform: scale(1);
 }
 

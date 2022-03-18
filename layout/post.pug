@@ -44,6 +44,8 @@ block content
                     return `<iframe srcdoc='${srcdoc}' loading="lazy"${iframe.slice(7)}`
                 }
                 return `<iframe loading="lazy"${iframe.slice(7)}`
+            }).replace(/<table([\w\W]+?)>(?:.|\n)*?<\/table>/g, function(table) {
+                return `<figure class="table">${table}</figure>`
             })
         }
     - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
