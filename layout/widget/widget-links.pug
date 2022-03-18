@@ -1,8 +1,8 @@
 main.aside-card-container.categories-widget(class= is_category && "category-page")
-    h3=__('friend')
+    h3=theme.links_title || __('friend')
     section
         ul.category-list
             each link in theme.links
                 li.category-list-item
-                    a.category-list-link(href= link.url target="_blank" rel="noopener nofollow")= link.title
-                    a.category-list-count(href= link.url target="_blank" rel="noopener nofollow")= link.domain
+                    a.category-list-link(href= link.url)= link.title
+                    a.category-list-count(href= link.url)= link.domain

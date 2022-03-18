@@ -96,9 +96,9 @@ block content
             div#footer
             .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3
                 aside.column.is-4-tablet.is-3-widescreen.post-container
-                    include widget/widget-recent-content-all
                     if theme.links && theme.links.length > 0
                         include widget/widget-links
+                    include widget/widget-recent-content-all
                 section.column.comment-box
                     if theme.comment_utteranc && theme.comment_utteranc.enable
                         article.comment
