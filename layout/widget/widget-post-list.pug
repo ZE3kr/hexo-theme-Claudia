@@ -5,7 +5,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
             section.column
                 if page.current === 1
                     div.is-hidden-tablet-or-landscape
-                        include widget-search
+                        include widget-search-mobile
                         include widget-profile    
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()

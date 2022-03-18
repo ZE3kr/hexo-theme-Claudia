@@ -1,19 +1,19 @@
-main.aside-card-container.search-widget.is-relative#searchContainer
-    label(for="searchInput")
-        div#searchButton.is-flex.px-4
+main.aside-card-container.search-widget.is-relative#searchContainerMobile
+    label(for="searchInputMobile")
+        div#searchButtonMobile.is-flex.px-4
                 svg.icon.mr-1
                     use(xlink:href="#icon-search")
-                input#searchInput.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
-    section#searchContent.search-content.content
+                input#searchInputMobile.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
+    section#searchContentMobile.search-content.content
 
 script.
     (function() {
         var searchDatabase = []
         var columnsEl = document.getElementById('columns')
-        var searchContainerEl = document.getElementById('searchContainer')
-        var searchInputEl = document.getElementById('searchInput')
-        var searchButtonEl = document.getElementById('searchButton')
-        var searchResultEl = document.getElementById('searchContent')
+        var searchContainerEl = document.getElementById('searchContainerMobile')
+        var searchInputEl = document.getElementById('searchInputMobile')
+        var searchButtonEl = document.getElementById('searchButtonMobile')
+        var searchResultEl = document.getElementById('searchContentMobile')
 
         var matomoTrack = $claudia.throttle(function (e) {
             window._paq && _paq.push(e)
@@ -113,7 +113,7 @@ script.
         searchButtonEl.onclick = function () {
             if (searchDatabase.length > 0) return;
 
-            fetch('/search.xml').then(res => res.text()).then(res => {
+            fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
                 var domparser = new DOMParser
                 var doc = domparser.parseFromString(res, 'application/xml')
                 searchDatabase = doc.getElementsByTagName('search')[0].children

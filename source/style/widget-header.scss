@@ -29,3 +29,83 @@
     padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-right);
   }
 }
+
+.search-widget .search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--second-text-color);
+  font-size: 16px;
+}
+.search-widget .icon {
+  font-size: 20px;
+  min-width: 20px;
+}
+.search-widget .search-content {
+  position: absolute;
+  left: 0;
+  top: calc(100% - 3px);
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  max-height: 0;
+  overflow: auto;
+  box-sizing: border-box;
+  background: var(--second-bg-color);
+  backdrop-filter: blur(var(--backdropFilter));
+  -webkit-backdrop-filter: blur(var(--backdropFilter));
+  border-bottom-left-radius: var(--borderRadius);
+  border-bottom-right-radius: var(--borderRadius);
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+  transition: max-height 500ms;
+  margin: -1px;
+  width: calc(100% + 2px)
+}
+.search-widget .search-content a:hover h5 {
+  color: #3273dc!important
+}
+.search-widget {
+  transition-property: width,transform;
+  transition-duration: 500ms;
+  z-index: 2;
+  width: 100%
+}
+.search-widget.focus-within .search-content {
+  border: 1px solid var(--border-line-color)
+}
+@media screen and (min-width: 769px) {
+  .search-widget:focus-within,
+  .search-widget.focus-within {
+    width: calc(100vw - 24px);
+    transform: translateX(calc((16px - 100vw)/3*2))
+  }
+  .columns section.column {
+    margin-top: 0;
+    transition: margin-top 500ms
+  }
+  .columns:focus-within section.column,
+  .columns.focus-within section.column {
+    margin-top: 61px
+  }
+}
+@media screen and (min-width: 1024px) {
+  .search-widget:focus-within,
+  .search-widget.focus-within {
+    width: 920px;
+    transform: translateX(-629.33px)
+  }
+}
+@media screen and (min-width: 1216px) {
+  .search-widget:focus-within,
+  .search-widget.focus-within {
+    width: 1120px;
+    transform: translateX(-852px)
+  }
+}
+@media screen and (min-width: 1408px) {
+  .search-widget:focus-within,
+  .search-widget.focus-within {
+    width: 1312px;
+    transform: translateX(-996px)
+  }
+}
