@@ -75,8 +75,6 @@ block content
                 article.mt-2.post-content
                     if tocContent
                         div.is-hidden-tablet.mb-4
-                            if tocContentRaw
-                                h2= __('toc')
                             != tocContent
                     div!= parseContent(page.content)
                 if page.video
