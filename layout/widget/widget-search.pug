@@ -87,7 +87,8 @@ style.
 main.aside-card-container.search-widget.is-relative#searchContainer
     label(for="searchInput")
         div#searchButton.is-flex.px-4
-                i.iconfont.icon--search1.mr-1
+                svg.icon.mr-1
+                    use(xlink:href="#icon-search")
                 input#searchInput.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
     section#searchContent.search-content.content
 
