@@ -112,7 +112,6 @@ $lineColor: var(--border-line-color);
     }
 
     @media screen and (min-width: 1024px) {
-      padding: 0;
       .column {
         padding-left: 12px;
         padding-right: 12px;
@@ -174,6 +173,7 @@ $lineColor: var(--border-line-color);
       background: var(--second-bg-color);
       border: 1px solid var(--border-line-color-2);
       padding: 6px;
+      min-height: calc(100% - 15px);
     }
     .comment-box {
       padding: 0.75rem;

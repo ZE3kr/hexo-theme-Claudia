@@ -75,38 +75,34 @@
   border: 1px solid var(--border-line-color)
 }
 @media screen and (min-width: 769px) {
-  .search-widget:focus-within,
   .search-widget.focus-within {
-    width: calc(100vw - 24px);
-    transform: translateX(calc((16px - 100vw)/3*2))
+    width: calc(100vw - 16px);
+    transform: translateX(calc((8px - 100vw)/3*2))
   }
   .columns section.column {
     margin-top: 0;
     transition: margin-top 500ms
   }
-  .columns:focus-within section.column,
-  .columns.focus-within section.column {
-    margin-top: 61px
+  .columns.focus-within section.column,
+  #commentBox.focus-within {
+    margin-top: 57px
   }
 }
 @media screen and (min-width: 1024px) {
-  .search-widget:focus-within,
   .search-widget.focus-within {
-    width: 920px;
-    transform: translateX(-629.33px)
+    width: 928px;
+    transform: translateX(-634.67px)
   }
 }
 @media screen and (min-width: 1216px) {
-  .search-widget:focus-within,
   .search-widget.focus-within {
     width: 1120px;
-    transform: translateX(-852px)
+    transform: translateX(-858px)
   }
 }
 @media screen and (min-width: 1408px) {
-  .search-widget:focus-within,
   .search-widget.focus-within {
     width: 1312px;
-    transform: translateX(-996px)
+    transform: translateX(-1002px)
   }
 }

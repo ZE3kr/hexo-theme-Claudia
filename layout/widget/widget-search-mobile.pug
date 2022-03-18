@@ -8,7 +8,6 @@ main.aside-card-container.search-widget.is-relative#searchContainerMobile
 
 script.
     (function() {
-        var searchDatabase = []
         var columnsEl = document.getElementById('columns')
         var searchContainerEl = document.getElementById('searchContainerMobile')
         var searchInputEl = document.getElementById('searchInputMobile')
@@ -19,13 +18,23 @@ script.
             window._paq && _paq.push(e)
         }, 500)
 
+        searchInputEl.onfocus = function() {
+            searchContainerEl.classList.add("focus-within")
+            columnsEl && columnsEl.classList.add("focus-within")
+        }
+
+        searchInputEl.onblur = function(evt) {
+            if (!evt.srcElement.value.trim()) {
+                searchContainerEl.classList.remove("focus-within")
+                columnsEl && columnsEl.classList.remove("focus-within")
+            }
+        }
+
         searchInputEl.oninput = function (evt) {
             var searchValue = evt.srcElement.value
             var haveSearchValue = Boolean(searchValue.trim())
             if (!haveSearchValue) {
                 searchResultEl.style.maxHeight = 0
-                searchContainerEl.classList.remove("focus-within")
-                columnsEl && columnsEl.classList.remove("focus-within")
                 return
             }
 
@@ -34,80 +43,8 @@ script.
             matomoTrack(['trackSiteSearch', searchValue, null, searchResults.length])
 
             if (searchResults.length > 0) {
-                renderSearchResults(searchResults)
+                renderSearchResults(searchResults, searchResultEl)
             }
-        }
-
-        function renderSearchResults(results) {
-            searchResultEl.innerHTML = null
-            var fragment = document.createDocumentFragment()
-
-            results.forEach(function (item) {
-                var link = document.createElement('a')
-                var title = document.createElement('h5')
-                var content = document.createElement('p')
-
-                title.className = 'mb-1'
-                title.innerText = item.title
-                content.innerHTML = item.content
-
-                link.href = item.link
-                link.appendChild(title)
-                link.appendChild(content)
-                link.className = 'p-4 is-block'
-
-                fragment.appendChild(link)
-            })
-
-            searchResultEl.appendChild(fragment)
-            searchResultEl.style.maxHeight = '550px'
-            searchContainerEl.classList.add("focus-within")
-            columnsEl && columnsEl.classList.add("focus-within")
-        }
-
-        function searching(inputText) {
-            var inputTexts = inputText.split(' ')
-            var searchResults = []
-            inputTexts.forEach(function (searchKey) {
-                var haveSearchValue = Boolean(searchKey.trim())
-                if (!haveSearchValue) return
-
-                var key = searchKey.toLowerCase()
-
-                for (var entry of searchDatabase) {
-                    var title = entry.getElementsByTagName('title')[0].textContent
-                    var link = entry.getElementsByTagName('link')[0].getAttribute('href')
-                    var contentWithTags = entry.getElementsByTagName('content')[0].textContent
-                    var content = contentWithTags.trim().replace(/<[^>]+>/g, '')
-                    var rawContent = content.toLowerCase()
-
-                    var LENGTH = 80
-                    var finalContent = ''
-                    var contentLength = rawContent.length
-                    var searchResultIdx = rawContent.indexOf(key)
-
-                    var startIdx = searchResultIdx - 20,
-                        endIdx = startIdx + LENGTH
-
-                    if (startIdx < 0) {
-                        startIdx = 0
-                        endIdx = 100
-                    }
-
-                    endIdx > contentLength && (endIdx = contentLength)
-
-                    finalContent = content.substring(startIdx, endIdx)
-
-                    if (title.indexOf(key) > -1 || searchResultIdx > -1) {
-                        searchResults.push({
-                            link: link,
-                            title: title,
-                            content: finalContent
-                        })
-                    }
-                }
-            })
-            return searchResults
         }
 
         searchButtonEl.onclick = function () {

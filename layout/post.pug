@@ -94,12 +94,15 @@ block content
 
         if page.comments || typeof page.comments === "undefined"
             div#footer
-            .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3
+            .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3#commentContainer
                 aside.column.is-4-tablet.is-3-widescreen.post-container
+                    include widget/widget-search
+                    //- if theme.widgets.includes('profile')
+                    //-     include widget/widget-profile
                     if theme.links && theme.links.length > 0
                         include widget/widget-links
                     include widget/widget-recent-content-all
-                section.column.comment-box
+                section.column.comment-box#commentBox
                     if theme.comment_utteranc && theme.comment_utteranc.enable
                         article.comment
                             script(
@@ -125,3 +128,11 @@ block content
 block script
     script(src= url_for("/js/post.js"))
     script(async src= url_for("/js/highlight.pack.js") onload="hljs.highlightAll()")
+    //- script.
+    //-     $claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+    //-     window.addEventListener('resize', $claudia.throttle(function () {
+    //-         var images = document.querySelectorAll('.js-img-fadeIn')
+
+    //-         images.forEach($claudia.blurBackdropImg)
+    //-     }, 150))
