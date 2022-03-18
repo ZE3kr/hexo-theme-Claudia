@@ -70,8 +70,8 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                         // turnPage
                         var paginatorResult = paginator({
                             escape: false,
-                            prev_text: `<svg class="icon has-text-grey" aria-hidden="true"><use xlink:href="#icon-left"></use></svg>`,
-                            next_text: `<svg class="icon has-text-grey" aria-hidden="true"><use xlink:href="#icon-right"></use></svg>`,
+                            prev_text: `<svg class="icon" aria-hidden="true"><use xlink:href="#icon-left"></use></svg>`,
+                            next_text: `<svg class="icon" aria-hidden="true"><use xlink:href="#icon-right"></use></svg>`,
                         })
                         var pageNumber = strip_html(paginatorResult)
                         var showPageIndicator = pageNumber - 0 !== 1
