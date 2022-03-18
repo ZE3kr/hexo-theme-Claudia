@@ -48,6 +48,7 @@ block content
                 return `<figure class="table">${table}</figure>`
             })
         }
+    - const tocContentRaw = toc(page.content, {list_number: false})
     - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
     main.container.section.post-page.pt-4.px-3
         .columns.content.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse.px-1
@@ -72,9 +73,11 @@ block content
                 if page.date
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
                 article.mt-2.post-content
-                    div.is-hidden-tablet.mb-4
-                        h2= __('toc')
-                        != tocContent
+                    if tocContent
+                        div.is-hidden-tablet.mb-4
+                            if tocContentRaw
+                                h2= __('toc')
+                            != tocContent
                     div!= parseContent(page.content)
                 if page.video
                     a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
