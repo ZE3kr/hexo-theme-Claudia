@@ -78,8 +78,8 @@ block content
                             != tocContent
                     div!= parseContent(page.content)
                 if page.video
-                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
-                    a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://videodelivery.net/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
+                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
+                    a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
                 //- section.jump-container.is-flex.is-justify-content-space-between.my-6
                 //-     // em is empty placeholder
                 //-     if page.prev

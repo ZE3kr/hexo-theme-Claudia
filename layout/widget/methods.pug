@@ -19,8 +19,7 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.slice(0, 46) === "https://imagedelivery.net/6T-behmofKYLsxlrK0l_MQ/" ||
-                    imageUrl.slice(0, 49) === "https://imagedelivery.net/6T-behmofKYLsxlrK0l_MQ/"
+                    imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/"
                 ) && ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 const prefix = imageUrl.slice(0, -5);
@@ -30,7 +29,10 @@
                     prefix + 'extra 2600w, ' +
                     prefix + 'large 1500w, ' +
                     prefix + 'medium 800w'
-            } else if ( imageUrl.slice(0, 26) === 'https://videodelivery.net/' ) {
+            } else if (
+                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
+            ) {
                 const w2000 = new URL(imageUrl)
                 w2000.searchParams.set('width', '2000')
                 const w1200 = new URL(imageUrl)
@@ -46,11 +48,14 @@
     function getThumbnail(imageUrl) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
-                imageUrl.slice(0, 46) === "https://imagedelivery.net/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
                 ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
-            } else if ( imageUrl.slice(0, 26) === 'https://videodelivery.net/' ) {
+            } else if (
+                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
+            ) {
                 const w200 = new URL(imageUrl)
                 w200.searchParams.set('width', '200')
                 w200.searchParams.set('height', '200')
