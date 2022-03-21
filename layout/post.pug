@@ -55,7 +55,7 @@ block content
             .column.is-3.toc-container.is-hidden-mobile!= tocContent
             .column.is-9
                 header.my-4
-                    if page.categories && page.categories.length > 0
+                    if page.categories && page.categories.length > 0 && page.categories.toArray
                         each category in page.categories.toArray()
                             a(href= url_for(`/${category.path}`))
                                 if __(`${config.language2}.${category.name}`) != `${config.language2}.${category.name}`
@@ -64,7 +64,7 @@ block content
                                         span.is-hidden(lang=config.language2)= __(`${config.language2}.${category.name}`)
                                 else
                                     i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")= category.name
-                    if page.tags && page.tags.length > 0
+                    if page.tags && page.tags.length > 0 && page.tags.toArray
                         each tag in page.tags.toArray()
                             a(href= url_for(`/${tag.path}`))
                                 if __(`${config.language2}.${tag.name}`) != `${config.language2}.${tag.name}`

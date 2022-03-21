@@ -3,7 +3,7 @@ header.header-widget.is-flex-shrink-0.is-hidden-mobile
         section.is-hidden-mobile.is-flex-shrink-0
             h2
                 a(href= url_for("/"))= theme.title
-        h3.is-hidden-mobile.is-family-serif.is-full-height.is-flex.is-align-items-center.is-flex-shrink-0
+        h3.is-family-serif.is-full-height.is-flex.is-align-items-center.is-flex-shrink-0
             block topic
         aside.is-flex-shrink-0
             if theme.menu
@@ -22,6 +22,7 @@ header.header-widget.is-flex-shrink-0.is-hidden-mobile
                         else
                             a(href= url_for(url) target="_top")= label && _p(label.toLowerCase())
 header.is-flex.header-widget.is-flex-shrink-0.is-align-items-center.is-justify-content-center.is-hidden-tablet
+    if theme.menu && (is_home() || is_post() || is_page() )
         if theme.menu
             each url, label in theme.menu
                 h3.is-inline-block
@@ -37,4 +38,11 @@ header.is-flex.header-widget.is-flex-shrink-0.is-align-items-center.is-justify-c
                             a(href= url_for(url) target="_top")= label
                     else
                         a(href= url_for(url) target="_top")= label && _p(label.toLowerCase())
+    else
+        .container.is-flex.is-align-items-center.is-justify-content-space-between.is-full-height
+            section.is-flex-shrink-0
+                h2
+                    a(href= url_for("/"))= __('home')
+            h3.is-family-serif.is-full-height.is-flex.is-align-items-center.is-flex-shrink-0
+                block topic
 
