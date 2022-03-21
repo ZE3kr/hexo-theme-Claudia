@@ -16,38 +16,6 @@ block topic
 
 block content
     include widget/methods
-    -
-        function parseContent(content) {
-            return content.replace(/<img([\w\W]+?)>/g, function(img) {
-                let srcset = ''
-                let src = ''
-                let alt = ''
-                img.replace(/src="([^"]+)"/, function(str) {
-                    src = str.slice(5, -1)
-                    srcset = getSrcset(src)
-                })
-                img.replace(/alt="([^"]+)"/, function(str) {
-                    alt = str.slice(5, -1)
-                })
-                let imgtag = `<img src="${src}" srcset="${srcset}" alt="${alt}" sizes="(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" loading="lazy">`
-                if (alt) {
-                    return `<figure>${imgtag}<figcaption>${alt}</figcaption></figure>`
-                }
-                return `<figure>${imgtag}</figure>`
-            }).replace(/<iframe([\w\W]+?)>/g, function(iframe) {
-                let src
-                iframe.replace(/src="([^"]+)"/, function(str) {
-                    src = new URL(str.slice(5, -1))
-                })
-                if (src && src.href.slice(0, 29) === 'https://cdn.ze3kr.com/iframe/') {
-                    const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/><meta name="description" content="Stream"/><title>Stream</title><style>html, body { height: 100%; } body { margin: 0px; overflow: hidden;}</style></head><body><stream width="100%" height="100%" src="${ src.pathname.slice(8) }"${ src.searchParams.get('preload') === 'true' ? ' preload=auto' : src.searchParams.get('preload') === 'metadata' ? ' metadata' : '' }${ src.searchParams.get('autoplay') === 'true' ? ' autoplay' : '' }${ src.searchParams.get('controls') === 'false' ? '' : ' controls' }${ src.searchParams.get('poster') ? ` poster="${ src.searchParams.get('poster') }"` : '' }${ src.searchParams.get('muted') === 'true' ? ' muted' : '' }${ src.searchParams.get('loop') === 'true' ? ' loop' : '' }${ src.searchParams.get('startTime') ? ` start-time="${ src.searchParams.get('startTime') }` : '' }${ src.searchParams.get('primaryColor') ? ` primary-color="${ src.searchParams.get('primaryColor') }"` : '' }></stream><script data-cfasync="false" defer="" type="text/javascript" src="/js/sdk-iframe-integration.fla9.latest.js"></script></body></html>`
-                    return `<iframe srcdoc='${srcdoc}' loading="lazy"${iframe.slice(7)}`
-                }
-                return `<iframe loading="lazy"${iframe.slice(7)}`
-            }).replace(/<table([\w\W]+?)>(?:.|\n)*?<\/table>/g, function(table) {
-                return `<figure class="table">${table}</figure>`
-            })
-        }
     - const tocContentRaw = toc(page.content, {list_number: false})
     - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
     main.container.section.post-page.pt-4.px-3
@@ -137,8 +105,9 @@ block content
                             script="(function() {var d = document, s = d.createElement('script');s.src = 'https://"+theme.comment_disqus.name+".disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();"
                             script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
 
-block script
+block append script
     script(src= url_for("/js/post.js"))
+    script(src= url_for("/js/sdk.latest.js"))
     script(async src= url_for("/js/highlight.pack.js") onload="hljs.highlightAll()")
     //- script.
     //-     $claudia.fadeInImage(null, $claudia.blurBackdropImg)

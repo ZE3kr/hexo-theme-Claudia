@@ -315,7 +315,6 @@ th:not([align]) {
 
 html {
   background-color: white;
-  font-size: 16px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   min-width: 300px;
@@ -326,6 +325,10 @@ html {
      -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
           text-size-adjust: 100%;
+}
+
+html body {
+  font-size: 16px;
 }
 
 article,

@@ -66,8 +66,28 @@ html(lang=config.language class= `appearance-${ appearance }`)
       div
         span!= theme.user && theme.user.footnotes
 
-    script(src= url_for("/js/hls.js") async)
-    script(src= url_for("/js/sdk.latest.js"))
+    script.
+      function streamLoaded () {
+        document.querySelectorAll('stream').forEach(function (video) {
+          video.parentNode.previousElementSibling.classList.remove('is-hidden')
+          video.addEventListener('loadedmetadata', (event) => {
+            videoScroll()
+            video.parentNode.classList.remove('skeleton')
+          });
+          video.addEventListener('playing', (event) => {
+            video['data-playing'] = true
+            video.classList.remove('is-hidden')
+            video.parentNode.classList.remove('skeleton-with-content')
+            video.previousElementSibling.classList.add('is-hidden')
+          });
+        })
+
+        window.addEventListener('load', function() {
+          setTimeout(videoScroll, 500)
+          window.addEventListener('scroll', videoScroll)
+        })
+      }
+    script(async src= url_for("/js/sdk-iframe-integration.fla9.latest.js") onload='streamLoaded()')
     block script
     noscript
       img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
@@ -173,6 +193,56 @@ html(lang=config.language class= `appearance-${ appearance }`)
             document.querySelectorAll('span[lang="#{config.language1}"], i[lang="#{config.language1}"], a[lang="#{config.language1}"]').forEach(span => span.classList.add('is-hidden'))
             break;
         }
+    script.
+      $claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+      window.addEventListener('resize', $claudia.throttle(function () {
+        var images = document.querySelectorAll('.js-img-fadeIn')
+        images.forEach($claudia.blurBackdropImg)
+      }, 150))
+
+      var timeout
+
+      function videoScroll () {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+        timeout = setTimeout(function () {
+          var hasHover = false
+          document.querySelectorAll('.tlo-header').forEach(function (header) {
+            if (!hasHover && header.getBoundingClientRect().top + header.clientHeight < window.innerHeight && header.getBoundingClientRect().top > 58) {
+              header.classList.add('hover')
+              hasHover = true
+
+              var video = header.querySelector('stream')
+              if (video) {
+                if (!video['data-playing']) {
+                  video.parentNode.classList.add('skeleton-with-content')
+                }
+                if (!video['data-loaded']) {
+                  video['data-loaded'] = true
+                }
+                try {
+                  video.play()
+                } catch(_) {
+                  video['data-playing'] = true
+                  video.parentNode.classList.remove('skeleton-with-content')
+                }
+              }
+            } else {
+              header.classList.remove('hover')
+
+              var video = header.querySelector('stream')
+              if (video) {
+                video.parentNode.classList.remove('skeleton-with-content')
+                video.pause()
+                video['data-loaded'] = false
+              }
+            }
+          })
+        }, 100)
+      }
+
     .
       <svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;">
         <symbol id="icon-location-fill" viewBox="0 0 1024 1024"><path d="M512 327c-29.9 0-58 11.6-79.2 32.8C411.7 381 400 409.1 400 439c0 29.9 11.7 58 32.8 79.2C454 539.3 482.1 551 512 551c29.9 0 58-11.7 79.2-32.8C612.4 497 624 468.9 624 439c0-29.9-11.6-58-32.8-79.2S541.9 327 512 327z"></path><path d="M854.6 289.1c-18.8-43.4-45.7-82.3-79.9-115.7-34.2-33.4-73.9-59.5-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8-34.2 33.4-61.1 72.4-79.9 115.7-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153 6.9 4.1 14.7 6.1 22.4 6.1 7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 615c-97.2 0-176-78.8-176-176s78.8-176 176-176 176 78.8 176 176-78.8 176-176 176z"></path></symbol>
