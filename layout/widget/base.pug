@@ -7,6 +7,9 @@
 - var pageTitle = page.category ? `${ _p('category') } · ${ page.category || __('all') }` : page.tag ? `${ _p('tag') } · ${ page.tag || __('all') }` : page.year ? `${ _p('archive') } · ${ page.year || __('all') }` : page.title
 - var appearance = theme.appearance ? theme.appearance : 'auto'
 - var currentUrl = url.slice(-11) === '/index.html' ? url.slice(0, -10) : url
+- var hasVideos = false
+- var hasCode = false
+- var hasIframe = false
 
 doctype html
 html(lang=config.language class= `appearance-${ appearance }`)
@@ -87,7 +90,11 @@ html(lang=config.language class= `appearance-${ appearance }`)
           window.addEventListener('scroll', videoScroll)
         })
       }
-    script(async src= url_for("/js/sdk-iframe-integration.fla9.latest.js") onload='streamLoaded()')
+    if hasVideos
+      script(async src= url_for("/js/sdk-iframe-integration.fla9.latest.js") onload='streamLoaded()')
+    else
+      script.
+        streamLoaded()
     block script
     noscript
       img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=3&amp;rec=1&amp;action_name=${encodeURIComponent(`${ pageTitle } | ${ theme.user.name }`)}` style="border:0" alt="")
