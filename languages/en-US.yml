@@ -42,6 +42,10 @@ zh-CN:
   movie: 影片
   download_movie: 下载影片
   read_more: 更多
+  # Categories
+  Movies: 影片
+  Portfolio: 作品集
+  Pictures: 图片
   # Tags
   Aerial: 航拍
   Time Lapse: 间隔拍摄

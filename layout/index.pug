@@ -7,7 +7,7 @@ block content
     - var isIndex = true
     include widget/widget-post-list
         block sidebar
-            div(class= `${page.current === 1 ? 'is-hidden-mobile-and-portrait' : ''}`)
+            div(class= `${page.current === 1 && is_home() ? 'is-hidden-mobile-and-portrait' : ''}`)
                 include widget/widget-search
                 if theme.widgets.includes('profile')
                     include widget/widget-profile

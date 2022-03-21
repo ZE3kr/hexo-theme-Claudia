@@ -3,7 +3,7 @@ include methods
 article.post-container.is-flex.is-justify-content-center.section.container.pt-4.px-1
         div.columns.is-variable.is-2-mobile.is-1-tablet.is-3-desktop.is-2-widescreen.is-full-width#columns
             section.column
-                if page.current === 1
+                if is_home() && page.current === 1
                     div.is-hidden-tablet-or-landscape
                         include widget-search-mobile
                         include widget-profile    
@@ -29,14 +29,17 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                         a.post-cover-link.has-text-centered.skeleton(href= postURL)
                                             img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                             section.content.post-card-content.p-4.pb-5
-                                if post.categories.toArray().find(category => category.name === 'Movies') || (post.tags && post.tags.length > 0)
+                                if (post.categories && post.categories.length > 0) || (post.tags && post.tags.length > 0)
                                     header
-                                        if post.categories.toArray().find(category => category.name === 'Movies')
-                                            a(href= url_for(`/categories/Movies/`))
-                                                i.tag.post-item-tag(lang=config.language1 style="color: #3273dc; border-color: #3273dc")= __('movie')
-                                                i.tag.post-item-tag.is-hidden(lang=config.language2 style="color: #3273dc; border-color: #3273dc")= __(`${config.language2}.movie`)
+                                        each category in post.categories.toArray()
+                                            a(href= url_for(`/${category.path}`))
+                                                if __(`${config.language2}.${category.name}`) != `${config.language2}.${category.name}`
+                                                    i.tag.post-item-tag(lang=config.language1 style="color: #3273dc; border-color: #3273dc")= category.name
+                                                    i.tag.post-item-tag.is-hidden(lang=config.language2 style="color: #3273dc; border-color: #3273dc")= __(`${config.language2}.${category.name}`)
+                                                else
+                                                    i.tag.post-item-tag(style="color: #3273dc; border-color: #3273dc")= category.name
                                         each tag in post.tags.toArray()
-                                            a(href= url_for(`/tags/${tag.name}`))
+                                            a(href= url_for(`/${tag.path}`))
                                                 if __(`${config.language2}.${tag.name}`) != `${config.language2}.${tag.name}`
                                                     i.tag.post-item-tag(lang=config.language1)= tag.name
                                                     i.tag.post-item-tag.is-hidden(lang=config.language2)= __(`${config.language2}.${tag.name}`)
