@@ -93,6 +93,6 @@
             }
             return `<iframe loading="lazy"${iframe.slice(7)}`
         }).replace(/<table([\w\W]+?)>(?:.|\n)*?<\/table>/g, function(table) {
-            return `<figure class="table">${table}</figure>`
+            return `<figure class="my-table">${table}</figure>`
         })
     }
