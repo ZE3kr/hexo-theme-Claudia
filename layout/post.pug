@@ -53,7 +53,12 @@ block content
                     if tocContent
                         div.is-hidden-tablet.mb-4
                             != tocContent
-                    div!= parseContent(page.content)
+                    - page_content = parseContent(page.content)
+                    div!= page_content
+                    if page_content.includes('https://cdn.ze3kr.com/iframe/')
+                        - hasIframe = true
+                    if page_content.includes('<pre><code>')
+                        - hasCode = true
                 if page.video
                     a.button.is-default.mt-2.has-text-weight-semibold(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
                     a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
@@ -108,7 +113,8 @@ block content
 block append script
     script(src= url_for("/js/post.js"))
     script(src= url_for("/js/sdk.latest.js"))
-    script(async src= url_for("/js/highlight.pack.js") onload="hljs.highlightAll()")
+    if hasCode
+        script(async src= url_for("/js/highlight.pack.js") onload="hljs.highlightAll()")
     //- script.
     //-     $claudia.fadeInImage(null, $claudia.blurBackdropImg)
 

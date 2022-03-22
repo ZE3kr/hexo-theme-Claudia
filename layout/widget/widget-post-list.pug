@@ -22,6 +22,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                                         span.post-cover-link.has-text-centered.skeleton.skeleton-with-content(href= postURL)
                                             img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                                             stream.is-hidden.post-cover-img.js-video(width="100%" height="100%" src=post.video metadata muted loop)
+                                            - hasVideos = true
                                     else
                                         a.post-cover-link.has-text-centered.skeleton(href= postURL)
                                             img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
