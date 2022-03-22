@@ -1,6 +1,5 @@
 extends widget/base
 block append head
-  link(rel='stylesheet', href= url_for('/style/post.css'))
   meta(name="description", content!= truncate( strip_html(page.content), {length: 360, omission: '..'} ))
 block topic
     div#postTopic.is-full-height
