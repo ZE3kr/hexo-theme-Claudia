@@ -15,10 +15,6 @@ script.
         var searchResultEl = document.getElementById('searchContent')
         var commentEl = document.getElementById('commentContainer')
 
-        var matomoTrack = $claudia.throttle(function (e) {
-            window._paq && _paq.push(e)
-        }, 500)
-
         searchInputEl.onfocus = function() {
             searchContainerEl.classList.add("focus-within")
             columnsEl && columnsEl.classList.add("focus-within")

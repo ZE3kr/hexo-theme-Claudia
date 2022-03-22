@@ -6,54 +6,51 @@ main.aside-card-container.search-widget.is-relative#searchContainerMobile
                 input#searchInputMobile.search-input.is-flex-grow-1(placeholder= _p('search_input_placeholder'))
     section#searchContentMobile.search-content.content
 
-script.
-    (function() {
-        var columnsEl = document.getElementById('columns')
-        var searchContainerEl = document.getElementById('searchContainerMobile')
-        var searchInputEl = document.getElementById('searchInputMobile')
-        var searchButtonEl = document.getElementById('searchButtonMobile')
-        var searchResultEl = document.getElementById('searchContentMobile')
+block append script
+    script.
+        (function() {
+            var columnsEl = document.getElementById('columns')
+            var searchContainerEl = document.getElementById('searchContainerMobile')
+            var searchInputEl = document.getElementById('searchInputMobile')
+            var searchButtonEl = document.getElementById('searchButtonMobile')
+            var searchResultEl = document.getElementById('searchContentMobile')
 
-        var matomoTrack = $claudia.throttle(function (e) {
-            window._paq && _paq.push(e)
-        }, 500)
-
-        searchInputEl.onfocus = function() {
-            searchContainerEl.classList.add("focus-within")
-            columnsEl && columnsEl.classList.add("focus-within")
-        }
-
-        searchInputEl.onblur = function(evt) {
-            if (!evt.srcElement.value.trim()) {
-                searchContainerEl.classList.remove("focus-within")
-                columnsEl && columnsEl.classList.remove("focus-within")
-            }
-        }
-
-        searchInputEl.oninput = function (evt) {
-            var searchValue = evt.srcElement.value
-            var haveSearchValue = Boolean(searchValue.trim())
-            if (!haveSearchValue) {
-                searchResultEl.style.maxHeight = 0
-                return
+            searchInputEl.onfocus = function() {
+                searchContainerEl.classList.add("focus-within")
+                columnsEl && columnsEl.classList.add("focus-within")
             }
 
-
-            var searchResults = searching(searchValue)
-            matomoTrack(['trackSiteSearch', searchValue, null, searchResults.length])
-
-            if (searchResults.length > 0) {
-                renderSearchResults(searchResults, searchResultEl)
+            searchInputEl.onblur = function(evt) {
+                if (!evt.srcElement.value.trim()) {
+                    searchContainerEl.classList.remove("focus-within")
+                    columnsEl && columnsEl.classList.remove("focus-within")
+                }
             }
-        }
 
-        searchButtonEl.onclick = function () {
-            if (searchDatabase.length > 0) return;
+            searchInputEl.oninput = function (evt) {
+                var searchValue = evt.srcElement.value
+                var haveSearchValue = Boolean(searchValue.trim())
+                if (!haveSearchValue) {
+                    searchResultEl.style.maxHeight = 0
+                    return
+                }
 
-            fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
-                var domparser = new DOMParser
-                var doc = domparser.parseFromString(res, 'application/xml')
-                searchDatabase = doc.getElementsByTagName('search')[0].children
-            })
-        }
-    })()
+
+                var searchResults = searching(searchValue)
+                matomoTrack(['trackSiteSearch', searchValue, null, searchResults.length])
+
+                if (searchResults.length > 0) {
+                    renderSearchResults(searchResults, searchResultEl)
+                }
+            }
+
+            searchButtonEl.onclick = function () {
+                if (searchDatabase.length > 0) return;
+
+                fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
+                    var domparser = new DOMParser
+                    var doc = domparser.parseFromString(res, 'application/xml')
+                    searchDatabase = doc.getElementsByTagName('search')[0].children
+                })
+            }
+        })()

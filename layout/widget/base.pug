@@ -31,7 +31,10 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="apple-touch-icon" href= url_for(theme.favicon))
     if theme.favicon_svg
       link(rel="icon" type="image/svg+xml" href= url_for(theme.favicon_svg))
-    link(rel="stylesheet" href= url_for('/style/base.css'))
+
+    link(rel="preload" href= url_for('/style/base.css') as= 'style')
+    link(rel="preload" href= url_for('/js/common.js') as= 'script')
+
     link(rel="dns-prefetch" href= 'https://cdn.ze3kr.com/')
     link(rel="preconnect" href= 'https://cdn.ze3kr.com/')
     link(rel="preconnect" href= 'https://cdn.ze3kr.com/' crossorigin)
@@ -44,7 +47,8 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="dns-prefetch" href= 'https://avatars.githubusercontent.com/')
     link(rel="preconnect" href= 'https://avatars.githubusercontent.com/')
 
-    script(src= url_for("/js/common.js"))
+    link(rel="stylesheet" href= url_for('/style/base.css'))
+
     block head
 
   body.is-flex.is-flex-direction-column
@@ -67,20 +71,24 @@ html(lang=config.language class= `appearance-${ appearance }`)
       div
         span!= theme.user && theme.user.footnotes
 
+    script(src= url_for("/js/common.js"))
     script.
+      var matomoTrack = $claudia.throttle(function (e) {
+        window._paq && _paq.push(e)
+      }, 500)
       function streamLoaded () {
         document.querySelectorAll('stream').forEach(function (video) {
           video.parentNode.previousElementSibling.classList.remove('is-hidden')
           video.addEventListener('loadedmetadata', (event) => {
             videoScroll()
             video.parentNode.classList.remove('skeleton')
-          });
+          })
           video.addEventListener('playing', (event) => {
             video['data-playing'] = true
             video.classList.remove('is-hidden')
             video.parentNode.classList.remove('skeleton-with-content')
             video.previousElementSibling.classList.add('is-hidden')
-          });
+          })
         })
 
         window.addEventListener('load', function() {
