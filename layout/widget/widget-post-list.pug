@@ -10,22 +10,22 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()
                         - var postURL = url_for(post.path)
-                        - var imgURL = post.cover || getPostCoverImg(post)
+                        - var imgURL = post.cover ? getPostCoverImg(post.cover) : getPostCoverImg(post)
                         - var isExcerpt = post.excerpt && post.excerpt.length > 0
                         - var postContent = isExcerpt ? post.excerpt : post.content
                         article.post-item-card
-                            if imgURL
+                            if imgURL[0]
                                 header.is-relative.is-flex.tlo-header
                                     div.post-cover-backdrop.is-hidden
-                                        img(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy")
+                                        img(src= imgURL[0] width= imgURL[1] height= imgURL[2] alt="loading.." srcset= getSrcset(imgURL[0], imgURL[1], imgURL[2]) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy")
                                     if post.video
                                         span.post-cover-link.has-text-centered.skeleton.skeleton-with-content(href= postURL)
-                                            img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
+                                            img.post-cover-img.js-img-fadeIn(src= imgURL[0] width= imgURL[1] height= imgURL[2] alt="loading.." srcset= getSrcset(imgURL[0], imgURL[1], imgURL[2]) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                                             stream.is-hidden.post-cover-img.js-video(width="100%" height="100%" src=post.video metadata muted loop)
                                             - hasVideos = true
                                     else
                                         a.post-cover-link.has-text-centered.skeleton(href= postURL)
-                                            img.post-cover-img.js-img-fadeIn(src= imgURL alt="loading.." srcset= getSrcset(imgURL) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
+                                            img.post-cover-img.js-img-fadeIn(src= imgURL[0] width= imgURL[1] height= imgURL[2] alt="loading.." srcset= getSrcset(imgURL[0], imgURL[1], imgURL[2]) sizes="(min-width: 931px) 600px, (min-width: 769px) calc( ( 100vw - 16px ) / 3 * 2 - 10px ), (min-width: 640px) 600px, calc( 100vw - 40px )" loading="lazy", data-backdrop="true")
                             section.content.post-card-content.p-4.pb-5
                                 if (post.categories && post.categories.length > 0) || (post.tags && post.tags.length > 0)
                                     header

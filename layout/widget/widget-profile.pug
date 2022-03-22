@@ -2,7 +2,7 @@ main.aside-card-container.profile-widget.is-flex.is-align-items-center
     section.is-flex.is-justify-content-center.avatar.is-clipped(class= theme.user && theme.user.avatar && 'skeleton')
         if (theme.user && theme.user.avatar)
             // debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"
-            img.js-img-fadeIn(loading="lazy" src= url_for(theme.user.avatar) alt="user avatar")
+            img.js-img-fadeIn(loading="lazy" src= url_for(theme.user.avatar) alt="user avatar" width="2600" height="2600")
         else
             div.avatar-placeholder
     div
