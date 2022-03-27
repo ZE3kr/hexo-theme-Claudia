@@ -10,7 +10,7 @@ article.post-container.is-flex.is-justify-content-center.section.container.pt-4.
                 if page.posts.length > 0
                     each post in page.posts.sort('date', -1).toArray()
                         - var postURL = url_for(post.path)
-                        - var imgURL = post.cover ? getPostCoverImg(post.cover) : getPostCoverImg(post)
+                        - var imgURL = getPostCoverImg(post.cover || post)
                         - var isExcerpt = post.excerpt && post.excerpt.length > 0
                         - var postContent = isExcerpt ? post.excerpt : post.content
                         article.post-item-card
