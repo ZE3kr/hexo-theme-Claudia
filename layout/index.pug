@@ -8,6 +8,8 @@ block content
                 include widget/widget-search
                 if theme.widgets.includes('profile')
                     include widget/widget-profile
+            if theme.widgets.includes('adsense')
+                include widget/widget-adsense
             if theme.links && theme.links.length > 0
                 include widget/widget-links
             if theme.iframe
