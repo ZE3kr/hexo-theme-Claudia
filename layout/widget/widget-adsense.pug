@@ -20,13 +20,19 @@ if theme.ads && theme.ads.length > 0
                 section!= ad.content
     script.
         addEventListener('load', function(){
+            var widgetA = document.getElementById('widgetA')
+            var beforeA = document.getElementById('beforeA')
+            var afterA = document.getElementById('afterA')
+            if (widgetA) {
+                document.getElementById('widgetA').style.width = document.getElementById('widgetA').clientWidth + 2 + 'px'
+            }
             var testTloA = function() {
                 if(
-                    !document.getElementById('widgetA') ||
-                    !document.getElementById('widgetA').clientHeight ||
-                    !document.getElementById('beforeA') ||
-                    !document.getElementById('afterA') ||
-                    document.getElementById('afterA').offsetTop - document.getElementById('beforeA').offsetTop < 30 ||
+                    !widgetA ||
+                    !widgetA.clientHeight ||
+                    !beforeA ||
+                    !afterA ||
+                    afterA.offsetTop - beforeA.offsetTop < 30 ||
                     !window.adsbygoogle
                 ) {
                     var tloA = document.getElementsByClassName('tloA')
