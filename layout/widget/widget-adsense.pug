@@ -65,12 +65,12 @@ if theme.ads && theme.ads.length > 0
             setTimeout(testTloA, 1000)
             setTimeout(testTloA, 2000)
             var tloScale = function() {
-                if (widgetA && widgetA.style && tloChild && tloChild.style) {
-                    var tloWidth = parseInt(tloChild.style.width, 10)
+                if (widgetA && widgetA.style && tloChild && tloChild.style && !tloChild.style.transform) {
+                    var tloWidth = tloChild.clientWidth
                     var tloWidthActual = document.getElementById('widgetA').clientWidth + 2
                     if (tloWidth > tloWidthActual) {
                         tloChild.style.transformOriginX = "left"
-                        tloChild.style.transform = "scaleX(" + (tloWidth/tloWidthActual) + ")"
+                        tloChild.style.transform = "scaleX(" + (tloWidthActual/tloWidth) + ")"
                     }
                 }
             }
