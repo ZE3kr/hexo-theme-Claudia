@@ -105,9 +105,10 @@
 #widgetA {
   display: block !important;
   min-height: 40px;
-  margin-left: 0!important;
+  margin-left: 0 !important;
   border: 1px solid var(--border-line-color-2) !important;
   overflow: hidden;
+  width: 100% !important;
 }
 
 #widgetA > *, #widgetA > ins {
