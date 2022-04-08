@@ -107,9 +107,7 @@
   min-height: 40px;
   border: 1px solid var(--border-line-color-2) !important;
   overflow: hidden;
-  width: 100% !important;
-  margin: 0 !important;
-  margin-left: 0 !important;
+  border-radius: 6px !important;
 }
 
 #widgetA > *, #widgetA > ins {

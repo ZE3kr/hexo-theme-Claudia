@@ -5,7 +5,7 @@ ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
         data-ad-client="ca-pub-5523331422060800"
         data-ad-slot="6951388710"
         data-ad-format="auto"
-        data-full-width-responsive="false"
+        data-full-width-responsive="true"
     )
 span#afterA
 script.
@@ -23,7 +23,6 @@ if theme.ads && theme.ads.length > 0
             var widgetA = document.getElementById('widgetA')
             var beforeA = document.getElementById('beforeA')
             var afterA = document.getElementById('afterA')
-            var tloChild = document.querySelector('#widgetA > *')
             var testTloA = function() {
                 if(
                     !widgetA ||
@@ -64,18 +63,4 @@ if theme.ads && theme.ads.length > 0
             setTimeout(testTloA, 500)
             setTimeout(testTloA, 1000)
             setTimeout(testTloA, 2000)
-            var tloScale = function() {
-                if (widgetA && widgetA.style && tloChild && tloChild.style && !tloChild.style.transform) {
-                    var tloWidth = tloChild.clientWidth
-                    var tloWidthActual = document.getElementById('widgetA').clientWidth + 2
-                    if (tloWidth > tloWidthActual) {
-                        tloChild.style.transformOriginX = "left"
-                        tloChild.style.transform = "scaleX(" + (tloWidthActual/tloWidth) + ")"
-                    }
-                }
-            }
-            tloScale()
-            setTimeout(tloScale, 500)
-            setTimeout(tloScale, 1000)
-            setTimeout(tloScale, 2000)
         })
