@@ -36,6 +36,7 @@ friend: 'Links'
 play: Play with Sound
 movie: Movie
 download_movie: Download Movie
+ads: Ads
 
 zh-CN:
   play: 取消静音播放
