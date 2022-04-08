@@ -23,6 +23,7 @@ if theme.ads && theme.ads.length > 0
             var widgetA = document.getElementById('widgetA')
             var beforeA = document.getElementById('beforeA')
             var afterA = document.getElementById('afterA')
+            var tloChild = document.querySelector('#widgetA > *').style.width
             var testTloA = function() {
                 if(
                     !widgetA ||
@@ -63,4 +64,20 @@ if theme.ads && theme.ads.length > 0
             setTimeout(testTloA, 500)
             setTimeout(testTloA, 1000)
             setTimeout(testTloA, 2000)
+            var tloScale = function() {
+                if (widgetA && widgetA.style && tloChild && tloChild.style) {
+                    var tloWidth = parseInt(tloChild.style.width, 10)
+                    var tloWidthActual = document.getElementById('widgetA').clientWidth + 2
+                    if (tloWidth > tloWidthActual) {
+                        widgetA.style.margin = 0
+                        widgetA.style.marginLeft = 0
+                        tloChild.style.transformOriginX = "left"
+                        tloChild.style.transform = "scaleX(" + (tloWidth/tloWidthActual) + ")"
+                    }
+                }
+            }
+            tloScale()
+            setTimeout(tloScale, 500)
+            setTimeout(tloScale, 1000)
+            setTimeout(tloScale, 2000)
         })
