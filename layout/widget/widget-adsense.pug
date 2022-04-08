@@ -30,7 +30,8 @@ if theme.ads && theme.ads.length > 0
                     !beforeA ||
                     !afterA ||
                     afterA.offsetTop - beforeA.offsetTop < 30 ||
-                    !window.adsbygoogle
+                    !window.adsbygoogle ||
+                    (widgetA && widgetA.dataset && widgetA.dataset.adStatus == 'unfilled')
                 ) {
                     var tloA = document.getElementsByClassName('tloA')
                     if (tloA) {
