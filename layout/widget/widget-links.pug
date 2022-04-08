@@ -3,6 +3,6 @@ main.aside-card-container.categories-widget
     section
         ul.category-list
             each link in theme.links
-                li.category-list-item(class= link.tloB ? "tloB" : '')
+                li.category-list-item(class= link.tloB ? "tloB" : link.tloA ? "tloA is-hidden" : '')
                     a.category-list-link(href= link.url)= link.title
                     a.category-list-count(href= link.url)= link.domain

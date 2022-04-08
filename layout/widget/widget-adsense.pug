@@ -40,6 +40,19 @@ if theme.ads && theme.ads.length > 0
                             tloB[i].classList.add('is-hidden')
                         }
                     }
+                } else {
+                    var tloA = document.getElementsByClassName('tloA')
+                    if (tloA) {
+                        for (var i = 0; i < tloA.length; i++) {
+                            tloA[i].classList.add('is-hidden')
+                        }
+                    }
+                    var tloB = document.getElementsByClassName('tloB')
+                    if (tloB) {
+                        for (var i = 0; i < tloB.length; i++) {
+                            tloB[i].classList.remove('is-hidden')
+                        }
+                    }
                 }
             }
             testTloA()

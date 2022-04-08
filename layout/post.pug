@@ -15,7 +15,8 @@ block content
     - const tocContent = toc(page.content + ((page.comments || typeof page.comments === "undefined") ? `<h2 id="footer">${__('comment')}</h2>` : ''), {list_number: false})
     main.container.section.post-page.pt-4.px-3
         .columns.content.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse.px-1
-            .column.is-3.toc-container.is-hidden-mobile!= tocContent
+            if page.toc || typeof page.toc === "undefined"
+                .column.is-3.toc-container.is-hidden-mobile!= tocContent
             .column.is-9
                 header.my-4
                     if page.categories && page.categories.length > 0 && page.categories.toArray
@@ -45,7 +46,7 @@ block content
                 if page.date
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
                 article.mt-2.post-content
-                    if tocContent
+                    if (page.toc || typeof page.toc === "undefined") && tocContent
                         div.is-hidden-tablet.mb-4
                             != tocContent
                     - page_content = parseContent(page.content)
@@ -72,19 +73,19 @@ block content
                 //-             span.has-text-weight-semibold= nextContent
                 //-             i.iconfont.icon-next.ml-2.has-text-grey
 
-        if page.comments || typeof page.comments === "undefined"
-            div#footer
-            .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3#commentContainer
-                aside.column.is-4-tablet.is-3-widescreen.post-container
-                    include widget/widget-search
-                    //- if theme.widgets.includes('profile')
-                    //-     include widget/widget-profile
-                    include widget/widget-recent-content-all
-                    if theme.links && theme.links.length > 0
-                        include widget/widget-links
-                    if theme.widgets.includes('adsense')
-                        include widget/widget-adsense
-                section.column.comment-box#commentBox
+        div#footer
+        .columns.is-flex-desktop.is-justify-content-center.comment-container.is-flex-direction-row-reverse.mt-1.pt-3#commentContainer
+            aside.column.is-4-tablet.is-3-widescreen.post-container
+                include widget/widget-search
+                //- if theme.widgets.includes('profile')
+                //-     include widget/widget-profile
+                include widget/widget-recent-content-all
+                if theme.links && theme.links.length > 0
+                    include widget/widget-links
+                if theme.widgets.includes('adsense')
+                    include widget/widget-adsense
+            section.column.comment-box#commentBox
+                if page.comments || typeof page.comments === "undefined"
                     if theme.comment_utteranc && theme.comment_utteranc.enable
                         article.comment
                             script(
@@ -106,7 +107,11 @@ block content
                             script="var disqus_config = function () {this.page.url = '"+theme.comment_disqus.url+url_for(page.path)+"';this.page.identifier = '"+theme.comment_disqus.name+"';};"
                             script="(function() {var d = document, s = d.createElement('script');s.src = 'https://"+theme.comment_disqus.name+".disqus.com/embed.js';s.setAttribute('data-timestamp', +new Date());(d.head || d.body).appendChild(s);})();"
                             script(id="dsq-count-scr", src="//blog-pubgj2togw.disqus.com/count.js", async)
-
+                else
+                    article.comment
+                        center.mt-4
+                            big
+                                h2= '评论已关闭'
 block append script
     script.
         $posts.mounted()
