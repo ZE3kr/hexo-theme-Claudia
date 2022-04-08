@@ -106,6 +106,10 @@
   display: block !important;
   min-height: 40px;
   margin-left: 0!important;
-  width: auto !important;
+  width: 100% !important;
   border: 1px solid var(--border-line-color-2) !important;
+}
+
+#widgetA > ins, #widgetA > ins > ins, #widgetA > ins > ins > iframe, #widgetA ins, #widgetA iframe {
+  width: 100% !important;
 }
