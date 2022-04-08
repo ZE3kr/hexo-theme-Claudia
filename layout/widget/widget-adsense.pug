@@ -69,8 +69,6 @@ if theme.ads && theme.ads.length > 0
                     var tloWidth = parseInt(tloChild.style.width, 10)
                     var tloWidthActual = document.getElementById('widgetA').clientWidth + 2
                     if (tloWidth > tloWidthActual) {
-                        widgetA.style.margin = 0
-                        widgetA.style.marginLeft = 0
                         tloChild.style.transformOriginX = "left"
                         tloChild.style.transform = "scaleX(" + (tloWidth/tloWidthActual) + ")"
                     }
