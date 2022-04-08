@@ -79,9 +79,11 @@ block content
                     include widget/widget-search
                     //- if theme.widgets.includes('profile')
                     //-     include widget/widget-profile
+                    include widget/widget-recent-content-all
                     if theme.links && theme.links.length > 0
                         include widget/widget-links
-                    include widget/widget-recent-content-all
+                    if theme.widgets.includes('adsense')
+                        include widget/widget-adsense
                 section.column.comment-box#commentBox
                     if theme.comment_utteranc && theme.comment_utteranc.enable
                         article.comment

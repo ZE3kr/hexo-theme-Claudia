@@ -77,3 +77,18 @@
 @import "widget-post-list";
 @import "themes/highlight-theme-light";
 @import "post";
+
+.post-container .aside-card-container.tloA {
+  background: var(--third-bg-color);
+
+  &:hover {
+    p, h3, li{
+      color: var(--activeColor) !important;
+    }
+  }
+
+  ul li:before {
+    content: '✓ '; 
+    color: rgb(65, 189, 107);
+  }
+}

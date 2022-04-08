@@ -1,4 +1,5 @@
 
+span#beforeA
 ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
         style="display:block"
         data-ad-client="ca-pub-5523331422060800"
@@ -6,5 +7,43 @@ ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
         data-ad-format="auto"
         data-full-width-responsive="true"
     )
+span#afterA
 script.
     (adsbygoogle = window.adsbygoogle || []).push({});
+if theme.ads && theme.ads.length > 0
+    each ad in theme.ads
+        a(href= ad.link)
+            main.aside-card-container.categories-widget.tloA.is-hidden
+                h3
+                    i.tag.post-item-tag= '广告'
+                    = ad.title
+                section!= ad.content
+    script.
+        addEventListener('load', function(){
+            var testTloA = function() {
+                if(
+                    !document.getElementById('widgetA') ||
+                    !document.getElementById('widgetA').clientHeight ||
+                    !document.getElementById('beforeA') ||
+                    !document.getElementById('afterA') ||
+                    document.getElementById('afterA').offsetTop - document.getElementById('beforeA').offsetTop < 30
+                ) {
+                    var tloA = document.getElementsByClassName('tloA')
+                    if (tloA) {
+                        for (var i = 0; i < tloA.length; i++) {
+                            tloA[i].classList.remove('is-hidden')
+                        }
+                    }
+                    var tloB = document.getElementsByClassName('tloB')
+                    if (tloB) {
+                        for (var i = 0; i < tloB.length; i++) {
+                            tloB[i].classList.add('is-hidden')
+                        }
+                    }
+                }
+            }
+            testTloA()
+            setTimeout(testTloA, 500)
+            setTimeout(testTloA, 1000)
+            setTimeout(testTloA, 2000)
+        })
