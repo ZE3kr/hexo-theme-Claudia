@@ -46,14 +46,21 @@ if theme.ads && theme.ads.length > 0
                         }
                     }
                     var tloC = document.getElementsByClassName('tloC')
+                    var tloD = document.getElementsByClassName('tloD')
                     if (tloC) {
                         if (!window.adsbygoogle || !widgetA || !widgetA.dataset || widgetA.dataset.adStatus !== 'unfilled') {
                             for (var i = 0; i < tloC.length; i++) {
                                 tloC[i].classList.remove('is-hidden')
                             }
+                            for (var i = 0; i < tloD.length; i++) {
+                                tloD[i].classList.add('is-hidden')
+                            }
                         } else {
                             for (var i = 0; i < tloC.length; i++) {
                                 tloC[i].classList.add('is-hidden')
+                            }
+                            for (var i = 0; i < tloD.length; i++) {
+                                tloD[i].classList.remove('is-hidden')
                             }
                         }
                     }
