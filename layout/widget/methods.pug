@@ -37,8 +37,10 @@
                 ) && ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 const prefix = imageUrl.slice(0, -5);
+                width = parseInt(width ?? 0, 10)
+                height = parseInt(height ?? 0, 10)
                 if (!width || (width > 6500 || height > 6500)) {
-                    return prefix + 'wide10k 10000w, ' +
+                    return prefix + `wide10k ${width > height ? width : height}w, ` +
                         prefix + 'wide6k 6500w, ' +
                         prefix + 'wide4k 4000w, ' +
                         prefix + 'extra 2600w, ' +
@@ -46,26 +48,29 @@
                         prefix + 'medium 800w'
                 }
                 if (width > 4000 || height > 4000) {
-                    return prefix + 'wide6k 6500w, ' +
+                    return prefix + `wide6k ${width > height ? width : height}w, ` +
                         prefix + 'wide4k 4000w, ' +
                         prefix + 'extra 2600w, ' +
                         prefix + 'large 1500w, ' +
                         prefix + 'medium 800w'
                 }
                 if (width > 2600 || height > 2600) {
-                    return prefix + 'wide4k 4000w, ' +
+                    return prefix + `wide4k ${width > height ? width : height}w, ` +
                         prefix + 'extra 2600w, ' +
                         prefix + 'large 1500w, ' +
                         prefix + 'medium 800w'
                 }
                 if (width > 1500 || height > 1500) {
-                    return prefix + 'extra 2600w, ' +
+                    return prefix + `extra ${width > height ? width : height}w, ` +
                         prefix + 'large 1500w, ' +
                         prefix + 'medium 800w'
                 }
                 if (width > 800 || height > 800) {
-                    return prefix + 'large 1500w, ' +
+                    return prefix + `large ${width > height ? width : height}w, ` +
                         prefix + 'medium 800w'
+                }
+                if (width || height) {
+                    return prefix + `medium ${width > height ? width : height}w`
                 }
                 return prefix + 'medium 800w'
             } else if (
@@ -106,12 +111,28 @@
     }
 
     function parseContent(content) {
-        return content.replace(/<img([\w\W]+?)>/g, function(img) {
+        return content.replace(/<picture([\w\W]+?)>(?:.|\n)*?<\/picture>/g, function(img) {
+            let alt = ''
+            let width = ''
+            img.replace(/<img([\w\W]+?)>/g, function(img) {
+                img.replace(/alt="([^"]+)"/, function(str) {
+                    alt = str.slice(5, -1)
+                })
+                img.replace(/width="([^"]+)"/, function(str) {
+                    width = str.slice(7, -1)
+                })
+            })
+            if (alt) {
+                return `<figure style="max-width: calc(${width ? width : 2600}px / var(--device-pixel-ratio))">${img}<figcaption>${alt}</figcaption></figure>`
+            }
+            return `<figure style="max-width: calc(${width ? width : 2600}px / var(--device-pixel-ratio))">${img}</figure>`
+        }).replace(/<img([\w\W]+?)>/g, function(img) {
             let srcset = ''
             let src = ''
             let alt = ''
             let width = ''
             let height = ''
+            let raw = ''
             img.replace(/alt="([^"]+)"/, function(str) {
                 alt = str.slice(5, -1)
             })
@@ -125,11 +146,43 @@
                 src = str.slice(5, -1)
                 srcset = getSrcset(src, width, height)
             })
+            img.replace(/data-raw="([^"]+)"/, function(str) {
+                raw = str.slice(10, -1)
+            })
             let imgtag = `<img src="${src}" width="${width}" height="${height}" srcset="${srcset}" alt="${alt}" sizes="(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" loading="lazy">`
-            if (alt) {
-                return `<figure>${imgtag}<figcaption>${alt}</figcaption></figure>`
+            if (raw) {
+                return imgtag
+            } else if (alt) {
+                return `<figure style="max-width: calc(${width ? width : 2600}px / var(--device-pixel-ratio))">${imgtag}<figcaption>${alt}</figcaption></figure>`
             }
-            return `<figure>${imgtag}</figure>`
+            return `<figure style="max-width: calc(${width ? width : 2600}px / var(--device-pixel-ratio))">${imgtag}</figure>`
+        }).replace(/<source([\w\W]+?)>/g, function(img) {
+            let srcset = ''
+            let src = ''
+            let media = ''
+            let type = ''
+            let width = ''
+            let height = ''
+            img.replace(/media="([^"]+)"/, function(str) {
+                media = str.slice(7, -1)
+            })
+            img.replace(/type="([^"]+)"/, function(str) {
+                type = str.slice(6, -1)
+            })
+            img.replace(/width="([^"]+)"/, function(str) {
+                width = str.slice(7, -1)
+            })
+            img.replace(/height="([^"]+)"/, function(str) {
+                height = str.slice(8, -1)
+            })
+            img.replace(/src="([^"]+)"/, function(str) {
+                src = str.slice(5, -1)
+                srcset = getSrcset(src, width, height)
+            })
+            if (media && src && !type.includes('video') && !type.includes('audio')) {
+                return `<source srcset="${srcset}" sizes="(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw" media="${media}" loading="lazy">`
+            }
+            return img
         }).replace(/<iframe([\w\W]+?)>/g, function(iframe) {
             let src
             iframe.replace(/src="([^"]+)"/, function(str) {

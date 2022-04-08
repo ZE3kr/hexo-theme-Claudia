@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import "common/bulma";
 
 .icon {
@@ -93,7 +94,7 @@
   }
 }
 
-.tloA.tloC {
+.tloC.tloWarp {
   padding: 10px;
   margin-bottom: 15px;
   box-shadow: 0 6px 30px -10px rgba(0, 0, 0, 0.1);
@@ -115,5 +116,20 @@
 }
 
 #widgetA[data-ad-status="unfilled"] {
-    display: none !important;
+  display: none !important;
+}
+
+:root {
+  --device-pixel-ratio: 1;
+}
+
+@for $i from 3 through 8 {
+  $j: math.div($i, 2);
+  @media (-webkit-min-device-pixel-ratio: #{$j}),
+        (min--moz-device-pixel-ratio: #{$j}),
+        (min-resolution: #{$j}dppx) {
+    :root {
+      --device-pixel-ratio: #{$j};
+    }
+  }
 }

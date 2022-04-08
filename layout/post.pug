@@ -51,7 +51,7 @@ block content
                             != tocContent
                     - page_content = parseContent(page.content)
                     if theme.widgets.includes('adsense') && theme.adb && (page.adb || typeof page.adb === "undefined")
-                        div.tloC.is-hidden!= parseContent(theme.adb)
+                        div.tloC.is-hidden.tloWarp!= parseContent(theme.adb)
                     div!= page_content
                     if page_content.includes('https://cdn.ze3kr.com/iframe/')
                         - hasIframe = true

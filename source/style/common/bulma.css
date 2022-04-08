@@ -3833,6 +3833,8 @@ a.has-text-link-dark:hover {
 }
 .content figure {
   cursor: zoom-in;
+  margin-left: auto;
+  margin-right: auto;
 }
 .content figure.my-table,
 .content figure.my-video {
