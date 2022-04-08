@@ -5,11 +5,12 @@ ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
         data-ad-client="ca-pub-5523331422060800"
         data-ad-slot="6951388710"
         data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-full-width-responsive="false"
     )
 span#afterA
 script.
-    (adsbygoogle = window.adsbygoogle || []).push({});
+    google_language="#{config.language}"
+    (adsbygoogle = window.adsbygoogle || []).push({})
 if theme.ads && theme.ads.length > 0
     each ad in theme.ads
         a(href= ad.link)
