@@ -50,6 +50,8 @@ block content
                         div.is-hidden-tablet.mb-4
                             != tocContent
                     - page_content = parseContent(page.content)
+                    if theme.widgets.includes('adsense') && theme.adb && (page.adb || typeof page.adb === "undefined")
+                        div.tloA.is-hidden.tloC!= parseContent(theme.adb)
                     div!= page_content
                     if page_content.includes('https://cdn.ze3kr.com/iframe/')
                         - hasIframe = true

@@ -92,3 +92,17 @@
     color: rgb(65, 189, 107);
   }
 }
+
+.tloA.tloC {
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 6px 30px -10px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  background: var(--third-bg-color);
+  border: 1px solid var(--border-line-color-2);
+}
+
+#widgetA {
+  display: block !important;
+  min-height: 40px;
+}

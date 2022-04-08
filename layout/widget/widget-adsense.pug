@@ -26,7 +26,8 @@ if theme.ads && theme.ads.length > 0
                     !document.getElementById('widgetA').clientHeight ||
                     !document.getElementById('beforeA') ||
                     !document.getElementById('afterA') ||
-                    document.getElementById('afterA').offsetTop - document.getElementById('beforeA').offsetTop < 30
+                    document.getElementById('afterA').offsetTop - document.getElementById('beforeA').offsetTop < 30 ||
+                    !window.adsbygoogle
                 ) {
                     var tloA = document.getElementsByClassName('tloA')
                     if (tloA) {
