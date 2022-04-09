@@ -84,7 +84,7 @@ block content
                 include widget/widget-recent-content-all
                 if theme.links && theme.links.length > 0
                     include widget/widget-links
-                if theme.widgets.includes('adsense')
+                if theme.widgets.includes('adsense') && (page.ads || typeof page.ads === "undefined")
                     include widget/widget-adsense
             section.column.comment-box#commentBox
                 if page.comments || typeof page.comments === "undefined"
