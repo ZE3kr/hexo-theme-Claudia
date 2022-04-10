@@ -670,6 +670,7 @@ header .container {
   z-index: 200;
   cursor: zoom-out;
   overflow-x: auto;
+  max-width: 100vw!important;
 }
 .content figure.full-screen:hover {
   transform: scale(1);
@@ -681,7 +682,6 @@ header .container {
   display: block;
   width: 100vw;
   height: auto;
-  max-width: 100vw;
   max-height: 100vh;
   position: relative;
   top: 50%;
@@ -689,6 +689,7 @@ header .container {
   transform-origin: left top;
   padding-top: unset !important;
   height: 100vh;
+  max-width: 100vw!important;
 }
 .content figure.full-screen.panorama > :first-child {
   width: unset;
