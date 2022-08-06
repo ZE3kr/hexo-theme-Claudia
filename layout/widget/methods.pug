@@ -33,7 +33,7 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/"
+                    imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/"
                 ) && ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 const prefix = imageUrl.slice(0, -5);
@@ -74,7 +74,7 @@
                 }
                 return prefix + 'medium 800w'
             } else if (
-                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
                 imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
             ) {
                 const w2000 = new URL(imageUrl)
@@ -93,12 +93,12 @@
     function getThumbnail(imageUrl) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
-                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
                 ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.slice(0, 45) === "https://cdn.ze3kr.com/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
                 imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
             ) {
                 const w200 = new URL(imageUrl)
@@ -184,15 +184,6 @@
             }
             return img
         }).replace(/<iframe([\w\W]+?)>/g, function(iframe) {
-            let src
-            iframe.replace(/src="([^"]+)"/, function(str) {
-                src = new URL(str.slice(5, -1))
-            })
-            if (src && src.href.slice(0, 29) === 'https://cdn.ze3kr.com/iframe/') {
-                //- return `<stream width="100%" height="100%" src="${ src.pathname.slice(8) }"${ src.searchParams.get('preload') === 'true' ? ' preload=auto' : src.searchParams.get('preload') === 'metadata' ? ' metadata' : '' }${ src.searchParams.get('autoplay') === 'true' ? ' autoplay' : '' }${ src.searchParams.get('controls') === 'false' ? '' : ' controls' }${ src.searchParams.get('poster') ? ` poster="${ src.searchParams.get('poster') }"` : '' }${ src.searchParams.get('muted') === 'true' ? ' muted' : '' }${ src.searchParams.get('loop') === 'true' ? ' loop' : '' }${ src.searchParams.get('startTime') ? ` start-time="${ src.searchParams.get('startTime') }` : '' }${ src.searchParams.get('primaryColor') ? ` primary-color="${ src.searchParams.get('primaryColor') }"` : '' }></stream>`
-                const srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/><meta name="description" content="Stream"/><title>Stream</title><style>html, body { height: 100%; } body { margin: 0px; overflow: hidden;}</style></head><body><stream width="100%" height="100%" src="${ src.pathname.slice(8) }"${ src.searchParams.get('preload') === 'true' ? ' preload=auto' : src.searchParams.get('preload') === 'metadata' ? ' metadata' : '' }${ src.searchParams.get('autoplay') === 'true' ? ' autoplay' : '' }${ src.searchParams.get('controls') === 'false' ? '' : ' controls' }${ src.searchParams.get('poster') ? ` poster="${ src.searchParams.get('poster') }"` : '' }${ src.searchParams.get('muted') === 'true' ? ' muted' : '' }${ src.searchParams.get('loop') === 'true' ? ' loop' : '' }${ src.searchParams.get('startTime') ? ` start-time="${ src.searchParams.get('startTime') }` : '' }${ src.searchParams.get('primaryColor') ? ` primary-color="${ src.searchParams.get('primaryColor') }"` : '' }></stream><script data-cfasync="false" defer="" type="text/javascript" src="/js/sdk-iframe-integration.fla9.latest.js"></script></body></html>`
-                return `<iframe srcdoc='${srcdoc}' loading="lazy"${iframe.slice(7)}`
-            }
             return `<iframe loading="lazy"${iframe.slice(7)}`
         }).replace(/<table([\w\W]+?)>(?:.|\n)*?<\/table>/g, function(table) {
             return `<figure class="my-table">${table}</figure>`

@@ -53,13 +53,11 @@ block content
                     if theme.widgets.includes('adsense') && theme.adb && (page.adb || typeof page.adb === "undefined")
                         div.tloC.is-hidden.tloWarp!= parseContent(theme.adb)
                     div!= page_content
-                    if page_content.includes('https://cdn.ze3kr.com/iframe/')
-                        - hasIframe = true
                     if page_content.includes('<pre><code>')
                         - hasCode = true
                 if page.video
-                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
-                    a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://cdn.ze3kr.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
+                    a.button.is-default.mt-2.has-text-weight-semibold(href=`https://cloudflarestream.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language1)= __('download_movie')
+                    a.button.is-default.mt-2.has-text-weight-semibold.is-hidden(href=`https://cloudflarestream.com/${page.video}/downloads/default.mp4` target="_blank" rel="noopener nofollow" lang=config.language2)= __(`${config.language2}.download_movie`)
                 //- section.jump-container.is-flex.is-justify-content-space-between.my-6
                 //-     // em is empty placeholder
                 //-     if page.prev
@@ -117,8 +115,6 @@ block content
 block append script
     script.
         $posts.mounted()
-    if hasIframe
-        script(async src= url_for("/js/sdk.latest.js"))
     if hasCode
         script(async src= url_for("/js/highlight.pack.js") onload="hljs.highlightAll()")
     //- script.

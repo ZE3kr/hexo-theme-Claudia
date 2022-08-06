@@ -9,7 +9,6 @@
 - var currentUrl = url.slice(-11) === '/index.html' ? url.slice(0, -10) : url
 - var hasVideos = false
 - var hasCode = false
-- var hasIframe = false
 
 doctype html
 html(lang=config.language class= `appearance-${ appearance }`)
@@ -35,9 +34,9 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="preload" href= url_for('/style/base.css') as= 'style')
     link(rel="preload" href= url_for('/js/common.js') as= 'script')
 
-    link(rel="dns-prefetch" href= 'https://cdn.ze3kr.com/')
-    link(rel="preconnect" href= 'https://cdn.ze3kr.com/')
-    link(rel="preconnect" href= 'https://cdn.ze3kr.com/' crossorigin)
+    link(rel="dns-prefetch" href= 'https://cdn.yangxi.tech/')
+    link(rel="preconnect" href= 'https://cdn.yangxi.tech/')
+    link(rel="preconnect" href= 'https://cdn.yangxi.tech/' crossorigin)
     link(rel="dns-prefetch" href= 'https://utteranc.es/')
     link(rel="preconnect" href= 'https://utteranc.es/')
     link(rel="dns-prefetch" href= 'https://api.utteranc.es/')
