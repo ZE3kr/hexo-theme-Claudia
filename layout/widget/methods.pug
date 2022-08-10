@@ -33,7 +33,7 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/"
+                    imageUrl.slice(0, 47) === "https://cdn.tloxygen.com/6T-behmofKYLsxlrK0l_MQ/"
                 ) && ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 const prefix = imageUrl.slice(0, -5);
@@ -74,7 +74,7 @@
                 }
                 return prefix + 'medium 800w'
             } else if (
-                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.tloxygen.com/6T-behmofKYLsxlrK0l_MQ/" &&
                 imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
             ) {
                 const w2000 = new URL(imageUrl)
@@ -93,12 +93,12 @@
     function getThumbnail(imageUrl) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
-                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.tloxygen.com/6T-behmofKYLsxlrK0l_MQ/" &&
                 ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.slice(0, 47) === "https://cdn.yangxi.tech/6T-behmofKYLsxlrK0l_MQ/" &&
+                imageUrl.slice(0, 47) === "https://cdn.tloxygen.com/6T-behmofKYLsxlrK0l_MQ/" &&
                 imageUrl.slice(54, 79) === '/thumbnails/thumbnail.jpg'
             ) {
                 const w200 = new URL(imageUrl)
