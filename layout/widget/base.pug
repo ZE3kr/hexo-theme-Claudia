@@ -103,7 +103,7 @@ html(lang=config.language class= `appearance-${ appearance }`)
         streamLoaded()
     block script
     noscript
-      img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=${theme.piwik}&rec=1&action_name=${encodeURIComponent(`${ pageTitle ?? '' } | ${ theme.user.name }`)}` style="border:0" alt="")
+      img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=${theme.piwik}&rec=1&action_name=${encodeURIComponent(`${ pageTitle ? pageTitle : '' } | ${ theme.user.name }`)}` style="border:0" alt="")
     script.
       var _paq = window._paq = window._paq || [];
       _paq.push(['trackPageView']);
