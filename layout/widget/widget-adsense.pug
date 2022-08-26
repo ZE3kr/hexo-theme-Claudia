@@ -1,12 +1,13 @@
 
 span#beforeA
-ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
-        style="display:block; border-radius: 6px"
-        data-ad-client="ca-pub-5523331422060800"
-        data-ad-slot="6951388710"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-    )
+if theme.adsense
+    ins.aside-card-container.categories-widget.p-0.adsbygoogle#widgetA(
+            style="display:block; border-radius: 6px"
+            data-ad-client= theme.adsense
+            data-ad-slot="6951388710"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+        )
 span#afterA
 script.
     (adsbygoogle = window.adsbygoogle || []).push({})
