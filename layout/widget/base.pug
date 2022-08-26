@@ -51,7 +51,8 @@ html(lang=config.language class= `appearance-${ appearance }`)
 
     block head
 
-    script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5523331422060800" crossorigin="anonymous")
+    if theme.widgets.includes('adsense')
+      script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5523331422060800" crossorigin="anonymous")
 
   body.is-flex.is-flex-direction-column
     include widget-header
