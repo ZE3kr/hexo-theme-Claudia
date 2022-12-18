@@ -29,6 +29,7 @@ user_name: 'User name'
 click_back_to_the_top: 'Click back to the top'
 blog: 'Blog'
 portfolio: 'Portfolio'
+comment_closed: 'Comments Are Closed'
 
 search_input_placeholder: 'Search everything..'
 
