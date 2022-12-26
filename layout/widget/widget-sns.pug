@@ -1,18 +1,29 @@
 - var debugSNS = false
-if (debugSNS || theme.social.twitter)
-    a(title="twitter" target="_blank" rel="noopener nofollow" href=`https://twitter.com/${theme.social.twitter}`)
+// Mastodon
+if (debugSNS || theme.social.mastodon)
+    a(title="Mastodon" target="_blank" rel="me" href= url_for(theme.social.mastodon))
         svg.icon.has-text-grey
-            use(xlink:href="#icon-t")
+            use(xlink:href="#icon-mastodon")
+// Matrix
+if (debugSNS || theme.social.matrix)
+    a(title="Matrix" target="_blank" rel="noopener nofollow" href= url_for(theme.social.matrix))
+        svg.icon.has-text-grey
+            use(xlink:href="#icon-matrix")
+// Twitter
+//- if (debugSNS || theme.social.twitter)
+//-     a(title="Twitter" target="_blank" rel="noopener nofollow" href=`https://twitter.com/${theme.social.twitter}`)
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-t")
 // Weibo
-if (debugSNS || theme.social.weibo)
-    a(title="Weibo" target="_blank" rel="noopener nofollow" href=`https://weibo.com/u/${theme.social.weibo}`)
-        svg.icon.has-text-grey
-            use(xlink:href="#icon-weibo")
+//- if (debugSNS || theme.social.weibo)
+//-     a(title="Weibo" target="_blank" rel="noopener nofollow" href=`https://weibo.com/u/${theme.social.weibo}`)
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-weibo")
 // Telegram
-if (debugSNS || theme.social.telegram)
-    a(title="Telegram" target="_blank" rel="noopener nofollow" href=`https://t.me/${theme.social.telegram}`)
-        svg.icon.has-text-grey
-            use(xlink:href="#icon-telegram")
+//- if (debugSNS || theme.social.telegram)
+//-     a(title="Telegram" target="_blank" rel="noopener nofollow" href=`https://t.me/${theme.social.telegram}`)
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-telegram")
 // Email
 if (debugSNS || theme.social.email)
     a(title="E-mail" target="_blank" rel="noopener nofollow" href=`mailto:${theme.social.email}`)
@@ -24,10 +35,10 @@ if (debugSNS || theme.social.github)
         svg.icon.has-text-grey
             use(xlink:href="#icon-github-fill")
 // Ins
-if (debugSNS || theme.social.instagram)
-    a(title="Instagram" target="_blank" rel="noopener nofollow" href=`https://www.instagram.com/${theme.social.instagram}`)
-        svg.icon.has-text-grey
-            use(xlink:href="#icon-instagram-fill")
+//- if (debugSNS || theme.social.instagram)
+//-     a(title="Instagram" target="_blank" rel="noopener nofollow" href=`https://www.instagram.com/${theme.social.instagram}`)
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-instagram-fill")
 // RSS
 if (debugSNS || config.feed && config.feed.enable)
     a(title="RSS" target="_blank" rel="noopener nofollow" href= url_for(config.feed.path))
