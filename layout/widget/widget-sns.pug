@@ -1,14 +1,19 @@
 - var debugSNS = false
 // Mastodon
-if (debugSNS || theme.social.mastodon)
-    a(title="Mastodon" target="_blank" rel="me" href= url_for(theme.social.mastodon))
+//- if (debugSNS || theme.social.mastodon)
+//-     a(title="Mastodon" target="_blank" rel="me" href= url_for(theme.social.mastodon))
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-mastodon")
+// Bluesky
+if (debugSNS || theme.social.bluesky)
+    a(title="Bluesky" target="_blank" href= url_for(theme.social.bluesky))
         svg.icon.has-text-grey
-            use(xlink:href="#icon-mastodon")
+            use(xlink:href="#icon-bluesky")
 // Matrix
-if (debugSNS || theme.social.matrix)
-    a(title="Matrix" target="_blank" rel="noopener nofollow" href= url_for(theme.social.matrix))
-        svg.icon.has-text-grey
-            use(xlink:href="#icon-matrix")
+//- if (debugSNS || theme.social.matrix)
+//-     a(title="Matrix" target="_blank" rel="noopener nofollow" href= url_for(theme.social.matrix))
+//-         svg.icon.has-text-grey
+//-             use(xlink:href="#icon-matrix")
 // Twitter
 //- if (debugSNS || theme.social.twitter)
 //-     a(title="Twitter" target="_blank" rel="noopener nofollow" href=`https://twitter.com/${theme.social.twitter}`)
