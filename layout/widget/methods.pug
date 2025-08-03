@@ -74,7 +74,7 @@
                 }
                 return prefix + `medium${extention} 800w`
             } else if (
-                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
+                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
                 imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w2000 = new URL(imageUrl)
@@ -98,7 +98,7 @@
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
+                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
                 imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w200 = new URL(imageUrl)
