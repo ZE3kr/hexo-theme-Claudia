@@ -11,7 +11,8 @@ include methods
                         - var backgroundColor = 'f5f5f5'
                         - var uiAvatarURL = `background=${backgroundColor}&name=${title.slice(0, 2)}`
                         - var imgURL = getThumbnail(getPostCoverImg(post.cover || post)[0])
-                        img(src= imgURL || `https://customer-qz3v4c7e4vfly110.cloudflarestream.com/api/?${uiAvatarURL}` alt="cover" loading="lazy")
+                        if imgURL
+                            img(src= imgURL alt="cover" loading="lazy")
                         //else
                         //    div.post-img-placeholder
                         section.is-flex-grow-2

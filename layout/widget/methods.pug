@@ -33,7 +33,7 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.startsWith("https://cdn.tloxygen.com/images/")
+                    imageUrl.startsWith("https://cdn.tlo.xyz/images/")
                 ) && ( imageUrl.endsWith("/large") || imageUrl.endsWith("/extra") )
             ) {
                 const prefix = imageUrl.slice(0, -5);
@@ -74,7 +74,7 @@
                 }
                 return prefix + `medium 800w`
             } else if (
-                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
+                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
                 imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w2000 = new URL(imageUrl)
@@ -93,12 +93,12 @@
     function getThumbnail(imageUrl) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
-                imageUrl.startsWith("https://cdn.tloxygen.com/images/") &&
+                imageUrl.startsWith("https://cdn.tlo.xyz/images/") &&
                 ( imageUrl.endsWith("/large") || imageUrl.endsWith("/extra") )
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
+                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
                 imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w200 = new URL(imageUrl)
