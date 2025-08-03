@@ -10,6 +10,12 @@ window.$claudia = {
             }, time || 100)
         }
     },
+    getImageParent: function(img) {
+        if (img.parentElement && img.parentElement.tagName.toLowerCase() === 'picture') {
+            return img.parentElement.parentElement
+        }
+        return img.parentElement
+    },
     fadeInImage: function(imgs, imageLoadedCallback) {
         var images = imgs || document.querySelectorAll('.js-img-fadeIn')
 
@@ -23,8 +29,14 @@ window.$claudia = {
             image.style.transition = 'opacity 320ms'
             image.style.opacity = 1
 
-            if (image.parentElement && image.parentElement.classList.contains('skeleton')) {
-                image.parentElement.classList.remove('skeleton')
+            var parent = $claudia.getImageParent(image)
+
+            if (parent && parent.classList.contains('skeleton')) {
+                parent.classList.remove('skeleton')
+            }
+
+            if (parent && parent.classList.contains('skeleton')) {
+                parent.classList.remove('skeleton')
             }
             imageLoadedCallback && imageLoadedCallback(image)
         }
@@ -40,14 +52,14 @@ window.$claudia = {
     blurBackdropImg: function(image) {
         if (!image.dataset.backdrop) return
 
-        var parent = image.parentElement //TODO: Not finish yes, must be a pure function
+        var parent = $claudia.getImageParent(image)
         var parentWidth = Math.round(parent.getBoundingClientRect().width)
         var childImgWidth = Math.round(image.getBoundingClientRect().width)
         var parentHeight = Math.round(parent.getBoundingClientRect().height)
         var childImgHeight = Math.round(image.getBoundingClientRect().height)
 
         var isCovered = parentWidth === childImgWidth && parentHeight === childImgHeight
-        var blurImg = parent.previousElementSibling //TODO: Not finish yes, must be a pure function
+        var blurImg = parent.previousElementSibling
 
         isCovered ? blurImg.classList.add('is-hidden') : blurImg.classList.remove('is-hidden')
     },
