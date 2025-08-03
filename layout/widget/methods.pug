@@ -29,7 +29,7 @@
         return [coverImgElement[1], width?.[1], height?.[1]]
     }
 
-    function getSrcset(imageUrl, width, height, extention = '') {
+    function getSrcset(imageUrl, width, height) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
@@ -40,39 +40,39 @@
                 width = parseInt(width ?? 0, 10)
                 height = parseInt(height ?? 0, 10)
                 if (!width || (width > 6500 || height > 6500)) {
-                    return prefix + `wide10k${extention} ${width > height ? width : height}w, ` +
-                        prefix + `wide6k${extention} 6500w, ` +
-                        prefix + `wide4k${extention} 4000w, ` +
-                        prefix + `extra${extention} 2600w, ` +
-                        prefix + `large${extention} 1500w, ` +
-                        prefix + `medium${extention} 800w`
+                    return prefix + `wide10k ${width > height ? width : height}w, ` +
+                        prefix + `wide6k 6500w, ` +
+                        prefix + `wide4k 4000w, ` +
+                        prefix + `extra 2600w, ` +
+                        prefix + `large 1500w, ` +
+                        prefix + `medium 800w`
                 }
                 if (width > 4000 || height > 4000) {
-                    return prefix + `wide6k${extention} ${width > height ? width : height}w, ` +
-                        prefix + `wide4k${extention} 4000w, ` +
-                        prefix + `extra${extention} 2600w, ` +
-                        prefix + `large${extention} 1500w, ` +
-                        prefix + `medium${extention} 800w`
+                    return prefix + `wide6k ${width > height ? width : height}w, ` +
+                        prefix + `wide4k 4000w, ` +
+                        prefix + `extra 2600w, ` +
+                        prefix + `large 1500w, ` +
+                        prefix + `medium 800w`
                 }
                 if (width > 2600 || height > 2600) {
-                    return prefix + `wide4k${extention} ${width > height ? width : height}w, ` +
-                        prefix + `extra${extention} 2600w, ` +
-                        prefix + `large${extention} 1500w, ` +
-                        prefix + `medium${extention} 800w`
+                    return prefix + `wide4k ${width > height ? width : height}w, ` +
+                        prefix + `extra 2600w, ` +
+                        prefix + `large 1500w, ` +
+                        prefix + `medium 800w`
                 }
                 if (width > 1500 || height > 1500) {
-                    return prefix + `extra${extention} ${width > height ? width : height}w, ` +
-                        prefix + `large${extention} 1500w, ` +
-                        prefix + `medium${extention} 800w`
+                    return prefix + `extra ${width > height ? width : height}w, ` +
+                        prefix + `large 1500w, ` +
+                        prefix + `medium 800w`
                 }
                 if (width > 800 || height > 800) {
-                    return prefix + `large${extention} ${width > height ? width : height}w, ` +
-                        prefix + `medium${extention} 800w`
+                    return prefix + `large ${width > height ? width : height}w, ` +
+                        prefix + `medium 800w`
                 }
                 if (width || height) {
-                    return prefix + `medium${extention} ${width > height ? width : height}w`
+                    return prefix + `medium ${width > height ? width : height}w`
                 }
-                return prefix + `medium${extention} 800w`
+                return prefix + `medium 800w`
             } else if (
                 imageUrl.slice(0, 20) === "https://cdn.tlo.xyz/" &&
                 imageUrl.slice(57, 82) === '/thumbnails/thumbnail.jpg'
@@ -128,13 +128,11 @@
             return `<figure style="max-width: calc(${width ? width : 2600}px / var(--device-pixel-ratio))">${img}</figure>`
         }).replace(/<img([\w\W]+?)>/g, function(img) {
             let srcset = ''
-            let srcsetWebP = ''
             let src = ''
             let alt = ''
             let width = ''
             let height = ''
             let raw = ''
-            let noWebp = ''
             const sizes = '(min-width: 1805px) 1300px, (min-width: 1408px) 1002px, (min-width: 1216px) 858px, (min-width: 1024px) 714px, (min-width: 769px) 75vw, 100vw'
             img.replace(/alt="([^"]+)"/, function(str) {
                 alt = str.slice(5, -1)
@@ -148,9 +146,8 @@
             img.replace(/src="([^"]+)"/, function(str) {
                 src = str.slice(5, -1)
                 srcset = getSrcset(src, width, height, '')
-                srcsetWebP = getSrcset(src, width, height, '.webp')
             })
-            let imgtag = `<picture><source type="image/webp" srcset="${srcsetWebP}" sizes="${sizes}"><img src="${src}" width="${width}" height="${height}" srcset="${srcset}" alt="${alt}" sizes="${sizes}" loading="lazy"></picture>`
+            let imgtag = `<picture><img src="${src}" width="${width}" height="${height}" srcset="${srcset}" alt="${alt}" sizes="${sizes}" loading="lazy"></picture>`
             img.replace(/data-raw="([^"]+)"/, function(str) {
                 raw = str.slice(10, -1)
                 imgtag = `<img src="${src}" width="${width}" height="${height}" srcset="${srcset}" alt="${alt}" sizes="${sizes}" loading="lazy">`
