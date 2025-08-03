@@ -75,32 +75,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
         span!= theme.user && theme.user.footnotes
 
     script(src= url_for("/js/common.js"))
-    script.
-      function streamLoaded () {
-        document.querySelectorAll('stream').forEach(function (video) {
-          video.parentNode.previousElementSibling.classList.remove('is-hidden')
-          video.addEventListener('loadedmetadata', (event) => {
-            videoScroll()
-            video.parentNode.classList.remove('skeleton')
-          })
-          video.addEventListener('playing', (event) => {
-            video['data-playing'] = true
-            video.classList.remove('is-hidden')
-            video.parentNode.classList.remove('skeleton-with-content')
-            video.previousElementSibling.classList.add('is-hidden')
-          })
-        })
-
-        window.addEventListener('load', function() {
-          setTimeout(videoScroll, 500)
-          window.addEventListener('scroll', videoScroll)
-        })
-      }
-    if hasVideos
-      script(async src= url_for("/js/sdk-iframe-integration.fla9.latest.js") onload='streamLoaded()')
-    else
-      script.
-        streamLoaded()
     block script
     script.
       var searchDatabase = []
