@@ -74,8 +74,8 @@
                 }
                 return prefix + `medium 800w`
             } else if (
-                imageUrl.slice(0, 20) === "https://cdn.tlo.xyz/" &&
-                imageUrl.slice(57, 82) === '/thumbnails/thumbnail.jpg'
+                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
+                imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w2000 = new URL(imageUrl)
                 w2000.searchParams.set('width', '2000')
@@ -98,7 +98,7 @@
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
+                imageUrl.startsWith("https://customer-qz3v4c7e4vfly110.cloudflarestream.com/") &&
                 imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w200 = new URL(imageUrl)
