@@ -33,8 +33,8 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.slice(0, 43) === "https://cdn.tloxygen.com/images/"
-                ) && ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
+                    imageUrl.startsWith("https://cdn.tloxygen.com/images/")
+                ) && ( imageUrl.endsWith("/large") || imageUrl.endsWith("/extra") )
             ) {
                 const prefix = imageUrl.slice(0, -5);
                 width = parseInt(width ?? 0, 10)
@@ -93,13 +93,13 @@
     function getThumbnail(imageUrl) {
         if ( typeof imageUrl.slice === "function" ) {
             if (
-                imageUrl.slice(0, 43) === "https://cdn.tloxygen.com/images/" &&
-                ( imageUrl.slice(-6) === "/large" || imageUrl.slice(-6) === "/extra" )
+                imageUrl.startsWith("https://cdn.tloxygen.com/images/") &&
+                ( imageUrl.endsWith("/large") || imageUrl.endsWith("/extra") )
             ) {
                 return imageUrl.slice(0, -5) + 'thumbnail'
             } else if (
-                imageUrl.slice(0, 20) === "https://cdn.tlo.xyz/" &&
-                imageUrl.slice(57, 82) === '/thumbnails/thumbnail.jpg'
+                imageUrl.startsWith("https://cdn.tlo.xyz/") &&
+                imageUrl.includes('/thumbnails/thumbnail.jpg')
             ) {
                 const w200 = new URL(imageUrl)
                 w200.searchParams.set('width', '200')

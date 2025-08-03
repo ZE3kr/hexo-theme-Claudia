@@ -74,9 +74,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
 
     script(src= url_for("/js/common.js"))
     script.
-      var matomoTrack = $claudia.throttle(function (e) {
-        window._paq && _paq.push(e)
-      }, 500)
       function streamLoaded () {
         document.querySelectorAll('stream').forEach(function (video) {
           video.parentNode.previousElementSibling.classList.remove('is-hidden')
@@ -105,17 +102,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     block script
     noscript
       img(referrerpolicy="no-referrer-when-downgrade" src=`/api/a?idsite=${theme.piwik}&rec=1&action_name=${encodeURIComponent(`${ pageTitle ? pageTitle : '' } | ${ theme.user.name }`)}` style="border:0" alt="")
-    script.
-      var _paq = window._paq = window._paq || [];
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="/api/";
-        _paq.push(['setTrackerUrl', u+'a']);
-        _paq.push(['setSiteId', '#{theme.piwik}']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.async=true; g.src=u+'a.js'; s.parentNode.insertBefore(g,s);
-      })();
 
       var searchDatabase = []
 
