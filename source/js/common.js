@@ -328,26 +328,6 @@ var $posts = {
             var postTitle = document.getElementById('postTitle')
             title = title || (postTitle && postTitle.innerText)
 
-            window.addEventListener('load', function() {
-                var iframe = figure.querySelector('iframe')
-
-                if (iframe) {
-                    var url = new URL(iframe.src)
-                    if (url.searchParams.get('autoplay') !== 'true') {
-                        var player = Stream(iframe)
-                        player.addEventListener('play', () => {
-                            window._paq && _paq.push(['trackEvent', 'Movie', 'play', title]);
-                        })
-                        player.addEventListener('pause', () => {
-                            window._paq && _paq.push(['trackEvent', 'Movie', 'pause', title]);
-                        })
-                        player.addEventListener('ended', () => {
-                            window._paq && _paq.push(['trackEvent', 'Movie', 'ended', title]);
-                        })
-                    }
-                }
-            })
-
             var img = figure.querySelector('img')
 
             if (img) {
@@ -465,7 +445,6 @@ var $posts = {
                 figure.addEventListener('click', function() {
                     if (figure.classList.contains('full-screen')) {
                         figure.classList.remove('full-screen')
-                        window._paq && _paq.push(['trackEvent', 'Picture', 'exit', title])
                         img.style.transform = ''
                         img.style.width = ''
                         img.style.height = ''
@@ -495,7 +474,6 @@ var $posts = {
                             }
                         })
                         figure.classList.add('full-screen')
-                        window._paq && _paq.push(['trackEvent', 'Picture', 'full', title])
                         window.$claudia.disableScroll()
                     }
                 })
