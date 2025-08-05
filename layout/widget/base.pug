@@ -34,17 +34,6 @@ html(lang=config.language class= `appearance-${ appearance }`)
     link(rel="preload" href= url_for('/style/base.css') as= 'style')
     link(rel="preload" href= url_for('/js/common.js') as= 'script')
 
-    link(rel="dns-prefetch" href= 'https://cdn.tlo.xyz/')
-    link(rel="preconnect" href= 'https://cdn.tlo.xyz/')
-    link(rel="dns-prefetch" href= 'https://utteranc.es/')
-    link(rel="preconnect" href= 'https://utteranc.es/')
-    link(rel="dns-prefetch" href= 'https://api.utteranc.es/')
-    link(rel="preconnect" href= 'https://api.utteranc.es/')
-    link(rel="dns-prefetch" href= 'https://api.github.com/')
-    link(rel="preconnect" href= 'https://api.github.com/')
-    link(rel="dns-prefetch" href= 'https://avatars.githubusercontent.com/')
-    link(rel="preconnect" href= 'https://avatars.githubusercontent.com/')
-
     link(rel="stylesheet" href= url_for('/style/base.css'))
 
     block head
