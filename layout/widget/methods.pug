@@ -33,8 +33,7 @@
         if ( typeof imageUrl.slice === "function" ) {
             if (
                 (
-                    imageUrl.startsWith("https://cdn.tloxygen.com/images/") ||
-                    imageUrl.startsWith("https://cdn.yangxi.tech/images/")
+                    imageUrl.startsWith("https://cdn.tloxygen.com/images/")
                 ) && ( imageUrl.endsWith("/large") || imageUrl.endsWith("/extra") )
             ) {
                 const prefix = imageUrl.slice(0, -5);
