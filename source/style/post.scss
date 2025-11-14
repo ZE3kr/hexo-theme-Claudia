@@ -1,4 +1,4 @@
-@import "common/variable";
+@use "common/variable" as *;
 
 $lineColor: var(--border-line-color);
 

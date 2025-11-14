@@ -1,4 +1,4 @@
-@import "common/variable";
+@use "common/variable" as *;
 $avatarSize: 180px;
 $coverMaxHeight: 360px;
 $coverBlurEffect: 20px;

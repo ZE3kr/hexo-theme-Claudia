@@ -1,4 +1,4 @@
-@import "common/variable";
+@use "common/variable" as *;
 
 .about-page {
   height: 100%;
